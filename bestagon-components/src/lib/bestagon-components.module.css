@@ -11,7 +11,7 @@
     min-height: 130px;
 }
 
-.hexContainer {
+.hexBox {
     padding: 2px 40px;
     position: relative;
     width: 150px;
@@ -19,13 +19,13 @@
     box-sizing: border-box;
 }
 
-.hexContainerInGrid {
+.hexBoxAbsolute {
     position: absolute;
     left: 0;
     top: 0;
 }
 
-.hexContainerSvg {
+.hexBoxSvg {
     position: absolute;
     inset: 0;
     z-index: -1;
