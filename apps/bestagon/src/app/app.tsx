@@ -38,7 +38,10 @@ export function App() {
         </HexagonBox>
         <HexagonBox>3</HexagonBox>
         <span></span>
-        <HexagonBox>4</HexagonBox>
+        <HexagonBox
+          polygonClassNames={styles.fancyHex}
+          onClick={(e) => { console.log(e) }}
+        >4</HexagonBox>
       </HexRow>
       <p>Should be below the hexes and not over the top</p>
     </div>
