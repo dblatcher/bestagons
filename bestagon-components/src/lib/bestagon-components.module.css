@@ -11,6 +11,10 @@
     min-height: 130px;
 }
 
+.hexRowExtraHeight {
+    min-height: 195px;
+}
+
 .hexBox {
     padding: 2px 40px;
     position: relative;

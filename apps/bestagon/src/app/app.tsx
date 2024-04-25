@@ -6,14 +6,17 @@ import styles from './app.module.css';
 export function App() {
   return (
     <div>
-      {/* <HexagonBox>test</HexagonBox>
       <HexagonBox polygonStyle={{
         fill: 'red',
         strokeWidth: 5,
       }}>
-        <p>I am content</p>
-        <p>in the HexagonBox</p>
-      </HexagonBox> */}
+        <button style={{
+          maxWidth: '100%'
+        }}>
+          <p>I am content</p>
+          <p>in the box</p>
+        </button>
+      </HexagonBox>
 
       <HexRow>
         <HexagonBox>A</HexagonBox>
@@ -22,9 +25,8 @@ export function App() {
         <HexagonBox>D</HexagonBox>
         <HexagonBox>E</HexagonBox>
       </HexRow>
-      <HexRow>
+      <HexRow extraHeight>
         <HexagonBox>1</HexagonBox>
-        <span></span>
         <HexagonBox polygonStyle={{ fill: 'pink' }}>
           <div style={{
             textAlign: 'center',
@@ -35,15 +37,10 @@ export function App() {
           </div>
         </HexagonBox>
         <HexagonBox>3</HexagonBox>
+        <span></span>
         <HexagonBox>4</HexagonBox>
       </HexRow>
-      <HexRow>
-        <HexagonBox>A</HexagonBox>
-        <HexagonBox>B</HexagonBox>
-        <HexagonBox>C</HexagonBox>
-        <HexagonBox>D</HexagonBox>
-        <HexagonBox>E</HexagonBox>
-      </HexRow>
+      <p>Should be below the hexes and not over the top</p>
     </div>
   );
 }

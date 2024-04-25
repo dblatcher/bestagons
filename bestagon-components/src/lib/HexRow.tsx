@@ -5,6 +5,7 @@ import { useStatefulRef } from "./use-stateful-ref";
 
 interface Props {
     children: ReactNode
+    extraHeight?: boolean
 }
 
 const getClassNames = (position: number, container?: HTMLElement): string[] => {
@@ -29,7 +30,7 @@ const getStyle = (position: number, container?: HTMLElement): CSSProperties => {
 }
 
 
-export const HexRow: React.FunctionComponent<Props> = ({ children }) => {
+export const HexRow: React.FunctionComponent<Props> = ({ children, extraHeight }) => {
     const [container, containerRef] = useStatefulRef()
 
     const getPosition = (child?: HTMLElement): number => {
@@ -39,12 +40,14 @@ export const HexRow: React.FunctionComponent<Props> = ({ children }) => {
         return Array.from(container.children).indexOf(child)
     }
 
+    const classNames = extraHeight ? [styles.hexRow, styles.hexRowExtraHeight] : [styles.hexRow]
+
     return (
         <HexContainerContext.Provider value={{
             container, getPosition,
             getClassNames, getStyle,
         }}>
-            <section className={styles.hexRow} ref={containerRef}>
+            <section className={classNames.join(" ")} ref={containerRef}>
                 {!!container && <>
                     {children}
                 </>}
