@@ -6,16 +6,7 @@ import { useStatefulRef } from "./use-stateful-ref";
 interface Props {
     children: ReactNode
     extraHeight?: boolean
-}
-
-const getClassNames = (position: number, container?: HTMLElement): string[] => {
-    if (!container || position == -1) {
-        return [styles.hexBox]
-    }
-    if (position % 2 === 1) {
-        return [styles.hexBox, styles.hexBoxAbsolute, styles.hexContainerInGridLower]
-    }
-    return [styles.hexBox, styles.hexBoxAbsolute]
+    size?: 'normal' | 'big' | 'small'
 }
 
 const getStyle = (position: number, container?: HTMLElement): CSSProperties => {
@@ -30,9 +21,10 @@ const getStyle = (position: number, container?: HTMLElement): CSSProperties => {
     }
 }
 
-
-export const HexRow: React.FunctionComponent<Props> = ({ children, extraHeight }) => {
+export const HexRow: React.FunctionComponent<Props> = ({ children, extraHeight, size }) => {
     const [container, containerRef] = useStatefulRef()
+
+    const sizeClasses = size == 'big' ? [styles.bigHex] : size === 'small' ? [styles.smallHex] : []
 
     const getPosition = (child?: HTMLElement): number => {
         if (!container || !child) {
@@ -41,7 +33,17 @@ export const HexRow: React.FunctionComponent<Props> = ({ children, extraHeight }
         return Array.from(container.children).indexOf(child)
     }
 
-    const classNames = extraHeight ? [styles.hexRow, styles.hexRowExtraHeight] : [styles.hexRow]
+    const getClassNames = (position: number, container?: HTMLElement): string[] => {
+        if (!container || position == -1) {
+            return [styles.hexBox, ...sizeClasses,]
+        }
+        if (position % 2 === 1) {
+            return [styles.hexBox, ...sizeClasses, styles.hexBoxAbsolute, styles.hexContainerInGridLower]
+        }
+        return [styles.hexBox, ...sizeClasses, styles.hexBoxAbsolute]
+    }
+
+    const classNames = extraHeight ? [styles.hexRow, ...sizeClasses, styles.hexRowExtraHeight] : [styles.hexRow, ...sizeClasses]
 
     return (
         <HexContainerContext.Provider value={{

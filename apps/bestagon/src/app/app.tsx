@@ -44,6 +44,16 @@ export function App() {
         >4</HexagonBox>
       </HexRow>
       <p>Should be below the hexes and not over the top</p>
+      <HexRow size='small'>
+        <HexagonBox>A</HexagonBox>
+        <HexagonBox>B</HexagonBox>
+        <HexagonBox>C</HexagonBox>
+      </HexRow>
+      <HexRow size='small' extraHeight>
+        <HexagonBox>A</HexagonBox>
+        <HexagonBox>B</HexagonBox>
+        <HexagonBox>C</HexagonBox>
+      </HexRow>
     </div>
   );
 }

@@ -1,5 +1,16 @@
 .hexRow, .hexBox {
     --hex-width: 150px;
+}
+
+.bigHex {
+    --hex-width: 300px;
+}
+
+.smallHex {
+    --hex-width: 80px;
+}
+
+.hexRow, .hexBox {
     --hex-height: calc(var(--hex-width) * (13/15));
     --hex-height-and-half: calc(var(--hex-height) * (3/2));
     --hex-side-padding: calc(var(--hex-width) * (4/15))
