@@ -24,8 +24,9 @@ const getStyle = (position: number, container?: HTMLElement): CSSProperties => {
     }
     const isOdd = position % 2 === 1;
     const translateY = isOdd ? 50 : 0
+    const translateX = position * 74.6
     return {
-        transform: `translateX(${position * 75}%) translateY(${translateY}%)`
+        transform: `translateX(${translateX}%) translateY(${translateY}%)`
     }
 }
 

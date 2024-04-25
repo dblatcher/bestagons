@@ -1,25 +1,24 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
+.hexRow, .hexBox {
+    --hex-width: 150px;
+    --hex-height: calc(var(--hex-width) * (13/15));
+    --hex-height-and-half: calc(var(--hex-height) * (3/2));
+    --hex-side-padding: calc(var(--hex-width) * (4/15))
+}
 
 .hexRow {
     position: relative;
-    min-height: 130px;
+    min-height: var(--hex-height);
 }
 
 .hexRowExtraHeight {
-    min-height: 195px;
+    min-height: var(--hex-height-and-half);
 }
 
 .hexBox {
-    padding: 2px 40px;
+    padding: 2px var(--hex-side-padding);
     position: relative;
-    width: 150px;
-    height: 130px;
+    width: var(--hex-width);
+    height: var(--hex-height);
     box-sizing: border-box;
 }
 
