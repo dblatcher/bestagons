@@ -1,5 +1,6 @@
-import React, { ReactNode, createContext, useContext, useEffect, useRef, useState } from "react";
+import React, { ReactNode, createContext, useContext } from "react";
 import styles from './bestagon-components.module.css';
+import { useStatefulRef } from "./use-stateful-ref";
 
 interface Props {
     children: ReactNode
@@ -17,16 +18,7 @@ export const useRowContext = () => useContext(RowContext)
 
 export const HexRow: React.FunctionComponent<Props> = ({ children }) => {
 
-    const containerRef = useRef<HTMLDivElement>(null)
-    const [container, setContainer] = useState<HTMLDivElement | undefined>(undefined)
-
-    useEffect(() => {
-        const { current } = containerRef
-        if (!current || container === current) {
-            return
-        }
-        setContainer(current)
-    })
+    const [container, containerRef] = useStatefulRef() 
 
     const getPosition = (child?: HTMLElement): number => {
         if (!container || !child) {
