@@ -1,0 +1,32 @@
+/*
+ * Replace this with your own classes
+ *
+ * e.g.
+ * .container {
+ * }
+*/
+
+.hexRow {
+    position: relative;
+    min-height: 130px;
+}
+
+.hexContainer {
+    padding: 2px 40px;
+    position: relative;
+    width: 150px;
+    height: 130px;
+    box-sizing: border-box;
+}
+
+.hexContainerInGrid {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.hexContainerSvg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+}
