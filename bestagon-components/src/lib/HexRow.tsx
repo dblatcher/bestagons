@@ -2,6 +2,7 @@ import React, { CSSProperties, ReactNode } from "react";
 import styles from './bestagon-components.module.css';
 import { HexContainerContext } from "./hex-container-context";
 import { useStatefulRef } from "./use-stateful-ref";
+import { getChildIndex, getSizeClasses } from "./helpers";
 
 interface Props {
     children: ReactNode
@@ -21,19 +22,16 @@ const getStyle = (position: number, container?: HTMLElement): CSSProperties => {
     }
 }
 
-export const HexRow: React.FunctionComponent<Props> = ({ children, extraHeight, size }) => {
-    const [container, containerRef] = useStatefulRef()
+const getClassNamesForRow = (
+    extraHeight?: boolean,
+    size?: 'normal' | 'big' | 'small'
+): string[] => {
+    const heightClasses = extraHeight ? styles.hexRowExtraHeight : []
+    return [styles.hexRow, getSizeClasses(size), heightClasses].flat()
+}
 
-    const sizeClasses = size == 'big' ? [styles.bigHex] : size === 'small' ? [styles.smallHex] : []
-
-    const getPosition = (child?: HTMLElement): number => {
-        if (!container || !child) {
-            return -1
-        }
-        return Array.from(container.children).indexOf(child)
-    }
-
-    const getClassNames = (position: number, container?: HTMLElement): string[] => {
+const higherLevelGetClassNamesForBox = (sizeClasses: string[]) =>
+    (position: number, container?: HTMLElement): string[] => {
         if (!container || position == -1) {
             return [styles.hexBox, ...sizeClasses,]
         }
@@ -43,14 +41,17 @@ export const HexRow: React.FunctionComponent<Props> = ({ children, extraHeight, 
         return [styles.hexBox, ...sizeClasses, styles.hexBoxAbsolute]
     }
 
-    const classNames = extraHeight ? [styles.hexRow, ...sizeClasses, styles.hexRowExtraHeight] : [styles.hexRow, ...sizeClasses]
+export const HexRow: React.FunctionComponent<Props> = ({ children, extraHeight, size }) => {
+    const [container, containerRef] = useStatefulRef()
+    const getPosition = (child?: HTMLElement): number => getChildIndex(container, child)
+    const getClassNames = higherLevelGetClassNamesForBox(getSizeClasses(size));
+    const classNamesForRow = getClassNamesForRow(extraHeight, size)
 
     return (
         <HexContainerContext.Provider value={{
-            container, getPosition,
-            getClassNames, getStyle,
+            container, getPosition, getClassNames, getStyle,
         }}>
-            <section className={classNames.join(" ")} ref={containerRef}>
+            <section className={classNamesForRow.join(" ")} ref={containerRef}>
                 {!!container && <>
                     {children}
                 </>}
