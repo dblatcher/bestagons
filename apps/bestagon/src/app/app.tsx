@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HexRow, HexagonBox } from '@bestagon-mono/bestagon-components';
+import { HexRow, HexWrapper, HexagonBox } from '@bestagon-mono/bestagon-components';
 import styles from './app.module.css';
 
 
@@ -17,6 +17,20 @@ export function App() {
           <p>in the box</p>
         </button>
       </HexagonBox>
+
+      <HexWrapper startLow>
+        <HexagonBox>A</HexagonBox>
+        <HexagonBox>B</HexagonBox>
+        <HexagonBox>C</HexagonBox>
+        <HexagonBox>D</HexagonBox>
+        <HexagonBox>E</HexagonBox>
+        <HexagonBox>F</HexagonBox>
+        <HexagonBox>G</HexagonBox>
+        <HexagonBox>H</HexagonBox>
+        <HexagonBox>I</HexagonBox>
+        <HexagonBox>J</HexagonBox>
+        <HexagonBox>K</HexagonBox>
+      </HexWrapper>
 
       <HexRow startLow>
         <HexagonBox>A</HexagonBox>
