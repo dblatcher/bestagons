@@ -8,27 +8,24 @@ interface Props {
     children: ReactNode
     extraHeight?: boolean
     size?: 'normal' | 'big' | 'small'
+    xOffset?: number
 }
 
-const getStyle = (position: number, container?: HTMLElement): CSSProperties => {
-    if (!container || position == -1) {
-        return {}
+const higherLevelGetStyleForRow = (xOffset = 0) =>
+    (position: number, container?: HTMLElement): CSSProperties => {
+        if (!container || position == -1) {
+            return {}
+        }
+        const offsetPosition = position + Math.floor(xOffset)
+        const isOdd = offsetPosition % 2 === 1;
+        const translateY = isOdd ? 50 : 0
+        const translateX = offsetPosition * 74.6
+        return {
+            transform: `translateX(${translateX}%) translateY(${translateY}%)`
+        }
     }
-    const isOdd = position % 2 === 1;
-    const translateY = isOdd ? 50 : 0
-    const translateX = position * 74.6
-    return {
-        transform: `translateX(${translateX}%) translateY(${translateY}%)`
-    }
-}
 
-const getClassNamesForRow = (
-    extraHeight?: boolean,
-    size?: 'normal' | 'big' | 'small'
-): string[] => {
-    const heightClasses = extraHeight ? styles.hexRowExtraHeight : []
-    return [styles.hexRow, getSizeClasses(size), heightClasses].flat()
-}
+
 
 const higherLevelGetClassNamesForBox = (sizeClasses: string[]) =>
     (position: number, container?: HTMLElement): string[] => {
@@ -41,10 +38,19 @@ const higherLevelGetClassNamesForBox = (sizeClasses: string[]) =>
         return [styles.hexBox, ...sizeClasses, styles.hexBoxAbsolute]
     }
 
-export const HexRow: React.FunctionComponent<Props> = ({ children, extraHeight, size }) => {
+const getClassNamesForRow = (
+    extraHeight?: boolean,
+    size?: 'normal' | 'big' | 'small'
+): string[] => {
+    const heightClasses = extraHeight ? styles.hexRowExtraHeight : []
+    return [styles.hexRow, getSizeClasses(size), heightClasses].flat()
+}
+
+export const HexRow: React.FunctionComponent<Props> = ({ children, extraHeight, size, xOffset }) => {
     const [container, containerRef] = useStatefulRef()
     const getPosition = (child?: HTMLElement): number => getChildIndex(container, child)
     const getClassNames = higherLevelGetClassNamesForBox(getSizeClasses(size));
+    const getStyle = higherLevelGetStyleForRow(xOffset)
     const classNamesForRow = getClassNamesForRow(extraHeight, size)
 
     return (

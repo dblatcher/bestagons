@@ -49,6 +49,16 @@ export function App() {
         <HexagonBox>B</HexagonBox>
         <HexagonBox>C</HexagonBox>
       </HexRow>
+      <HexRow size='small' xOffset={1}>
+        <HexagonBox>A</HexagonBox>
+        <HexagonBox>B</HexagonBox>
+        <HexagonBox>C</HexagonBox>
+      </HexRow>
+      <HexRow size='small' xOffset={2}>
+        <HexagonBox>A</HexagonBox>
+        <HexagonBox>B</HexagonBox>
+        <HexagonBox>C</HexagonBox>
+      </HexRow>
       <HexRow size='small' extraHeight>
         <HexagonBox>A</HexagonBox>
         <HexagonBox>B</HexagonBox>
