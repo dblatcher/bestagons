@@ -18,14 +18,14 @@ export function App() {
         </button>
       </HexagonBox>
 
-      <HexRow>
+      <HexRow startLow>
         <HexagonBox>A</HexagonBox>
         <HexagonBox>B</HexagonBox>
         <HexagonBox>C</HexagonBox>
         <HexagonBox>D</HexagonBox>
         <HexagonBox>E</HexagonBox>
       </HexRow>
-      <HexRow extraHeight>
+      <HexRow startLow extraHeight>
         <HexagonBox>1</HexagonBox>
         <HexagonBox polygonStyle={{ fill: 'pink' }}>
           <div style={{
@@ -44,25 +44,34 @@ export function App() {
         >4</HexagonBox>
       </HexRow>
       <p>Should be below the hexes and not over the top</p>
-      <HexRow size='small'>
-        <HexagonBox>A</HexagonBox>
-        <HexagonBox>B</HexagonBox>
-        <HexagonBox>C</HexagonBox>
-      </HexRow>
       <HexRow size='small' xOffset={1}>
         <HexagonBox>A</HexagonBox>
+        <HexagonBox>A</HexagonBox>
+        <HexagonBox>A</HexagonBox>
+      </HexRow>
+      <HexRow size='small'>
         <HexagonBox>B</HexagonBox>
+        <HexagonBox>B</HexagonBox>
+        <HexagonBox>B</HexagonBox>
+        <HexagonBox>B</HexagonBox>
+        <HexagonBox>B</HexagonBox>
+      </HexRow>
+      <HexRow size='small'>
         <HexagonBox>C</HexagonBox>
+        <HexagonBox>C</HexagonBox>
+        <HexagonBox>C</HexagonBox>
+        <HexagonBox>C</HexagonBox>
+        <HexagonBox>C</HexagonBox>
+      </HexRow>
+      <HexRow size='small'>
+        <HexagonBox>D</HexagonBox>
+        <HexagonBox>D</HexagonBox>
+        <HexagonBox>D</HexagonBox>
+        <HexagonBox>D</HexagonBox>
+        <HexagonBox>D</HexagonBox>
       </HexRow>
       <HexRow size='small' xOffset={2}>
-        <HexagonBox>A</HexagonBox>
-        <HexagonBox>B</HexagonBox>
-        <HexagonBox>C</HexagonBox>
-      </HexRow>
-      <HexRow size='small' extraHeight>
-        <HexagonBox>A</HexagonBox>
-        <HexagonBox>B</HexagonBox>
-        <HexagonBox>C</HexagonBox>
+        <HexagonBox>E</HexagonBox>
       </HexRow>
     </div>
   );

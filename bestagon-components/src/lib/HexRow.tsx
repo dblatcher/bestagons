@@ -9,22 +9,24 @@ interface Props {
     extraHeight?: boolean
     size?: 'normal' | 'big' | 'small'
     xOffset?: number
+    startLow?: boolean
 }
 
-const higherLevelGetStyleForRow = (xOffset = 0) =>
+const higherLevelGetStyleForRow = (xOffset = 0, startLow = false) =>
     (position: number, container?: HTMLElement): CSSProperties => {
         if (!container || position == -1) {
             return {}
         }
         const offsetPosition = position + Math.floor(xOffset)
         const isOdd = offsetPosition % 2 === 1;
-        const translateY = isOdd ? 50 : 0
+        const translateY = startLow
+            ? isOdd ? 0 : 50
+            : isOdd ? 50 : 0;
         const translateX = offsetPosition * 74.6
         return {
             transform: `translateX(${translateX}%) translateY(${translateY}%)`
         }
     }
-
 
 
 const higherLevelGetClassNamesForBox = (sizeClasses: string[]) =>
@@ -46,11 +48,11 @@ const getClassNamesForRow = (
     return [styles.hexRow, getSizeClasses(size), heightClasses].flat()
 }
 
-export const HexRow: React.FunctionComponent<Props> = ({ children, extraHeight, size, xOffset }) => {
+export const HexRow: React.FunctionComponent<Props> = ({ children, extraHeight, size, xOffset, startLow }) => {
     const [container, containerRef] = useStatefulRef()
     const getPosition = (child?: HTMLElement): number => getChildIndex(container, child)
     const getClassNames = higherLevelGetClassNamesForBox(getSizeClasses(size));
-    const getStyle = higherLevelGetStyleForRow(xOffset)
+    const getStyle = higherLevelGetStyleForRow(xOffset, startLow)
     const classNamesForRow = getClassNamesForRow(extraHeight, size)
 
     return (
