@@ -1,7 +1,9 @@
 import { RefObject, useEffect, useRef, useState } from "react"
 
 
-export const useStatefulRef = <T extends HTMLElement = HTMLElement>(): [T | undefined, RefObject<T>] => {
+export const useStatefulRef = <T extends HTMLElement = HTMLElement>(
+    onChange?: { (value: T): void }
+): [T | undefined, RefObject<T>] => {
 
     const ref = useRef<T>(null)
     const [state, setState] = useState<T | undefined>(undefined)
@@ -13,6 +15,9 @@ export const useStatefulRef = <T extends HTMLElement = HTMLElement>(): [T | unde
             return
         }
         setState(current)
+        if (onChange) {
+            onChange(current)
+        }
     })
 
     return [state, ref]

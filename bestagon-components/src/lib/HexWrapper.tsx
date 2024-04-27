@@ -8,7 +8,6 @@ interface Props {
     children: ReactNode
     extraHeight?: boolean
     size?: 'normal' | 'big' | 'small'
-    xOffset?: number
     startLow?: boolean
 }
 
@@ -56,16 +55,22 @@ const getClassNamesForRow = (
     return [styles.hexRow, getSizeClasses(size), heightClasses].flat()
 }
 
-export const HexWrapper: React.FunctionComponent<Props> = ({ children, extraHeight, size, xOffset, startLow }) => {
-    const [container, containerRef] = useStatefulRef()
-    const [containerWidth, setContainerWidth] = useState(window?.document.body.clientWidth)
+export const HexWrapper: React.FunctionComponent<Props> = ({ children, extraHeight, size = 'normal', startLow }) => {
+    const [containerWidth, setContainerWidth] = useState(1000)
+    const [numberOfChildElements, setNumberOfChildElements] = useState(1)
+    const [container, containerRef] = useStatefulRef((container) => {
+        setContainerWidth(container.clientWidth)
+        setNumberOfChildElements(container.children.length)
+    })
 
     const hexWidth = Math.floor(containerWidth / 130)
-    const rowCount = Math.ceil((container?.children.length ?? 1) / hexWidth)
+    const rowCount = Math.ceil(numberOfChildElements / hexWidth)
+
 
     const handleResize = useCallback((event: any) => {
         setContainerWidth(container?.clientWidth ?? containerWidth)
-    }, [container])
+        setNumberOfChildElements(container?.children.length ?? 1)
+    }, [container, numberOfChildElements])
 
     useEffect(() => {
         window?.addEventListener('resize', handleResize)
@@ -83,14 +88,10 @@ export const HexWrapper: React.FunctionComponent<Props> = ({ children, extraHeig
         <HexContainerContext.Provider value={{
             container, getPosition, getClassNames, getStyle,
         }}>
-            <b>count: {container?.children.length}</b>
-            <b>width: {containerWidth} , {hexWidth}</b>
             <section className={classNamesForRow.join(" ")} ref={containerRef} style={{
                 minHeight: 130 * (.5 + rowCount)
             }}>
-                {!!container && <>
-                    {children}
-                </>}
+                {children}
             </section>
         </HexContainerContext.Provider>
     )
