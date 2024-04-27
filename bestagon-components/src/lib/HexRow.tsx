@@ -10,6 +10,7 @@ interface Props {
     size?: 'normal' | 'big' | 'small'
     xOffset?: number
     startLow?: boolean
+    polygonClassNames?: string[]
 }
 
 const higherLevelGetStyleForRow = (xOffset = 0, startLow = false) =>
@@ -48,7 +49,7 @@ const getClassNamesForRow = (
     return [styles.hexRow, getSizeClasses(size), heightClasses].flat()
 }
 
-export const HexRow: React.FunctionComponent<Props> = ({ children, extraHeight, size, xOffset, startLow }) => {
+export const HexRow: React.FunctionComponent<Props> = ({ children, extraHeight, size, xOffset, startLow, polygonClassNames }) => {
     const [container, containerRef] = useStatefulRef()
     const getPosition = (child?: HTMLElement): number => getChildIndex(container, child)
     const getClassNames = higherLevelGetClassNamesForBox(getSizeClasses(size));
@@ -57,7 +58,7 @@ export const HexRow: React.FunctionComponent<Props> = ({ children, extraHeight, 
 
     return (
         <HexContainerContext.Provider value={{
-            container, getPosition, getClassNames, getStyle,
+            container, getPosition, getClassNames, getStyle, polygonClassNames,
         }}>
             <section className={classNamesForRow.join(" ")} ref={containerRef}>
                 {!!container && <>

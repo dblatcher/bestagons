@@ -9,3 +9,10 @@
 .fancyHex:hover {
     fill: lightcoral;
 }
+
+.blackHex {
+    fill: black;
+    stroke-width: 3;
+    stroke: white;
+    stroke-dasharray: 1 1;
+}

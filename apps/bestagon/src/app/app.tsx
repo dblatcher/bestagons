@@ -18,7 +18,7 @@ export function App() {
         </button>
       </HexagonBox>
 
-      <HexWrapper startLow size='normal'>
+      <HexWrapper startLow size='normal' polygonClassNames={[styles.fancyHex]}>
         <HexagonBox>A</HexagonBox>
         <HexagonBox>B</HexagonBox>
         <HexagonBox>C</HexagonBox>
@@ -32,9 +32,9 @@ export function App() {
         <HexagonBox>K</HexagonBox>
       </HexWrapper>
 
-      <HexRow startLow>
+      <HexRow startLow polygonClassNames={[styles.blackHex]}>
         <HexagonBox>A</HexagonBox>
-        <HexagonBox>B</HexagonBox>
+        <HexagonBox polygonClassNames={[styles.fancyHex]}>B</HexagonBox>
         <HexagonBox>C</HexagonBox>
         <HexagonBox>D</HexagonBox>
         <HexagonBox>E</HexagonBox>
@@ -53,7 +53,7 @@ export function App() {
         <HexagonBox>3</HexagonBox>
         <span></span>
         <HexagonBox
-          polygonClassNames={styles.fancyHex}
+          polygonClassNames={[styles.fancyHex]}
           onClick={(e) => { console.log(e) }}
         >4</HexagonBox>
       </HexRow>

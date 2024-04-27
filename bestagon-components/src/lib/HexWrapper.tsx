@@ -9,6 +9,7 @@ interface Props {
     extraHeight?: boolean
     size?: 'normal' | 'big' | 'small'
     startLow?: boolean
+    polygonClassNames?: string[]
 }
 
 const higherLevelGetStyleForRow = (hexesPerRow: number, startLow = false,) =>
@@ -60,7 +61,13 @@ const getHexesPerRow = (containerWidth: number, hexWidth: number): number => {
     return numberThatWouldFitWithoutExtra - 1
 }
 
-export const HexWrapper: React.FunctionComponent<Props> = ({ children, extraHeight, size = 'normal', startLow }) => {
+export const HexWrapper: React.FunctionComponent<Props> = ({
+    children,
+    extraHeight,
+    size = 'normal',
+    startLow,
+    polygonClassNames,
+}) => {
     const [containerWidth, setContainerWidth] = useState(1000)
     const [numberOfChildElements, setNumberOfChildElements] = useState(1)
     const [container, containerRef] = useStatefulRef((container) => {
@@ -93,7 +100,7 @@ export const HexWrapper: React.FunctionComponent<Props> = ({ children, extraHeig
 
     return (
         <HexContainerContext.Provider value={{
-            container, getPosition, getClassNames, getStyle,
+            container, getPosition, getClassNames, getStyle, polygonClassNames,
         }}>
             <section className={classNamesForRow.join(" ")} ref={containerRef} style={{
                 minHeight: hexDims.height * (.5 + rowCount),

@@ -6,7 +6,7 @@ import { useStatefulRef } from "./use-stateful-ref";
 interface Props {
     children: ReactNode
     polygonStyle?: CSSProperties
-    polygonClassNames?: string
+    polygonClassNames?: string[]
     onClick?: React.MouseEventHandler<SVGPolygonElement>
 }
 
@@ -15,10 +15,15 @@ export const HexagonBox: React.FunctionComponent<Props> = ({ children, polygonSt
 
     const [box, boxRef] = useStatefulRef<HTMLDivElement>()
 
-    const { container, getPosition, getStyle, getClassNames } = useHexContainer()
+    const { container, getPosition, getStyle, getClassNames, polygonClassNames: inheritedPolygonClassNames = [] } = useHexContainer()
     const positionInRow = getPosition(box)
     const classNames = getClassNames(positionInRow, container)
     const positioningStyle = getStyle(positionInRow, container)
+
+    const polygonClassList = [
+        ...(inheritedPolygonClassNames ?? []),
+        ...(polygonClassNames ?? []),
+    ]
 
     return <div className={classNames.join(" ")} style={positioningStyle} ref={boxRef}>
         <svg className={styles.hexBoxSvg} viewBox="0 0 723 626">
@@ -28,7 +33,7 @@ export const HexagonBox: React.FunctionComponent<Props> = ({ children, polygonSt
                 stroke="black"
                 strokeWidth="1"
                 style={polygonStyle}
-                className={polygonClassNames}
+                className={polygonClassList.join(" ")}
                 onClick={onClick}
             />
         </svg>

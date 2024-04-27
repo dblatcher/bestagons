@@ -6,6 +6,7 @@ export const HexContainerContext = createContext<{
     getPosition: { (element?: HTMLElement): number },
     getClassNames: { (position: number, container?: HTMLElement): string[] },
     getStyle: { (position: number, container?: HTMLElement): CSSProperties }
+    polygonClassNames?: string[],
 }>({
     container: undefined,
     getPosition: () => -1,
