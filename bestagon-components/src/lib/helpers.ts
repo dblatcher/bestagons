@@ -17,6 +17,8 @@ export const getSizeClasses = (size: HexSize = 'normal'): string[] => {
     }
 }
 
+export const AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP = .746;
+
 const hexDimeensions = (width: number) => (
     {
         width,

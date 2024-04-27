@@ -2,7 +2,7 @@ import React, { CSSProperties, ReactNode } from "react";
 import styles from './bestagon-components.module.css';
 import { HexContainerContext } from "./hex-container-context";
 import { useStatefulRef } from "./use-stateful-ref";
-import { getChildIndex, getSizeClasses } from "./helpers";
+import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, getChildIndex, getSizeClasses } from "./helpers";
 
 interface Props {
     children: ReactNode
@@ -22,7 +22,7 @@ const higherLevelGetStyleForRow = (xOffset = 0, startLow = false) =>
         const translateY = startLow
             ? isOdd ? 0 : 50
             : isOdd ? 50 : 0;
-        const translateX = offsetPosition * 74.6
+        const translateX = offsetPosition * (100 * AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP)
         return {
             transform: `translateX(${translateX}%) translateY(${translateY}%)`
         }

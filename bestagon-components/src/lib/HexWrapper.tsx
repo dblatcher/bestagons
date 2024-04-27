@@ -2,7 +2,7 @@ import React, { CSSProperties, ReactNode, useCallback, useEffect, useState } fro
 import styles from './bestagon-components.module.css';
 import { HexContainerContext } from "./hex-container-context";
 import { useStatefulRef } from "./use-stateful-ref";
-import { getChildIndex, getHexDimentionsForSize, getSizeClasses } from "./helpers";
+import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, getChildIndex, getHexDimentionsForSize, getSizeClasses } from "./helpers";
 
 interface Props {
     children: ReactNode
@@ -16,20 +16,15 @@ const higherLevelGetStyleForRow = (hexesPerRow: number, startLow = false,) =>
         if (!container || position == -1) {
             return {}
         }
-
         const row = Math.floor(position / hexesPerRow)
-
         const spacesInPreviousRows = row * hexesPerRow
-
         const offsetPosition = position - spacesInPreviousRows
         const isOdd = offsetPosition % 2 === 1;
-
         const rowTranslate = 100 * row
-
         const translateY = startLow
             ? isOdd ? rowTranslate : rowTranslate + 50
             : isOdd ? rowTranslate + 50 : rowTranslate;
-        const translateX = offsetPosition * 74.6
+        const translateX = offsetPosition * (100 * AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP)
         return {
             transform: `translateX(${translateX}%) translateY(${translateY}%)`
         }
@@ -38,7 +33,6 @@ const higherLevelGetStyleForRow = (hexesPerRow: number, startLow = false,) =>
 
 const higherLevelGetClassNamesForBox = (sizeClasses: string[]) =>
     (position: number, container?: HTMLElement): string[] => {
-        console.log(sizeClasses)
         if (!container || position == -1) {
             return [styles.hexBox, ...sizeClasses,]
         }
@@ -56,6 +50,16 @@ const getClassNamesForRow = (
     return [styles.hexRow, getSizeClasses(size), heightClasses].flat()
 }
 
+const getHexesPerRow = (containerWidth: number, hexWidth: number): number => {
+    const spacePerHex = hexWidth * AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP;
+    const extraSpaceForLastHex = hexWidth * (1 - AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP)
+    const numberThatWouldFitWithoutExtra = Math.floor(containerWidth / spacePerHex)
+    if (containerWidth > (numberThatWouldFitWithoutExtra * spacePerHex) + extraSpaceForLastHex) {
+        return numberThatWouldFitWithoutExtra
+    }
+    return numberThatWouldFitWithoutExtra - 1
+}
+
 export const HexWrapper: React.FunctionComponent<Props> = ({ children, extraHeight, size = 'normal', startLow }) => {
     const [containerWidth, setContainerWidth] = useState(1000)
     const [numberOfChildElements, setNumberOfChildElements] = useState(1)
@@ -66,7 +70,7 @@ export const HexWrapper: React.FunctionComponent<Props> = ({ children, extraHeig
 
     const hexDims = getHexDimentionsForSize(size);
 
-    const hexesPerRow = Math.floor(containerWidth / hexDims.width)
+    const hexesPerRow = getHexesPerRow(containerWidth, hexDims.width)
     const rowCount = Math.ceil(numberOfChildElements / hexesPerRow)
 
 
@@ -92,7 +96,7 @@ export const HexWrapper: React.FunctionComponent<Props> = ({ children, extraHeig
             container, getPosition, getClassNames, getStyle,
         }}>
             <section className={classNamesForRow.join(" ")} ref={containerRef} style={{
-                minHeight: hexDims.height * (.5 + rowCount)
+                minHeight: hexDims.height * (.5 + rowCount),
             }}>
                 {children}
             </section>
