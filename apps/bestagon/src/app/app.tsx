@@ -18,7 +18,7 @@ export function App() {
         </button>
       </HexagonBox>
 
-      <HexWrapper startLow>
+      <HexWrapper startLow size='normal'>
         <HexagonBox>A</HexagonBox>
         <HexagonBox>B</HexagonBox>
         <HexagonBox>C</HexagonBox>

@@ -2,7 +2,7 @@ import React, { CSSProperties, ReactNode, useCallback, useEffect, useState } fro
 import styles from './bestagon-components.module.css';
 import { HexContainerContext } from "./hex-container-context";
 import { useStatefulRef } from "./use-stateful-ref";
-import { getChildIndex, getSizeClasses } from "./helpers";
+import { getChildIndex, getHexDimentionsForSize, getSizeClasses } from "./helpers";
 
 interface Props {
     children: ReactNode
@@ -11,15 +11,15 @@ interface Props {
     startLow?: boolean
 }
 
-const higherLevelGetStyleForRow = (hexWidth: number, startLow = false,) =>
+const higherLevelGetStyleForRow = (hexesPerRow: number, startLow = false,) =>
     (position: number, container?: HTMLElement): CSSProperties => {
         if (!container || position == -1) {
             return {}
         }
 
-        const row = Math.floor(position / hexWidth)
+        const row = Math.floor(position / hexesPerRow)
 
-        const spacesInPreviousRows = row * hexWidth
+        const spacesInPreviousRows = row * hexesPerRow
 
         const offsetPosition = position - spacesInPreviousRows
         const isOdd = offsetPosition % 2 === 1;
@@ -38,6 +38,7 @@ const higherLevelGetStyleForRow = (hexWidth: number, startLow = false,) =>
 
 const higherLevelGetClassNamesForBox = (sizeClasses: string[]) =>
     (position: number, container?: HTMLElement): string[] => {
+        console.log(sizeClasses)
         if (!container || position == -1) {
             return [styles.hexBox, ...sizeClasses,]
         }
@@ -63,8 +64,10 @@ export const HexWrapper: React.FunctionComponent<Props> = ({ children, extraHeig
         setNumberOfChildElements(container.children.length)
     })
 
-    const hexWidth = Math.floor(containerWidth / 130)
-    const rowCount = Math.ceil(numberOfChildElements / hexWidth)
+    const hexDims = getHexDimentionsForSize(size);
+
+    const hexesPerRow = Math.floor(containerWidth / hexDims.width)
+    const rowCount = Math.ceil(numberOfChildElements / hexesPerRow)
 
 
     const handleResize = useCallback((event: any) => {
@@ -81,7 +84,7 @@ export const HexWrapper: React.FunctionComponent<Props> = ({ children, extraHeig
 
     const getPosition = (child?: HTMLElement): number => getChildIndex(container, child)
     const getClassNames = higherLevelGetClassNamesForBox(getSizeClasses(size));
-    const getStyle = higherLevelGetStyleForRow(hexWidth, startLow)
+    const getStyle = higherLevelGetStyleForRow(hexesPerRow, startLow)
     const classNamesForRow = getClassNamesForRow(extraHeight, size)
 
     return (
@@ -89,7 +92,7 @@ export const HexWrapper: React.FunctionComponent<Props> = ({ children, extraHeig
             container, getPosition, getClassNames, getStyle,
         }}>
             <section className={classNamesForRow.join(" ")} ref={containerRef} style={{
-                minHeight: 130 * (.5 + rowCount)
+                minHeight: hexDims.height * (.5 + rowCount)
             }}>
                 {children}
             </section>
