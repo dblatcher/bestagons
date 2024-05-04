@@ -41,6 +41,13 @@
     top: 0;
 }
 
+.hexBox_img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: auto;
+}
+
 .hexBox_svg {
     position: absolute;
     inset: 0;

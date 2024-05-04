@@ -35,14 +35,10 @@ export const HexagonBox: React.FunctionComponent<Props> = ({ className: directCl
     >
 
         {image && (
-            <img src={image.src}
-                style={{
-                    zIndex: 0,
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                    inset: 0,
-                }} />
+            <img
+                src={image.src}
+                className={styles.hexBox_img}
+            />
         )}
 
         <svg className={styles.hexBox_svg} viewBox="0 0 723 626">
