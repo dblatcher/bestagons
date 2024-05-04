@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HexRow, HexWrapper, HexagonBox } from '@bestagon-mono/bestagon-components';
+import { HexRow, HexWrapper, HexagonBox, HexagonImage } from '@bestagon-mono/bestagon-components';
 import styles from './app.module.css';
 
 
@@ -20,11 +20,18 @@ export function App() {
 
       <HexWrapper startLow size='normal' polygonClassNames={[styles.fancyHex]}>
         <HexagonBox>A</HexagonBox>
-        <HexagonBox>B</HexagonBox>
+        <HexagonImage src='./fruit.png' onClick={() => { alert(';clicked') }}>
+          <button style={{
+            maxWidth: '100%'
+          }}>
+            <p>I am content</p>
+            <p>in the box</p>
+          </button>
+        </HexagonImage>
         <HexagonBox>C</HexagonBox>
         <HexagonBox>D</HexagonBox>
         <HexagonBox>E</HexagonBox>
-        <HexagonBox>F</HexagonBox>
+        <HexagonImage src='./feathers.png'/>
         <HexagonBox>G</HexagonBox>
         <HexagonBox>H</HexagonBox>
         <HexagonBox>I</HexagonBox>

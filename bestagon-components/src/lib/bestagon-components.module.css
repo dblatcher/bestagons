@@ -39,12 +39,19 @@
     top: 0;
 }
 
-.hexBoxSvg {
+.hexBox_svg {
     position: absolute;
     inset: 0;
     z-index: -1;
 }
 
-.hexBoxSvg polygon {
+.hexBox_svg polygon {
     pointer-events: fill;
+}
+
+.hexBox_content {
+    position: absolute;
+    top: 0;
+    inset:0 25%;
+    height: 100%;
 }
