@@ -13,7 +13,7 @@ interface Props {
     hexClassNames?: string[]
 }
 
-const higherLevelGetStyleForRow = (hexesPerRow: number, startLow = false,) =>
+const higherLevelGetStyleForBox = (hexesPerRow: number, startLow = false,) =>
     (position: number, container?: HTMLElement): CSSProperties => {
         if (!container || position == -1) {
             return {}
@@ -45,7 +45,7 @@ const higherLevelGetClassNamesForBox = (sizeClasses: string[], hexClassNames: st
         return [...base, styles.hexBoxAbsolute]
     }
 
-const getClassNamesForRow = (
+const getClassNamesForContainer = (
     extraHeight?: boolean,
     size?: 'normal' | 'big' | 'small'
 ): string[] => {
@@ -98,16 +98,20 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
 
     const getPosition = (child?: HTMLElement): number => getChildIndex(container, child)
     const getClassNames = higherLevelGetClassNamesForBox(getSizeClasses(size), hexClassNames);
-    const getStyle = higherLevelGetStyleForRow(hexesPerRow, startLow)
-    const classNamesForRow = getClassNamesForRow(extraHeight, size)
+    const getStyle = higherLevelGetStyleForBox(hexesPerRow, startLow)
+    const classNamesForContainer = getClassNamesForContainer(extraHeight, size)
 
     return (
         <HexContainerContext.Provider value={{
             container, getPosition, getClassNames, getStyle, polygonClassNames,
         }}>
-            <section className={classNamesForRow.join(" ")} ref={containerRef} style={{
-                minHeight: hexDims.height * (.5 + rowCount),
-            }}>
+            <section
+                className={classNamesForContainer.join(" ")}
+                ref={containerRef}
+                style={{
+                    minHeight: hexDims.height * (.5 + rowCount),
+                }}
+            >
                 {children}
             </section>
         </HexContainerContext.Provider>
