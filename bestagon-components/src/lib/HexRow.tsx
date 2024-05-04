@@ -11,6 +11,7 @@ interface Props {
     xOffset?: number
     startLow?: boolean
     polygonClassNames?: string[]
+    hexClassNames?: string[]
 }
 
 const higherLevelGetStyleForRow = (xOffset = 0, startLow = false) =>
@@ -30,15 +31,16 @@ const higherLevelGetStyleForRow = (xOffset = 0, startLow = false) =>
     }
 
 
-const higherLevelGetClassNamesForBox = (sizeClasses: string[]) =>
+const higherLevelGetClassNamesForBox = (sizeClasses: string[], hexClassNames: string[]) =>
     (position: number, container?: HTMLElement): string[] => {
+        const base = [styles.hexBox, ...sizeClasses, ...hexClassNames]
         if (!container || position == -1) {
-            return [styles.hexBox, ...sizeClasses,]
+            return base
         }
         if (position % 2 === 1) {
-            return [styles.hexBox, ...sizeClasses, styles.hexBoxAbsolute, styles.hexContainerInGridLower]
+            return [...base, styles.hexBoxAbsolute, styles.hexContainerInGridLower]
         }
-        return [styles.hexBox, ...sizeClasses, styles.hexBoxAbsolute]
+        return [...base, styles.hexBoxAbsolute]
     }
 
 const getClassNamesForRow = (
@@ -49,10 +51,18 @@ const getClassNamesForRow = (
     return [styles.hexRow, getSizeClasses(size), heightClasses].flat()
 }
 
-export const HexRow: React.FunctionComponent<Props> = ({ children, extraHeight, size, xOffset, startLow, polygonClassNames }) => {
+export const HexRow: React.FunctionComponent<Props> = ({
+    children,
+    extraHeight,
+    size,
+    xOffset,
+    startLow,
+    polygonClassNames,
+    hexClassNames = [],
+}) => {
     const [container, containerRef] = useStatefulRef()
     const getPosition = (child?: HTMLElement): number => getChildIndex(container, child)
-    const getClassNames = higherLevelGetClassNamesForBox(getSizeClasses(size));
+    const getClassNames = higherLevelGetClassNamesForBox(getSizeClasses(size), hexClassNames);
     const getStyle = higherLevelGetStyleForRow(xOffset, startLow)
     const classNamesForRow = getClassNamesForRow(extraHeight, size)
 

@@ -18,7 +18,7 @@ export function App() {
         </button>
       </HexagonBox>
 
-      <HexWrapper startLow size='normal'>
+      <HexWrapper startLow size='normal' hexClassNames={[styles.yellowHex]}>
         <HexagonBox
           image={{ src: './fruit.png' }}
           onClick={(event) => {
@@ -43,9 +43,9 @@ export function App() {
         <HexagonBox>K</HexagonBox>
       </HexWrapper>
 
-      <HexRow startLow polygonClassNames={[styles.fancyHex]}>
+      <HexRow startLow polygonClassNames={[styles.fancyFrame]} hexClassNames={[styles.blueHex]}>
         <HexagonBox>A</HexagonBox>
-        <HexagonBox polygonClassNames={[styles.blackHex]}>B</HexagonBox>
+        <HexagonBox polygonClassNames={[styles.blackFrame]}>B</HexagonBox>
         <HexagonBox>C</HexagonBox>
         <HexagonBox>D</HexagonBox>
         <HexagonBox>E</HexagonBox>
@@ -64,7 +64,7 @@ export function App() {
         <HexagonBox>3</HexagonBox>
         <span></span>
         <HexagonBox
-          polygonClassNames={[styles.fancyHex]}
+          polygonClassNames={[styles.fancyFrame]}
           onClick={(e) => { console.log(e) }}
         >4</HexagonBox>
       </HexRow>
@@ -81,7 +81,7 @@ export function App() {
         <HexagonBox>B</HexagonBox>
         <HexagonBox>B</HexagonBox>
       </HexRow>
-      <HexRow size='small' polygonClassNames={[styles.fancyHex]}>
+      <HexRow size='small' polygonClassNames={[styles.fancyFrame]} hexClassNames={[styles.blueHex]}>
         <HexagonBox>C</HexagonBox>
         <HexagonBox>C</HexagonBox>
         <HexagonBox>C</HexagonBox>

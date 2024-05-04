@@ -10,6 +10,7 @@ interface Props {
     size?: 'normal' | 'big' | 'small'
     startLow?: boolean
     polygonClassNames?: string[]
+    hexClassNames?: string[]
 }
 
 const higherLevelGetStyleForRow = (hexesPerRow: number, startLow = false,) =>
@@ -32,15 +33,16 @@ const higherLevelGetStyleForRow = (hexesPerRow: number, startLow = false,) =>
     }
 
 
-const higherLevelGetClassNamesForBox = (sizeClasses: string[]) =>
+const higherLevelGetClassNamesForBox = (sizeClasses: string[], hexClassNames: string[]) =>
     (position: number, container?: HTMLElement): string[] => {
+        const base = [styles.hexBox, ...sizeClasses, ...hexClassNames]
         if (!container || position == -1) {
-            return [styles.hexBox, ...sizeClasses,]
+            return base
         }
         if (position % 2 === 1) {
-            return [styles.hexBox, ...sizeClasses, styles.hexBoxAbsolute, styles.hexContainerInGridLower]
+            return [...base, styles.hexBoxAbsolute, styles.hexContainerInGridLower]
         }
-        return [styles.hexBox, ...sizeClasses, styles.hexBoxAbsolute]
+        return [...base, styles.hexBoxAbsolute]
     }
 
 const getClassNamesForRow = (
@@ -67,6 +69,7 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
     size = 'normal',
     startLow,
     polygonClassNames,
+    hexClassNames = [],
 }) => {
     const [containerWidth, setContainerWidth] = useState(1000)
     const [numberOfChildElements, setNumberOfChildElements] = useState(1)
@@ -94,7 +97,7 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
     }, [handleResize])
 
     const getPosition = (child?: HTMLElement): number => getChildIndex(container, child)
-    const getClassNames = higherLevelGetClassNamesForBox(getSizeClasses(size));
+    const getClassNames = higherLevelGetClassNamesForBox(getSizeClasses(size), hexClassNames);
     const getStyle = higherLevelGetStyleForRow(hexesPerRow, startLow)
     const classNamesForRow = getClassNamesForRow(extraHeight, size)
 
