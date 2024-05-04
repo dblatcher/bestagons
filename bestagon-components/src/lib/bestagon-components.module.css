@@ -1,5 +1,6 @@
 .hexRow, .hexBox {
     --hex-width: 150px;
+    --clip-hexagon: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 }
 
 .bigHex {
@@ -31,6 +32,7 @@
     width: var(--hex-width);
     height: var(--hex-height);
     box-sizing: border-box;
+    clip-path: var(--clip-hexagon);
 }
 
 .hexBoxAbsolute {
@@ -42,7 +44,6 @@
 .hexBox_svg {
     position: absolute;
     inset: 0;
-    z-index: -1;
 }
 
 .hexBox_svg polygon {

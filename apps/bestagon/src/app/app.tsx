@@ -19,7 +19,11 @@ export function App() {
       </HexagonBox>
 
       <HexWrapper startLow size='normal' polygonClassNames={[styles.fancyHex]}>
-        <HexagonBox>A</HexagonBox>
+        <HexagonBox 
+        image={{src:'./fruit.png'}}
+        onClick={(event) => {
+          console.log(event.target)
+        }}>A</HexagonBox>
         <HexagonImage src='./fruit.png' onClick={() => { alert(';clicked') }}>
           <button style={{
             maxWidth: '100%'
@@ -31,7 +35,7 @@ export function App() {
         <HexagonBox>C</HexagonBox>
         <HexagonBox>D</HexagonBox>
         <HexagonBox>E</HexagonBox>
-        <HexagonImage src='./feathers.png'/>
+        <HexagonImage src='./feathers.png' />
         <HexagonBox>G</HexagonBox>
         <HexagonBox>H</HexagonBox>
         <HexagonBox>I</HexagonBox>

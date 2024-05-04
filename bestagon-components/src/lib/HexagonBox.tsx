@@ -7,11 +7,12 @@ interface Props {
     children: ReactNode
     polygonStyle?: CSSProperties
     polygonClassNames?: string[]
-    onClick?: React.MouseEventHandler<SVGPolygonElement>
+    onClick?: React.MouseEventHandler<HTMLElement>
+    image?: { src: string }
 }
 
 
-export const HexagonBox: React.FunctionComponent<Props> = ({ children, polygonStyle, polygonClassNames, onClick }) => {
+export const HexagonBox: React.FunctionComponent<Props> = ({ children, polygonStyle, polygonClassNames, onClick, image }) => {
 
     const [box, boxRef] = useStatefulRef<HTMLDivElement>()
 
@@ -25,7 +26,24 @@ export const HexagonBox: React.FunctionComponent<Props> = ({ children, polygonSt
         ...(polygonClassNames ?? []),
     ]
 
-    return <div className={classNames.join(" ")} style={positioningStyle} ref={boxRef}>
+    // do to - if onClick, should be button
+    return <div className={classNames.join(" ")}
+        style={positioningStyle}
+        ref={boxRef}
+        onClick={onClick}
+    >
+
+        {image && (
+            <img src={image.src}
+                style={{
+                    zIndex: 0,
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    inset: 0,
+                }} />
+        )}
+
         <svg className={styles.hexBox_svg} viewBox="0 0 723 626">
             <polygon
                 points="723,314 543,625.769145 183,625.769145 3,314 183,2.230855 543,2.230855 723,314"
@@ -34,12 +52,13 @@ export const HexagonBox: React.FunctionComponent<Props> = ({ children, polygonSt
                 strokeWidth="1"
                 style={polygonStyle}
                 className={polygonClassList.join(" ")}
-                onClick={onClick}
             />
         </svg>
-        <div>
-            {children}
-        </div>
+        {children && (
+            <div className={styles.hexBox_content}>
+                {children}
+            </div>
+        )}
     </div>
 }
 
