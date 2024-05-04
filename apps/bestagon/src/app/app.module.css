@@ -1,18 +1,26 @@
 /* Your styles goes here. */
 
-.fancyHex {
-    fill: aquamarine;
-    stroke-width: 4;
-    transition: fill 1s;
+.blueHex {
+    background-color: lightblue;
 }
 
-.fancyHex:hover {
-    fill: lightcoral;
+.blueHex:hover {
+    background-color: blue;
+}
+
+.fancyHex {
+    stroke-width: 10;
+    transition: stroke-width 1s, stroke 1s;
+    stroke-dasharray: 10 10;
+}
+
+*:hover > svg .fancyHex {
+    stroke-width: 50;
+    stroke: red;
 }
 
 .blackHex {
-    fill: black;
-    stroke-width: 3;
-    stroke: white;
-    stroke-dasharray: 1 1;
+    stroke-width: 30;
+    stroke: black;
+    stroke-dasharray: 10 10;
 }

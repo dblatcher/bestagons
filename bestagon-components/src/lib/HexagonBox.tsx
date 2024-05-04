@@ -5,6 +5,7 @@ import { useStatefulRef } from "./use-stateful-ref";
 
 interface Props {
     children: ReactNode
+    className?: string;
     polygonStyle?: CSSProperties
     polygonClassNames?: string[]
     onClick?: React.MouseEventHandler<HTMLElement>
@@ -12,13 +13,13 @@ interface Props {
 }
 
 
-export const HexagonBox: React.FunctionComponent<Props> = ({ children, polygonStyle, polygonClassNames, onClick, image }) => {
+export const HexagonBox: React.FunctionComponent<Props> = ({ className: directClassName, children, polygonStyle, polygonClassNames, onClick, image }) => {
 
     const [box, boxRef] = useStatefulRef<HTMLDivElement>()
 
     const { container, getPosition, getStyle, getClassNames, polygonClassNames: inheritedPolygonClassNames = [] } = useHexContainer()
     const positionInRow = getPosition(box)
-    const classNames = getClassNames(positionInRow, container)
+    const classNames = [...getClassNames(positionInRow, container), directClassName]
     const positioningStyle = getStyle(positionInRow, container)
 
     const polygonClassList = [

@@ -18,13 +18,13 @@ export function App() {
         </button>
       </HexagonBox>
 
-      <HexWrapper startLow size='normal' polygonClassNames={[styles.fancyHex]}>
-        <HexagonBox 
-        image={{src:'./fruit.png'}}
-        onClick={(event) => {
-          console.log(event.target)
-        }}>A</HexagonBox>
-        <HexagonImage src='./fruit.png' onClick={() => { alert(';clicked') }}>
+      <HexWrapper startLow size='normal'>
+        <HexagonBox
+          image={{ src: './fruit.png' }}
+          onClick={(event) => {
+            console.log(event.target)
+          }}>A</HexagonBox>
+        <HexagonImage src='./fruit.png' onClick={() => { alert('clicked') }}>
           <button style={{
             maxWidth: '100%'
           }}>
@@ -32,7 +32,7 @@ export function App() {
             <p>in the box</p>
           </button>
         </HexagonImage>
-        <HexagonBox>C</HexagonBox>
+        <HexagonBox className={styles.blueHex}>C</HexagonBox>
         <HexagonBox>D</HexagonBox>
         <HexagonBox>E</HexagonBox>
         <HexagonImage src='./feathers.png' />
@@ -43,9 +43,9 @@ export function App() {
         <HexagonBox>K</HexagonBox>
       </HexWrapper>
 
-      <HexRow startLow polygonClassNames={[styles.blackHex]}>
+      <HexRow startLow polygonClassNames={[styles.fancyHex]}>
         <HexagonBox>A</HexagonBox>
-        <HexagonBox polygonClassNames={[styles.fancyHex]}>B</HexagonBox>
+        <HexagonBox polygonClassNames={[styles.blackHex]}>B</HexagonBox>
         <HexagonBox>C</HexagonBox>
         <HexagonBox>D</HexagonBox>
         <HexagonBox>E</HexagonBox>
@@ -81,7 +81,7 @@ export function App() {
         <HexagonBox>B</HexagonBox>
         <HexagonBox>B</HexagonBox>
       </HexRow>
-      <HexRow size='small'>
+      <HexRow size='small' polygonClassNames={[styles.fancyHex]}>
         <HexagonBox>C</HexagonBox>
         <HexagonBox>C</HexagonBox>
         <HexagonBox>C</HexagonBox>
