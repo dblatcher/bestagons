@@ -6,6 +6,7 @@
 
 .blueHex:hover {
     background-color: blue;
+    color: white;
 }
 
 .yellowHex {
@@ -29,11 +30,9 @@
 .fancyFrame {
     stroke-width: 10;
     transition: stroke-width 1s, stroke 1s;
-    stroke-dasharray: 10 10;
 }
 
 *:hover>svg .fancyFrame {
-    stroke-width: 50;
     stroke: red;
 }
 

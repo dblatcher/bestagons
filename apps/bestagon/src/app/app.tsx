@@ -11,7 +11,7 @@ export function App() {
         strokeWidth: 5,
       }}>
         <button style={{
-          maxWidth: '100%'
+          maxWidth: '100%',
         }}>
           <p>I am content</p>
           <p>in the box</p>
@@ -25,12 +25,13 @@ export function App() {
             console.log(event.target)
           }}>A</HexagonBox>
         <HexagonImage src='./fruit.png' onClick={() => { alert('clicked') }}>
-          <button style={{
-            maxWidth: '100%'
+          <div style={{
+            maxWidth: '100%',
+            backgroundColor: 'pink'
           }}>
             <p>I am content</p>
             <p>in the box</p>
-          </button>
+          </div>
         </HexagonImage>
         <HexagonBox className={styles.blueHex}>C</HexagonBox>
         <HexagonBox>D</HexagonBox>
@@ -70,7 +71,7 @@ export function App() {
       </HexRow>
       <p>Should be below the hexes and not over the top</p>
       <HexRow size='small' xOffset={1}>
-        <HexagonBox>A</HexagonBox>
+        <HexagonBox onClick={() => { console.log('A') }}>A</HexagonBox>
         <HexagonBox>A</HexagonBox>
         <HexagonBox>A</HexagonBox>
       </HexRow>
@@ -89,7 +90,7 @@ export function App() {
         <HexagonBox>C</HexagonBox>
       </HexRow>
       <HexRow size='small'>
-        <HexagonBox>D</HexagonBox>
+        <HexagonBox onClick={()=>{console.log('d')}}>D</HexagonBox>
         <HexagonBox>D</HexagonBox>
         <HexagonBox>D</HexagonBox>
         <HexagonBox>D</HexagonBox>

@@ -1,4 +1,5 @@
-.hexRow, .hexBox {
+.hexRow,
+.hexBox {
     --hex-width: 150px;
     --clip-hexagon: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 }
@@ -11,7 +12,8 @@
     --hex-width: 80px;
 }
 
-.hexRow, .hexBox {
+.hexRow,
+.hexBox {
     --hex-height: calc(var(--hex-width) * (13/15));
     --hex-height-and-half: calc(var(--hex-height) * (3/2));
     --hex-side-padding: calc(var(--hex-width) * (4/15))
@@ -51,16 +53,40 @@
 .hexBox_svg {
     position: absolute;
     inset: 0;
-    stroke: 2;
 }
 
 .hexBox_svg polygon {
+    stroke-width: 2;
     pointer-events: fill;
 }
 
 .hexBox_content {
     position: absolute;
     top: 0;
-    inset:0 25%;
+    inset: 0 25%;
     height: 100%;
+}
+
+.hexButton {
+    background-color: unset;
+    text-align: unset;
+    cursor: pointer;
+    border: none;
+}
+
+.hexButton .hexBox_svg polygon {
+    stroke-width: 16;
+    stroke: gray;
+}
+
+.hexButton:focus .hexBox_svg polygon {
+    stroke-width: 32;
+    stroke: rgba(100, 100, 240, 1);
+    fill: rgba(100, 100, 240, .2);
+}
+
+.hexButton:hover .hexBox_svg polygon {
+    stroke-width: 32;
+    stroke: black;
+    fill: rgba(100, 100, 100, .4);
 }
