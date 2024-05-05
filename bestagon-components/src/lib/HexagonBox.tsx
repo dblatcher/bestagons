@@ -57,8 +57,6 @@ const ButtonHexagonBox: React.FunctionComponent<Props> = ({
     const [box, boxRef] = useStatefulRef<HTMLButtonElement>()
     const { classNames, positioningStyle, polygonClassList } = getDerivedProperties(directClassName, polygonClassNames, box, useHexContainer())
 
-
-
     return <button className={[styles.hexButton, ...classNames].join(" ")}
         style={positioningStyle}
         ref={boxRef}
@@ -69,8 +67,6 @@ const ButtonHexagonBox: React.FunctionComponent<Props> = ({
         {children}
     </button>
 }
-
-
 
 const DivHexagonBox: React.FunctionComponent<Props> = ({
     className: directClassName,
@@ -93,7 +89,6 @@ const DivHexagonBox: React.FunctionComponent<Props> = ({
         {children}
     </div>
 }
-
 
 
 export const HexagonBox: React.FunctionComponent<Props> = ({
