@@ -19,12 +19,15 @@
 
 .yellowHex img {
     filter: saturate(.25);
-    transition: width 1s, filter 1s;
+    transition: width linear .75s, filter 1s, transform linear .75s;
+    width: 150%;
+    transform: translate(-25%, -25%);
 }
 
 .yellowHex:hover>img {
     filter: saturate(1);
-    width: 150%;
+    width: 100%;
+    transform: translate(0%, 0%);
 }
 
 .fancyFrame {

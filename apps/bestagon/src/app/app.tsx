@@ -18,7 +18,7 @@ export function App() {
         </button>
       </HexagonBox>
 
-      <HexWrapper startLow size='normal' hexClassNames={[styles.yellowHex]}>
+      <HexWrapper size='normal' hexClassNames={[styles.yellowHex]}>
         <HexagonBox
           image={{ src: './fruit.png' }}
           onClick={(event) => {
