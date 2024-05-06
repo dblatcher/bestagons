@@ -6,10 +6,7 @@ import styles from './app.module.css';
 export function App() {
   return (
     <div>
-      <HexagonBox polygonStyle={{
-        fill: 'red',
-        strokeWidth: 5,
-      }}>
+      <HexagonBox>
         <button style={{
           maxWidth: '100%',
         }}>
@@ -17,6 +14,14 @@ export function App() {
           <p>in the box</p>
         </button>
       </HexagonBox>
+
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
 
       <HexWrapper size='normal' hexClassNames={[styles.yellowHex]}>
         <HexagonBox

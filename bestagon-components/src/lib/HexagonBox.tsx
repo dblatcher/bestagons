@@ -25,9 +25,9 @@ const getDerivedProperties = (directClassName: string | undefined, polygonClassN
 }
 
 const HexSvgOutline = ({ polygonStyle, polygonClassList }: { polygonStyle?: CSSProperties, polygonClassList: string[] }) => (
-    <svg className={styles.hexBox_svg} viewBox="0 0 723 626">
+    <svg className={styles.hexBox_svg} viewBox="0 0 150 130">
         <polygon
-            points="723,314 543,625.769145 183,625.769145 3,314 183,2.230855 543,2.230855 723,314"
+            points="0,65 37.5,0 112.5,0 150,65 112.5,130 37.5,130 0,65"
             fill="none"
             stroke="black"
             strokeWidth="1"
