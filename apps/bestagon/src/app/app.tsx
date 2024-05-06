@@ -6,24 +6,44 @@ import styles from './app.module.css';
 export function App() {
   return (
     <div>
-      <HexagonBox>
-        <button style={{
-          maxWidth: '100%',
-        }}>
-          <p>I am content</p>
-          <p>in the box</p>
-        </button>
-      </HexagonBox>
 
+      <div style={{ display: 'flex' }}>
+        <HexagonBox>
+          <button style={{
+            maxWidth: '100%',
+          }}>
+            <p>I am content</p>
+            <p>in the box</p>
+          </button>
+        </HexagonBox>
+
+        <HexagonBox onClick={() => { alert('clicked') }} size='small'>
+          <div style={{
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '120%',
+            textAlign: 'center',
+          }}>
+            <b>click me</b>
+          </div>
+        </HexagonBox>
+        <HexagonBox onClick={() => { alert('clicked') }} size='small'>
+          <div style={{
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '120%',
+            textAlign: 'center',
+          }}>
+            <b>click me</b>
+          </div>
+        </HexagonBox>
+      </div>
       <br></br>
       <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <HexagonBox onClick={() => { alert('clicked') }} size='big'>
-        click me
-      </HexagonBox>
       <br></br>
 
       <HexWrapper size='normal' hexClassNames={[styles.yellowHex]} polygonStyle={{ display: 'none' }}>
@@ -102,7 +122,7 @@ export function App() {
         <HexagonBox>D</HexagonBox>
         <HexagonBox>D</HexagonBox>
         <HexagonBox>D</HexagonBox>
-        <HexagonBox size='normal'>D</HexagonBox>
+        <HexagonBox>D</HexagonBox>
       </HexRow>
       <HexRow size='small' xOffset={2}>
         <HexagonBox>E</HexagonBox>

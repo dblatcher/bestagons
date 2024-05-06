@@ -85,18 +85,16 @@
 }
 
 .hexButton .hexBox_svg polygon {
-    stroke-width: 1;
+    stroke-width: 4;
     stroke: gray;
 }
 
 .hexButton:focus .hexBox_svg polygon {
-    stroke-width: 2;
-    stroke: rgba(100, 100, 240, 1);
-    fill: rgba(100, 100, 240, .2);
+    stroke-width: 8;
+    stroke: black;
 }
 
 .hexButton:hover .hexBox_svg polygon {
-    stroke-width: 2;
+    fill: rgba(10, 10, 10, .1);
     stroke: black;
-    fill: none;
 }
