@@ -7,6 +7,7 @@ import { useStatefulRef } from "./use-stateful-ref";
 
 type Props = HertitableHexProps & {
     children: ReactNode
+    style?: CSSProperties
     className?: string;
     onClick?: React.MouseEventHandler<HTMLElement>
     image?: { src: string }
@@ -41,12 +42,12 @@ const ButtonHexagonBox: React.FunctionComponent<Props> = ({
     ...heritablePropsAndClassName
 }) => {
     const [box, boxRef] = useStatefulRef<HTMLButtonElement>()
-    const { classNames, positioningStyle, combinedPolygonClassNames, combinedPolygonStyle } = getDerivedProperties(
+    const { classNames, combinedHexStyle, combinedPolygonClassNames, combinedPolygonStyle } = getDerivedProperties(
         box, useHexContainer(), heritablePropsAndClassName
     )
 
     return <button className={[styles.hexButton, ...classNames].join(" ")}
-        style={positioningStyle}
+        style={combinedHexStyle}
         ref={boxRef}
         onClick={onClick}
     >
@@ -63,12 +64,12 @@ const DivHexagonBox: React.FunctionComponent<Props> = ({
     ...heritablePropsAndClassName
 }) => {
     const [box, boxRef] = useStatefulRef<HTMLDivElement>()
-    const { classNames, positioningStyle, combinedPolygonClassNames, combinedPolygonStyle } = getDerivedProperties(
+    const { classNames, combinedHexStyle, combinedPolygonClassNames, combinedPolygonStyle } = getDerivedProperties(
         box, useHexContainer(), heritablePropsAndClassName
     )
 
     return <div className={classNames.join(" ")}
-        style={positioningStyle}
+        style={combinedHexStyle}
         ref={boxRef}
         onClick={onClick}
     >

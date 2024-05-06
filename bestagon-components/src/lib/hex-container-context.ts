@@ -8,6 +8,7 @@ export type HexContainerProps = {
     getStyle: { (position: number, container?: HTMLElement): CSSProperties }
     polygonClassNames?: string[],
     polygonStyle?: CSSProperties,
+    hexStyle?: CSSProperties,
 }
 
 export const HexContainerContext = createContext<HexContainerProps>({
@@ -15,7 +16,6 @@ export const HexContainerContext = createContext<HexContainerProps>({
     getPosition: () => -1,
     getClassNames: () => [styles.hexBox],
     getStyle: () => ({}),
-    polygonStyle: {},
 })
 
 export const useHexContainer = () => useContext(HexContainerContext)

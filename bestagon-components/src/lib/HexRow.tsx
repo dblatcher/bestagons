@@ -53,12 +53,11 @@ const getClassNamesForContainer = (
 export const HexRow: React.FunctionComponent<Props> = ({
     children,
     extraHeight,
-    size,
     xOffset,
     startLow,
-    polygonClassNames,
     hexClassNames = [],
-    polygonStyle,
+    size = 'normal',
+    ...heritables
 }) => {
     const [container, containerRef] = useStatefulRef()
     const getPosition = (child?: HTMLElement): number => getChildIndex(container, child)
@@ -68,7 +67,7 @@ export const HexRow: React.FunctionComponent<Props> = ({
 
     return (
         <HexContainerContext.Provider value={{
-            container, getPosition, getClassNames, getStyle, polygonClassNames, polygonStyle
+            container, getPosition, getClassNames, getStyle, ...heritables
         }}>
             <section
                 className={classNamesForContainer.join(" ")}

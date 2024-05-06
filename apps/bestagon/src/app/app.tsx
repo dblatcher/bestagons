@@ -8,7 +8,11 @@ export function App() {
     <div>
 
       <div style={{ display: 'flex' }}>
-        <HexagonBox>
+        <HexagonBox
+          style={{
+            backgroundColor: 'red'
+          }}
+        >
           <button style={{
             maxWidth: '100%',
           }}>
@@ -17,7 +21,9 @@ export function App() {
           </button>
         </HexagonBox>
 
-        <HexagonBox onClick={() => { alert('clicked') }} size='small'>
+        <HexagonBox onClick={() => { alert('clicked') }} size='small' hexStyle={{
+          backgroundColor: 'red'
+        }}>
           <div style={{
             height: '100%',
             display: 'flex',
@@ -46,7 +52,7 @@ export function App() {
       <br></br>
       <br></br>
 
-      <HexWrapper size='normal' hexClassNames={[styles.yellowHex]} polygonStyle={{ display: 'none' }}>
+      <HexWrapper size='normal' hexClassNames={[styles.yellowHex]} polygonStyle={{ display: 'none' }} >
         <HexagonBox
           image={{ src: './fruit.png' }}
           onClick={(event) => {
@@ -61,7 +67,7 @@ export function App() {
             <p>in the box</p>
           </div>
         </HexagonImage>
-        <HexagonBox className={styles.blueHex}>C</HexagonBox>
+        <HexagonBox>C</HexagonBox>
         <HexagonBox>D</HexagonBox>
         <HexagonBox>E</HexagonBox>
         <HexagonImage src='./feathers.png' />
@@ -79,7 +85,10 @@ export function App() {
         <HexagonBox>D</HexagonBox>
         <HexagonBox>E</HexagonBox>
       </HexRow>
-      <HexRow startLow extraHeight>
+      <HexRow startLow extraHeight hexStyle={{
+        backgroundImage: 'url(./feathers.png)',
+        backgroundSize: 'contain',
+      }}>
         <HexagonBox>1</HexagonBox>
         <HexagonBox>
           <div style={{

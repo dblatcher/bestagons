@@ -65,11 +65,10 @@ const getHexesPerRow = (containerWidth: number, hexWidth: number): number => {
 export const HexWrapper: React.FunctionComponent<Props> = ({
     children,
     extraHeight,
-    size = 'normal',
     startLow,
-    polygonClassNames,
     hexClassNames = [],
-    polygonStyle,
+    size = 'normal',
+    ...heritables
 }) => {
     const [containerWidth, setContainerWidth] = useState(1000)
     const [numberOfChildElements, setNumberOfChildElements] = useState(1)
@@ -103,7 +102,7 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
 
     return (
         <HexContainerContext.Provider value={{
-            container, getPosition, getClassNames, getStyle, polygonClassNames, polygonStyle
+            container, getPosition, getClassNames, getStyle, ...heritables
         }}>
             <section
                 className={classNamesForContainer.join(" ")}
