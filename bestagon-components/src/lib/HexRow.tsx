@@ -12,6 +12,7 @@ interface Props {
     startLow?: boolean
     polygonClassNames?: string[]
     hexClassNames?: string[]
+    polygonStyle?: CSSProperties
 }
 
 const higherLevelGetStyleForBox = (xOffset = 0, startLow = false) =>
@@ -59,6 +60,7 @@ export const HexRow: React.FunctionComponent<Props> = ({
     startLow,
     polygonClassNames,
     hexClassNames = [],
+    polygonStyle,
 }) => {
     const [container, containerRef] = useStatefulRef()
     const getPosition = (child?: HTMLElement): number => getChildIndex(container, child)
@@ -68,7 +70,7 @@ export const HexRow: React.FunctionComponent<Props> = ({
 
     return (
         <HexContainerContext.Provider value={{
-            container, getPosition, getClassNames, getStyle, polygonClassNames,
+            container, getPosition, getClassNames, getStyle, polygonClassNames, polygonStyle
         }}>
             <section
                 className={classNamesForContainer.join(" ")}

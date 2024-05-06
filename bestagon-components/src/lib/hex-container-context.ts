@@ -7,11 +7,13 @@ export const HexContainerContext = createContext<{
     getClassNames: { (position: number, container?: HTMLElement): string[] },
     getStyle: { (position: number, container?: HTMLElement): CSSProperties }
     polygonClassNames?: string[],
+    polygonStyle?: CSSProperties,
 }>({
     container: undefined,
     getPosition: () => -1,
     getClassNames: () => [styles.hexBox],
-    getStyle: () => ({})
+    getStyle: () => ({}),
+    polygonStyle: {},
 })
 
 export const useHexContainer = () => useContext(HexContainerContext)

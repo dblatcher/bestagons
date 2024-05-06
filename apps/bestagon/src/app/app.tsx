@@ -21,9 +21,12 @@ export function App() {
       <br></br>
       <br></br>
       <br></br>
+      <HexagonBox onClick={() => { alert('clicked') }}>
+        click me
+      </HexagonBox>
       <br></br>
 
-      <HexWrapper size='normal' hexClassNames={[styles.yellowHex]}>
+      <HexWrapper size='normal' hexClassNames={[styles.yellowHex]} polygonStyle={{ display: 'none' }}>
         <HexagonBox
           image={{ src: './fruit.png' }}
           onClick={(event) => {
@@ -58,7 +61,7 @@ export function App() {
       </HexRow>
       <HexRow startLow extraHeight>
         <HexagonBox>1</HexagonBox>
-        <HexagonBox polygonStyle={{ fill: 'pink' }}>
+        <HexagonBox>
           <div style={{
             textAlign: 'center',
             padding: 5,
@@ -80,7 +83,7 @@ export function App() {
         <HexagonBox>A</HexagonBox>
         <HexagonBox>A</HexagonBox>
       </HexRow>
-      <HexRow size='small'>
+      <HexRow size='small' polygonStyle={{ strokeWidth: 1 }}>
         <HexagonBox>B</HexagonBox>
         <HexagonBox>B</HexagonBox>
         <HexagonBox>B</HexagonBox>
@@ -95,7 +98,7 @@ export function App() {
         <HexagonBox>C</HexagonBox>
       </HexRow>
       <HexRow size='small'>
-        <HexagonBox onClick={()=>{console.log('d')}}>D</HexagonBox>
+        <HexagonBox onClick={() => { console.log('d') }}>D</HexagonBox>
         <HexagonBox>D</HexagonBox>
         <HexagonBox>D</HexagonBox>
         <HexagonBox>D</HexagonBox>

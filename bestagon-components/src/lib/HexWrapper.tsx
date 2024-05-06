@@ -10,6 +10,7 @@ interface Props {
     size?: 'normal' | 'big' | 'small'
     startLow?: boolean
     polygonClassNames?: string[]
+    polygonStyle?: CSSProperties
     hexClassNames?: string[]
 }
 
@@ -70,6 +71,7 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
     startLow,
     polygonClassNames,
     hexClassNames = [],
+    polygonStyle,
 }) => {
     const [containerWidth, setContainerWidth] = useState(1000)
     const [numberOfChildElements, setNumberOfChildElements] = useState(1)
@@ -103,7 +105,7 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
 
     return (
         <HexContainerContext.Provider value={{
-            container, getPosition, getClassNames, getStyle, polygonClassNames,
+            container, getPosition, getClassNames, getStyle, polygonClassNames, polygonStyle
         }}>
             <section
                 className={classNamesForContainer.join(" ")}
