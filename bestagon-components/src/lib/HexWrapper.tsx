@@ -2,7 +2,7 @@ import React, { CSSProperties, ReactNode, useCallback, useEffect, useState } fro
 import styles from './bestagon-components.module.css';
 import { HexContainerContext } from "./hex-container-context";
 import { useStatefulRef } from "./use-stateful-ref";
-import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, getChildIndex, getHexDimentionsForSize, getSizeClasses } from "./helpers";
+import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, getChildIndex, getHexDimensionsForSize, getSizeClasses } from "./helpers";
 import { HertitableHexProps } from "./types";
 
 type Props = HertitableHexProps & {
@@ -78,7 +78,7 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
         setNumberOfChildElements(container.children.length)
     })
 
-    const hexDims = getHexDimentionsForSize(size);
+    const hexDims = getHexDimensionsForSize(size);
 
     const hexesPerRow = getHexesPerRow(containerWidth, hexDims.width)
     const rowCount = Math.ceil(numberOfChildElements / hexesPerRow)

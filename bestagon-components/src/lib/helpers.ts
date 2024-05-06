@@ -25,17 +25,22 @@ export const removeSizeClasses = (original: string[]): string[] => {
 
 export const AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP = .75;
 
-const hexDimeensions = (width: number) => (
+
+// 13/15 (0.86 recurring) is an approximation root 0.75 (0.8660254037844386)
+// which is the actual ratio of width to height for a regular hexagon
+const hexDimensions = (width: number) => (
     {
         width,
         height: width * (13 / 15),
     }
 )
 
-export const getHexDimentionsForSize = (size: HexSize = 'normal') => {
+// these numbers are used in the CSS and TS, so need to match
+// TO DO? generate classes dynamically with Emotion?
+export const getHexDimensionsForSize = (size: HexSize = 'normal') => {
     switch (size) {
-        case "normal": return hexDimeensions(150)
-        case "big": return hexDimeensions(300)
-        case "small": return hexDimeensions(80)
+        case "normal": return hexDimensions(150)
+        case "big": return hexDimensions(300)
+        case "small": return hexDimensions(80)
     }
 }
