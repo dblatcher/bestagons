@@ -90,7 +90,9 @@ export function App() {
         backgroundSize: 'contain',
       }}>
         <HexagonBox>1</HexagonBox>
-        <HexagonBox>
+        <HexagonBox style={{
+          backgroundImage: 'url(./fruit.png)'
+        }}>
           <div style={{
             textAlign: 'center',
             padding: 5,
