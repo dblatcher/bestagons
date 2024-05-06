@@ -1,18 +1,16 @@
 import React, { CSSProperties, ReactNode } from "react";
 import styles from './bestagon-components.module.css';
-import { HexContainerContext } from "./hex-container-context";
-import { useStatefulRef } from "./use-stateful-ref";
 import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, getChildIndex, getSizeClasses } from "./helpers";
+import { HexContainerContext } from "./hex-container-context";
+import { HertitableHexProps } from "./types";
+import { useStatefulRef } from "./use-stateful-ref";
 
-interface Props {
+type Props = HertitableHexProps & {
     children: ReactNode
     extraHeight?: boolean
-    size?: 'normal' | 'big' | 'small'
+    hexClassNames?: string[]
     xOffset?: number
     startLow?: boolean
-    polygonClassNames?: string[]
-    hexClassNames?: string[]
-    polygonStyle?: CSSProperties
 }
 
 const higherLevelGetStyleForBox = (xOffset = 0, startLow = false) =>

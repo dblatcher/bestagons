@@ -1,44 +1,55 @@
 import React, { CSSProperties, ReactNode } from "react";
 import styles from './bestagon-components.module.css';
-import { useHexContainer } from "./hex-container-context";
+import { HexContainerProps, useHexContainer } from "./hex-container-context";
 import { useStatefulRef } from "./use-stateful-ref";
+import { HertitableHexProps } from "./types";
+import { getSizeClasses, removeSizeClasses } from "./helpers";
 
-interface Props {
+type Props = HertitableHexProps & {
     children: ReactNode
     className?: string;
-    polygonStyle?: CSSProperties
-    polygonClassNames?: string[]
     onClick?: React.MouseEventHandler<HTMLElement>
     image?: { src: string }
 }
 
 const getDerivedProperties = (
-    directClassName: string | undefined,
-    polygonClassNames: string[],
-    polygonStyle: CSSProperties,
     box: HTMLElement | undefined,
-    hexContainer: ReturnType<typeof useHexContainer>
+    hexContainer: HexContainerProps,
+    directProperties: HertitableHexProps & { className?: string }
 ) => {
     const {
         container,
-        getPosition,
-        getStyle,
-        getClassNames,
         polygonClassNames: inheritedPolygonClassNames = [],
         polygonStyle: inheritedPolygonStyle = {}
     } = hexContainer
-    const positionInRow = getPosition(box)
-    const classNames = [...getClassNames(positionInRow, container), directClassName]
-    const positioningStyle = getStyle(positionInRow, container)
-    const combinedPolygonClassNames = [
-        ...(inheritedPolygonClassNames ?? []),
-        ...(polygonClassNames ?? []),
-    ]
-    const combinedPolygonStyle = {
-        ...inheritedPolygonStyle,
-        ...polygonStyle,
+
+    const positionInRow = hexContainer.getPosition(box)
+    const classNames = hexContainer.getClassNames(positionInRow, container)
+
+    if (directProperties.className) {
+        classNames.push(directProperties.className)
     }
-    return { classNames, positioningStyle, combinedPolygonClassNames, combinedPolygonStyle }
+
+    // TO DO ? changing the size changes the posiitioning (uses %)
+    // do I actually want to allow hexes in a container to be a different size to
+    // the container?
+    if (directProperties.size) {
+        removeSizeClasses(classNames)
+        classNames.push(...getSizeClasses(directProperties.size))
+    }
+
+    return {
+        classNames,
+        positioningStyle: hexContainer.getStyle(positionInRow, container),
+        combinedPolygonClassNames: [
+            ...inheritedPolygonClassNames,
+            ...(directProperties.polygonClassNames ?? []),
+        ],
+        combinedPolygonStyle: {
+            ...inheritedPolygonStyle,
+            ...directProperties.polygonStyle,
+        }
+    }
 }
 
 const HexSvgOutline = ({ combinedPolygonStyle, combinedPolygonClassNames }: { combinedPolygonStyle?: CSSProperties, combinedPolygonClassNames: string[] }) => (
@@ -64,16 +75,14 @@ const HexImage = ({ image }: { image: Props['image'] }) => <>
 </>
 
 const ButtonHexagonBox: React.FunctionComponent<Props> = ({
-    className: directClassName,
     children,
-    polygonStyle = {},
-    polygonClassNames = [],
     onClick,
-    image
+    image,
+    ...heritablePropsAndClassName
 }) => {
     const [box, boxRef] = useStatefulRef<HTMLButtonElement>()
     const { classNames, positioningStyle, combinedPolygonClassNames, combinedPolygonStyle } = getDerivedProperties(
-        directClassName, polygonClassNames, polygonStyle, box, useHexContainer()
+        box, useHexContainer(), heritablePropsAndClassName
     )
 
     return <button className={[styles.hexButton, ...classNames].join(" ")}
@@ -88,16 +97,14 @@ const ButtonHexagonBox: React.FunctionComponent<Props> = ({
 }
 
 const DivHexagonBox: React.FunctionComponent<Props> = ({
-    className: directClassName,
     children,
-    polygonStyle = {},
-    polygonClassNames = [],
     onClick,
-    image
+    image,
+    ...heritablePropsAndClassName
 }) => {
     const [box, boxRef] = useStatefulRef<HTMLDivElement>()
     const { classNames, positioningStyle, combinedPolygonClassNames, combinedPolygonStyle } = getDerivedProperties(
-        directClassName, polygonClassNames, polygonStyle, box, useHexContainer()
+        box, useHexContainer(), heritablePropsAndClassName
     )
 
     return <div className={classNames.join(" ")}

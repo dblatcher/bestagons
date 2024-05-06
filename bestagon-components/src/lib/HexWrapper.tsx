@@ -3,14 +3,12 @@ import styles from './bestagon-components.module.css';
 import { HexContainerContext } from "./hex-container-context";
 import { useStatefulRef } from "./use-stateful-ref";
 import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, getChildIndex, getHexDimentionsForSize, getSizeClasses } from "./helpers";
+import { HertitableHexProps } from "./types";
 
-interface Props {
+type Props = HertitableHexProps & {
     children: ReactNode
     extraHeight?: boolean
-    size?: 'normal' | 'big' | 'small'
     startLow?: boolean
-    polygonClassNames?: string[]
-    polygonStyle?: CSSProperties
     hexClassNames?: string[]
 }
 

@@ -21,7 +21,7 @@ export function App() {
       <br></br>
       <br></br>
       <br></br>
-      <HexagonBox onClick={() => { alert('clicked') }}>
+      <HexagonBox onClick={() => { alert('clicked') }} size='big'>
         click me
       </HexagonBox>
       <br></br>
@@ -102,7 +102,7 @@ export function App() {
         <HexagonBox>D</HexagonBox>
         <HexagonBox>D</HexagonBox>
         <HexagonBox>D</HexagonBox>
-        <HexagonBox>D</HexagonBox>
+        <HexagonBox size='normal'>D</HexagonBox>
       </HexRow>
       <HexRow size='small' xOffset={2}>
         <HexagonBox>E</HexagonBox>

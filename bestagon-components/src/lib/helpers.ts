@@ -1,6 +1,6 @@
 import styles from './bestagon-components.module.css';
+import { HexSize } from './types';
 
-export type HexSize = 'normal' | 'big' | 'small'
 
 export const getChildIndex = (container?: HTMLElement, child?: HTMLElement): number => {
     if (!container || !child) {
@@ -15,6 +15,12 @@ export const getSizeClasses = (size: HexSize = 'normal'): string[] => {
         case "big": return [styles.bigHex]
         case "small": return [styles.smallHex]
     }
+}
+
+export const removeSizeClasses = (original: string[]): string[] => {
+    const filtered = original.filter(name => ![styles.bigHex, styles.smallHex].includes(name))
+    original.splice(0, original.length, ...filtered)
+    return original
 }
 
 export const AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP = .75;
