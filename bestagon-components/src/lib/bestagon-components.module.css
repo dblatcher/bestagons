@@ -44,6 +44,7 @@
     height: var(--hex-height);
     box-sizing: border-box;
     clip-path: var(--clip-hexagon);
+    pointer-events: all;
 }
 
 .hexBoxAbsolute {
