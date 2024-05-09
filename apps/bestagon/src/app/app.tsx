@@ -6,7 +6,7 @@ import { Examples } from '../components/Examples';
 export function App() {
   return (<>
 
-    <Board rows={4} width={6}/>
+    <Board rows={8} width={7}/>
     <Examples />
 
   </>);

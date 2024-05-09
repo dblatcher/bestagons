@@ -39,7 +39,6 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
     const [y, setY] = useState(0)
 
     const getStyle = (row: number, col: number): CSSProperties => {
-
         if (row === y && col === x) {
             return {
                 backgroundColor: 'orange'
@@ -50,12 +49,26 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
                 backgroundColor: 'yellow'
             }
         }
-
         return {}
+    }
+
+    const getSelectedElement = () => {
+        return document.querySelector(`[data-col="${x}"][data-row="${y}"]`)
+    }
+
+    const logClientCoords = () => {
+        const element = getSelectedElement()?.parentElement?.parentElement
+        if (!element) {
+            return
+        }
+        const {clientLeft,clientTop,} = element
+        console.log({element, clientLeft,clientTop})
+        console.log(element.getBoundingClientRect())
     }
 
     return (
         <div>
+            
             {getZeroBasedNumbers(rows).map((row) => (
                 <HexRow startLow={startLow} size='small' key={row} extraHeight={row === rows - 1}>
                     {getZeroBasedNumbers(width).map((col) => (
@@ -65,10 +78,13 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
                                 setY(row);
                             }}
                             style={getStyle(row, col)} key={col}
-                        >{col} , {row}</HexagonBox>
+                        >
+                            <span data-col={col} data-row={row}> {col} , {row}</span>
+                        </HexagonBox>
                     ))}
                 </HexRow>
             ))}
+            <button onClick={logClientCoords}>t</button>
         </div>
     );
 }
