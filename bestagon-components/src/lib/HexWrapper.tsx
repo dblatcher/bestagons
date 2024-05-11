@@ -15,8 +15,11 @@ type Props = HertitableHexProps & {
 
 const higherLevelGetStyleForBox = (hexesPerRow: number, startLow = false,) =>
     (position: number, container?: HTMLElement): CSSProperties => {
-        if (!container || position == -1) {
+        if (position == -1) {
             return {}
+        }
+        if (!container) {
+            return { visibility: 'hidden' }
         }
         const row = Math.floor(position / hexesPerRow)
         const spacesInPreviousRows = row * hexesPerRow

@@ -16,8 +16,11 @@ type Props = HertitableHexProps & {
 
 const higherLevelGetStyleForBox = (xOffset = 0, startLow = false) =>
     (position: number, container?: HTMLElement): CSSProperties => {
-        if (!container || position == -1) {
+        if (position == -1) {
             return {}
+        }
+        if (!container) {
+            return { visibility: 'hidden' }
         }
         const offsetPosition = position + Math.floor(xOffset)
         const isOdd = offsetPosition % 2 === 1;
@@ -73,7 +76,7 @@ export const HexRow: React.FunctionComponent<Props> = ({
                 className={classNamesForContainer.join(" ")}
                 ref={containerRef}
             >
-                <NumberedChildren children={children}/>
+                <NumberedChildren children={children} />
             </section>
         </HexContainerContext.Provider>
     )
