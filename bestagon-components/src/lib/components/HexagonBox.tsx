@@ -1,10 +1,10 @@
 import React, { CSSProperties, ReactNode } from "react";
 import { useChildNumber } from "./NumberedChildren";
-import styles from './bestagon-components.module.css';
-import { getDerivedProperties } from "./derive-combined-properties";
-import { useHexContainer } from "./hex-container-context";
-import { HertitableHexProps } from "./types";
-import { HexData, buildHexDataAttributes } from "./data-hex-attributes";
+import styles from '../bestagon-components.module.css';
+import { getDerivedProperties } from "../derive-combined-properties";
+import { useHexContainer } from "../hex-container-context";
+import { HertitableHexProps } from "../types";
+import { HexData, buildHexDataAttributes } from "../data-hex-attributes";
 
 type Props = HertitableHexProps & {
     children: ReactNode
