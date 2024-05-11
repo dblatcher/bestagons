@@ -73,9 +73,7 @@ export const HexRow: React.FunctionComponent<Props> = ({
                 className={classNamesForContainer.join(" ")}
                 ref={containerRef}
             >
-                {!!container && <>
-                    {children}
-                </>}
+                {children}
             </section>
         </HexContainerContext.Provider>
     )
