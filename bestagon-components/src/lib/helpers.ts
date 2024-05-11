@@ -2,13 +2,6 @@ import styles from './bestagon-components.module.css';
 import { HexSize } from './types';
 
 
-export const getChildIndex = (container?: HTMLElement, child?: HTMLElement): number => {
-    if (!container || !child) {
-        return -1
-    }
-    return Array.from(container.children).indexOf(child)
-}
-
 export const getSizeClasses = (size: HexSize = 'normal'): string[] => {
     switch (size) {
         case "normal": return []

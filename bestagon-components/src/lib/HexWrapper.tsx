@@ -1,9 +1,10 @@
 import React, { CSSProperties, ReactNode, useCallback, useEffect, useState } from "react";
+import { NumberedChildren } from "./NumberedChildren";
 import styles from './bestagon-components.module.css';
+import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, getHexDimensionsForSize, getSizeClasses } from "./helpers";
 import { HexContainerContext } from "./hex-container-context";
-import { useStatefulRef } from "./use-stateful-ref";
-import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, getChildIndex, getHexDimensionsForSize, getSizeClasses } from "./helpers";
 import { HertitableHexProps } from "./types";
+import { useStatefulRef } from "./use-stateful-ref";
 
 type Props = HertitableHexProps & {
     children: ReactNode
@@ -27,7 +28,7 @@ const higherLevelGetStyleForBox = (hexesPerRow: number, startLow = false,) =>
             : isOdd ? rowTranslate + 50 : rowTranslate;
         const translateX = offsetPosition * (100 * AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP)
         return {
-            transform: `translateX(${translateX}%) translateY(${translateY}%)`
+            transform: `translateX(${translateX}%) translateY(${translateY}%)`,
         }
     }
 
@@ -95,14 +96,13 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
         }
     }, [handleResize])
 
-    const getPosition = (child?: HTMLElement): number => getChildIndex(container, child)
     const getClassNames = higherLevelGetClassNamesForBox(getSizeClasses(size), hexClassNames);
     const getStyle = higherLevelGetStyleForBox(hexesPerRow, startLow)
     const classNamesForContainer = getClassNamesForContainer(extraHeight, size)
 
     return (
         <HexContainerContext.Provider value={{
-            container, getPosition, getClassNames, getStyle, ...heritables
+            container, getClassNames, getStyle, ...heritables
         }}>
             <section
                 className={classNamesForContainer.join(" ")}
@@ -111,7 +111,7 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
                     minHeight: hexDims.height * (.5 + rowCount),
                 }}
             >
-                {children}
+                <NumberedChildren children={children} />
             </section>
         </HexContainerContext.Provider>
     )

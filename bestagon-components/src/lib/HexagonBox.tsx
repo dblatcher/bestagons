@@ -1,9 +1,9 @@
 import React, { CSSProperties, ReactNode } from "react";
+import { useChildNumber } from "./NumberedChildren";
 import styles from './bestagon-components.module.css';
 import { getDerivedProperties } from "./derive-combined-properties";
 import { useHexContainer } from "./hex-container-context";
 import { HertitableHexProps } from "./types";
-import { useStatefulRef } from "./use-stateful-ref";
 
 type Props = HertitableHexProps & {
     children: ReactNode
@@ -41,14 +41,12 @@ const ButtonHexagonBox: React.FunctionComponent<Props> = ({
     image,
     ...heritablePropsAndClassName
 }) => {
-    const [box, boxRef] = useStatefulRef<HTMLButtonElement>()
     const { classNames, combinedHexStyle, combinedPolygonClassNames, combinedPolygonStyle } = getDerivedProperties(
-        box, useHexContainer(), heritablePropsAndClassName
+        useHexContainer(), heritablePropsAndClassName, useChildNumber()
     )
 
     return <button className={[styles.hexButton, ...classNames].join(" ")}
         style={combinedHexStyle}
-        ref={boxRef}
         onClick={onClick}
     >
         <HexImage image={image} />
@@ -63,14 +61,12 @@ const DivHexagonBox: React.FunctionComponent<Props> = ({
     image,
     ...heritablePropsAndClassName
 }) => {
-    const [box, boxRef] = useStatefulRef<HTMLDivElement>()
     const { classNames, combinedHexStyle, combinedPolygonClassNames, combinedPolygonStyle } = getDerivedProperties(
-        box, useHexContainer(), heritablePropsAndClassName
+        useHexContainer(), heritablePropsAndClassName, useChildNumber()
     )
 
     return <div className={classNames.join(" ")}
         style={combinedHexStyle}
-        ref={boxRef}
         onClick={onClick}
     >
         <HexImage image={image} />

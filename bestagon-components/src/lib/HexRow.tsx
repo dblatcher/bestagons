@@ -1,6 +1,7 @@
 import React, { CSSProperties, ReactNode } from "react";
+import { NumberedChildren } from "./NumberedChildren";
 import styles from './bestagon-components.module.css';
-import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, getChildIndex, getSizeClasses } from "./helpers";
+import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, getSizeClasses } from "./helpers";
 import { HexContainerContext } from "./hex-container-context";
 import { HertitableHexProps } from "./types";
 import { useStatefulRef } from "./use-stateful-ref";
@@ -60,20 +61,19 @@ export const HexRow: React.FunctionComponent<Props> = ({
     ...heritables
 }) => {
     const [container, containerRef] = useStatefulRef()
-    const getPosition = (child?: HTMLElement): number => getChildIndex(container, child)
     const getClassNames = higherLevelGetClassNamesForBox(getSizeClasses(size), hexClassNames);
     const getStyle = higherLevelGetStyleForBox(xOffset, startLow)
     const classNamesForContainer = getClassNamesForContainer(extraHeight, size)
 
     return (
         <HexContainerContext.Provider value={{
-            container, getPosition, getClassNames, getStyle, ...heritables
+            container, getClassNames, getStyle, ...heritables
         }}>
             <section
                 className={classNamesForContainer.join(" ")}
                 ref={containerRef}
             >
-                {children}
+                <NumberedChildren children={children}/>
             </section>
         </HexContainerContext.Provider>
     )

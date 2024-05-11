@@ -4,9 +4,9 @@ import { HexContainerProps } from "./hex-container-context"
 import { HertitableHexProps } from "./types"
 
 export const getDerivedProperties = (
-    box: HTMLElement | undefined,
     hexContainer: HexContainerProps,
-    directProperties: HertitableHexProps & { className?: string, style?: CSSProperties }
+    directProperties: HertitableHexProps & { className?: string, style?: CSSProperties },
+    positionInRow: number,
 ) => {
     const {
         container,
@@ -15,7 +15,6 @@ export const getDerivedProperties = (
         hexStyle: inheritedHexStyle = {},
     } = hexContainer
 
-    const positionInRow = hexContainer.getPosition(box)
     const classNames = hexContainer.getClassNames(positionInRow, container)
 
     if (directProperties.className) {
