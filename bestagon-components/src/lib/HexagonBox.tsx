@@ -4,6 +4,7 @@ import styles from './bestagon-components.module.css';
 import { getDerivedProperties } from "./derive-combined-properties";
 import { useHexContainer } from "./hex-container-context";
 import { HertitableHexProps } from "./types";
+import { HexData, buildHexDataAttributes } from "./data-hex-attributes";
 
 type Props = HertitableHexProps & {
     children: ReactNode
@@ -11,6 +12,7 @@ type Props = HertitableHexProps & {
     className?: string;
     onClick?: React.MouseEventHandler<HTMLElement>
     image?: { src: string }
+    hexData?: HexData
 }
 
 const HexSvgOutline = ({ combinedPolygonStyle, combinedPolygonClassNames }: { combinedPolygonStyle?: CSSProperties, combinedPolygonClassNames: string[] }) => (
@@ -39,6 +41,7 @@ const ButtonHexagonBox: React.FunctionComponent<Props> = ({
     children,
     onClick,
     image,
+    hexData,
     ...heritablePropsAndClassName
 }) => {
     const { classNames, combinedHexStyle, combinedPolygonClassNames, combinedPolygonStyle } = getDerivedProperties(
@@ -48,6 +51,7 @@ const ButtonHexagonBox: React.FunctionComponent<Props> = ({
     return <button className={[styles.hexButton, ...classNames].join(" ")}
         style={combinedHexStyle}
         onClick={onClick}
+        {...buildHexDataAttributes(hexData)}
     >
         <HexImage image={image} />
         <HexSvgOutline {...{ combinedPolygonClassNames, combinedPolygonStyle }} />
@@ -59,6 +63,7 @@ const DivHexagonBox: React.FunctionComponent<Props> = ({
     children,
     onClick,
     image,
+    hexData,
     ...heritablePropsAndClassName
 }) => {
     const { classNames, combinedHexStyle, combinedPolygonClassNames, combinedPolygonStyle } = getDerivedProperties(

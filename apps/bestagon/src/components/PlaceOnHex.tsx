@@ -4,7 +4,7 @@ interface Props {
     boardRef: React.RefObject<HTMLElement>
     x: number,
     y: number,
-    findHex: { (x: number, y: number): HTMLElement | undefined }
+    findHex: { (x: number, y: number): Element | undefined }
     children: ReactNode
 }
 

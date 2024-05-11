@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HexRow, HexagonBox, useStatefulRef } from '@bestagon-mono/bestagon-components';
+import { HexRow, HexagonBox, attributeMap, useStatefulRef } from '@bestagon-mono/bestagon-components';
 import React, { CSSProperties, useState } from 'react';
 import { PlaceOnHex } from './PlaceOnHex';
 
@@ -54,7 +54,7 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
     }
 
     const findHex = (x: number, y: number) => {
-        return board?.querySelector(`[data-col="${x}"][data-row="${y}"]`)?.parentElement?.parentElement ?? undefined
+        return board?.querySelector(`[${attributeMap.x}="${x}"][${attributeMap.y}="${y}"]`) ?? undefined
     }
 
 
@@ -69,13 +69,16 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
                     <HexRow startLow={startLow} size='small' key={row} extraHeight={row === rows - 1}>
                         {getZeroBasedNumbers(width).map((col) => (
                             <HexagonBox
+                                hexData={{
+                                    x: col, y: row
+                                }}
                                 onClick={() => {
                                     setX(col);
                                     setY(row);
                                 }}
                                 style={getStyle(row, col)} key={col}
                             >
-                                <span data-col={col} data-row={row}> {col} , {row}</span>
+                                <span> {col} , {row}</span>
                             </HexagonBox>
                         ))}
                     </HexRow>
