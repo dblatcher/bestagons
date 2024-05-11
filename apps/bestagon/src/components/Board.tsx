@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HexRow, HexagonBox } from '@bestagon-mono/bestagon-components';
+import { HexRow, HexagonBox, useStatefulRef } from '@bestagon-mono/bestagon-components';
 import React, { CSSProperties, useState } from 'react';
+import { FigureOnHex } from './FigureOnHex';
 
 interface Props {
     rows: number
@@ -34,9 +35,9 @@ const isHexAdjacent = (x1: number, y1: number, x2: number, y2: number, startLow 
 const startLow = false
 
 export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
-
-    const [x, setX] = useState(0)
-    const [y, setY] = useState(0)
+    const [board, boardRef] = useStatefulRef<HTMLDivElement>()
+    const [x, setX] = useState(2)
+    const [y, setY] = useState(3)
 
     const getStyle = (row: number, col: number): CSSProperties => {
         if (row === y && col === x) {
@@ -52,39 +53,43 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
         return {}
     }
 
-    const getSelectedElement = () => {
-        return document.querySelector(`[data-col="${x}"][data-row="${y}"]`)
+    const getSelectedHexContent = (x: number, y: number) => {
+        return board?.querySelector(`[data-col="${x}"][data-row="${y}"]`)
     }
 
-    const logClientCoords = () => {
-        const element = getSelectedElement()?.parentElement?.parentElement
-        if (!element) {
-            return
-        }
-        const {clientLeft,clientTop,} = element
-        console.log({element, clientLeft,clientTop})
-        console.log(element.getBoundingClientRect())
-    }
 
     return (
-        <div>
-            
-            {getZeroBasedNumbers(rows).map((row) => (
-                <HexRow startLow={startLow} size='small' key={row} extraHeight={row === rows - 1}>
-                    {getZeroBasedNumbers(width).map((col) => (
-                        <HexagonBox
-                            onClick={() => {
-                                setX(col);
-                                setY(row);
-                            }}
-                            style={getStyle(row, col)} key={col}
-                        >
-                            <span data-col={col} data-row={row}> {col} , {row}</span>
-                        </HexagonBox>
-                    ))}
-                </HexRow>
-            ))}
-            <button onClick={logClientCoords}>t</button>
+        <div
+            ref={boardRef}
+            style={{
+                position: 'relative'
+            }}>
+            {
+                getZeroBasedNumbers(rows).map((row) => (
+                    <HexRow startLow={startLow} size='small' key={row} extraHeight={row === rows - 1}>
+                        {getZeroBasedNumbers(width).map((col) => (
+                            <HexagonBox
+                                onClick={() => {
+                                    setX(col);
+                                    setY(row);
+                                }}
+                                style={getStyle(row, col)} key={col}
+                            >
+                                <span data-col={col} data-row={row}> {col} , {row}</span>
+                            </HexagonBox>
+                        ))}
+                    </HexRow>
+                ))
+            }
+
+            {board && (
+                <FigureOnHex
+                    {...{ x, y, boardRef }}
+                    findHex={(x, y) => {
+                        return getSelectedHexContent(x, y)?.parentElement?.parentElement ?? undefined
+                    }}
+                />
+            )}
         </div>
     );
 }
