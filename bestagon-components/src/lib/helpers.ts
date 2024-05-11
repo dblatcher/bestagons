@@ -36,4 +36,10 @@ export const getHexDimensionsForSize = (size: HexSize = 'normal') => {
         case "big": return hexDimensions(300)
         case "small": return hexDimensions(80)
     }
-}
+};
+
+export const getZeroBasedNumbers = (length: number) => {
+    const list: number[] = new Array(length);
+    list.fill(0);
+    return list.map((_, index) => index);
+};

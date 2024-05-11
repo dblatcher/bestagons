@@ -1,18 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HexRow, HexagonBox, attributeMap, useStatefulRef } from '@bestagon-mono/bestagon-components';
+import { HexGrid, HexagonBox, attributeMap, useStatefulRef } from '@bestagon-mono/bestagon-components';
 import React, { CSSProperties, useState } from 'react';
 import { PlaceOnHex } from './PlaceOnHex';
 
 interface Props {
     rows: number
     width: number
-}
-
-
-const getZeroBasedNumbers = (length: number) => {
-    const list: number[] = new Array(length);
-    list.fill(0);
-    return list.map((_, index) => index);
 }
 
 const isHexAdjacent = (x1: number, y1: number, x2: number, y2: number, startLow = false): boolean => {
@@ -32,7 +25,7 @@ const isHexAdjacent = (x1: number, y1: number, x2: number, y2: number, startLow 
     return false
 }
 
-const startLow = false
+const startLow = true
 
 export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
     const [board, boardRef] = useStatefulRef<HTMLDivElement>()
@@ -59,32 +52,21 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
 
 
     return (
-        <div
-            ref={boardRef}
-            style={{
-                position: 'relative'
-            }}>
-            {
-                getZeroBasedNumbers(rows).map((row) => (
-                    <HexRow startLow={startLow} size='small' key={row} extraHeight={row === rows - 1}>
-                        {getZeroBasedNumbers(width).map((col) => (
-                            <HexagonBox
-                                hexData={{
-                                    x: col, y: row
-                                }}
-                                onClick={() => {
-                                    setX(col);
-                                    setY(row);
-                                }}
-                                style={getStyle(row, col)} key={col}
-                            >
-                                <span> {col} , {row}</span>
-                            </HexagonBox>
-                        ))}
-                    </HexRow>
-                ))
-            }
-
+        <HexGrid ref={boardRef}
+            startLow={startLow} rows={rows} width={width} size='small'
+            makeHex={(col, row) => (
+                <HexagonBox key={col}
+                    hexData={{ x: col, y: row }}
+                    onClick={() => {
+                        setX(col);
+                        setY(row);
+                    }}
+                    style={getStyle(row, col)}
+                >
+                    <b>{col}, {row}</b>
+                </HexagonBox>
+            )}
+        >
             {board && (<>
                 <PlaceOnHex {...{ x, y, boardRef, findHex }}>
                     <span>Here</span>
@@ -93,7 +75,7 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
                     <span>not here</span>
                 </PlaceOnHex>
             </>)}
-        </div>
+        </HexGrid>
     );
 }
 
