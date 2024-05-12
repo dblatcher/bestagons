@@ -1,6 +1,6 @@
 import { CSSProperties } from "react"
 
-export type HexSize = 'normal' | 'big' | 'small'
+export type HexSize = 'normal' | 'big' | 'small' | 'xSmall'
 
 export type HertitableHexProps = {
     hexStyle?:CSSProperties

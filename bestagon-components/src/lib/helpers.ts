@@ -7,6 +7,7 @@ export const getSizeClasses = (size: HexSize = 'normal'): string[] => {
         case "normal": return []
         case "big": return [styles.bigHex]
         case "small": return [styles.smallHex]
+        case "xSmall": return [styles.xSmallHex]
     }
 }
 
@@ -32,9 +33,10 @@ const hexDimensions = (width: number) => (
 // TO DO? generate classes dynamically with Emotion?
 export const getHexDimensionsForSize = (size: HexSize = 'normal') => {
     switch (size) {
-        case "normal": return hexDimensions(150)
         case "big": return hexDimensions(300)
+        case "normal": return hexDimensions(150)
         case "small": return hexDimensions(80)
+        case "xSmall": return hexDimensions(40)
     }
 };
 
