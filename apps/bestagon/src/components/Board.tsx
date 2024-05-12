@@ -54,16 +54,16 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
     return (
         <HexGrid ref={boardRef}
             startLow={startLow} rows={rows} width={width} size='small'
-            makeHex={(col, row) => (
-                <HexagonBox key={col}
-                    hexData={{ x: col, y: row }}
+            makeHex={(x, y) => (
+                <HexagonBox
+                    hexData={{ x, y }}
                     onClick={() => {
-                        setX(col);
-                        setY(row);
+                        setX(x);
+                        setY(y);
                     }}
-                    style={getStyle(row, col)}
+                    style={getStyle(y, x)} key={x}
                 >
-                    <b>{col}, {row}</b>
+                    <b>{x}, {y}</b>
                 </HexagonBox>
             )}
         >
