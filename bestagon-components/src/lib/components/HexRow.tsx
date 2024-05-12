@@ -3,7 +3,7 @@ import { NumberedChildren } from "./NumberedChildren";
 import styles from '../bestagon-components.module.css';
 import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, getSizeClasses } from "../helpers";
 import { HexContainerContext } from "../hex-container-context";
-import { HertitableHexProps } from "../types";
+import { HertitableHexProps, HexSize } from "../types";
 import { useStatefulRef } from "../use-stateful-ref";
 
 type Props = HertitableHexProps & {
@@ -16,7 +16,7 @@ type Props = HertitableHexProps & {
 
 const higherLevelGetStyleForBox = (xOffset = 0, startLow = false) =>
     (position: number, container?: HTMLElement): CSSProperties => {
-        if (position == -1) {
+        if (position ===  -1) {
             return {}
         }
         if (!container) {
@@ -37,7 +37,7 @@ const higherLevelGetStyleForBox = (xOffset = 0, startLow = false) =>
 const higherLevelGetClassNamesForBox = (sizeClasses: string[], hexClassNames: string[]) =>
     (position: number, container?: HTMLElement): string[] => {
         const base = [styles.hexBox, ...sizeClasses, ...hexClassNames]
-        if (!container || position == -1) {
+        if (!container || position ===  -1) {
             return base
         }
         if (position % 2 === 1) {
@@ -48,7 +48,7 @@ const higherLevelGetClassNamesForBox = (sizeClasses: string[], hexClassNames: st
 
 const getClassNamesForContainer = (
     extraHeight?: boolean,
-    size?: 'normal' | 'big' | 'small'
+    size?: HexSize 
 ): string[] => {
     const heightClasses = extraHeight ? styles.hexRowExtraHeight : []
     return [styles.hexRow, getSizeClasses(size), heightClasses].flat()

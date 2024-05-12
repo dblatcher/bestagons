@@ -31,14 +31,13 @@ const HexSvgOutline = ({ combinedPolygonStyle, combinedPolygonClassNames }: { co
     </svg>
 )
 
-const HexImage = ({ image }: { image: Props['image'] }) => <>
-    {image && (
-        <img
-            className={styles.hexBox_img}
-            {...image}
-        />
-    )}
-</>
+const HexImage = ({ image }: { image: Props['image'] }) => image && (
+    <img
+        alt={image.alt ?? ''}
+        className={styles.hexBox_img}
+        {...image}
+    />
+)
 
 const ButtonHexagonBox: React.FunctionComponent<Props> = ({
     children,
