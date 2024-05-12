@@ -69,8 +69,11 @@ export function Examples() {
                 </HexagonImage>
                 <HexagonBox>C</HexagonBox>
                 <HexagonBox>D</HexagonBox>
-                <HexagonBox>E</HexagonBox>
-                <HexagonImage src='./feathers.png' />
+                <HexagonBox image={{
+                    src:'./feathers.png',
+                    alt:'feathers'
+                }}>E</HexagonBox>
+                <HexagonImage src='./feathers.png' alt='feathers'/>
                 <HexagonBox>G</HexagonBox>
                 <HexagonBox>H</HexagonBox>
                 <HexagonBox>I</HexagonBox>

@@ -1,16 +1,16 @@
-import React, { CSSProperties, ReactNode } from "react";
+import React, { CSSProperties, ImgHTMLAttributes, ReactNode } from "react";
 import { HexagonBox } from "./HexagonBox";
 
-interface Props {
+type Props = ImgHTMLAttributes<HTMLImageElement> & {
     children?: ReactNode
     polygonStyle?: CSSProperties
     polygonClassNames?: string[]
     onClick?: React.MouseEventHandler<HTMLElement>
-    src: string
+
 }
 
 
-export const HexagonImage: React.FunctionComponent<Props> = ({ children, polygonStyle, polygonClassNames, onClick, src }) => {
+export const HexagonImage: React.FunctionComponent<Props> = ({ children, polygonStyle, polygonClassNames, onClick, ...imageProps }) => {
 
     return <HexagonBox
         {...{
@@ -18,8 +18,7 @@ export const HexagonImage: React.FunctionComponent<Props> = ({ children, polygon
             polygonClassNames,
             onClick
         }}
-
-        image={{ src }}
+        image={imageProps}
     >{children}</HexagonBox>
 }
 

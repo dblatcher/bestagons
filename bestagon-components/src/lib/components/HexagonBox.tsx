@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactNode } from "react";
+import React, { CSSProperties, ReactNode, ImgHTMLAttributes } from "react";
 import { useChildNumber } from "./NumberedChildren";
 import styles from '../bestagon-components.module.css';
 import { getDerivedProperties } from "../derive-combined-properties";
@@ -6,12 +6,14 @@ import { useHexContainer } from "../hex-container-context";
 import { HertitableHexProps } from "../types";
 import { HexData, buildHexDataAttributes } from "../data-hex-attributes";
 
+
+
 type Props = HertitableHexProps & {
     children: ReactNode
     style?: CSSProperties
     className?: string;
     onClick?: React.MouseEventHandler<HTMLElement>
-    image?: { src: string }
+    image?: ImgHTMLAttributes<HTMLImageElement>
     hexData?: HexData
 }
 
@@ -31,8 +33,8 @@ const HexSvgOutline = ({ combinedPolygonStyle, combinedPolygonClassNames }: { co
 const HexImage = ({ image }: { image: Props['image'] }) => <>
     {image && (
         <img
-            src={image.src}
             className={styles.hexBox_img}
+            {...image}
         />
     )}
 </>
