@@ -1,12 +1,14 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HexRow, HexWrapper, HexagonBox, HexagonImage } from '@bestagon-mono/bestagon-components';
+import { HexGrid, HexRow, HexWrapper, HexagonBox, HexagonImage } from '@bestagon-mono/bestagon-components';
 import styles from './examples.module.css';
 
 
 export function Examples() {
     return (
         <div>
-
+            <HexGrid width={3} rows={3} makeHex={(x, y) => 
+                <HexagonImage key={x} src={x === y ? './fruit.png' : './feathers.png'} />} 
+            />
             <div style={{ display: 'flex' }}>
                 <HexagonBox
                     style={{
@@ -52,7 +54,10 @@ export function Examples() {
             <br></br>
             <br></br>
 
-            <HexWrapper size='normal' hexClassNames={[styles.yellowHex]} polygonStyle={{ display: 'none' }} >
+            <HexWrapper size='normal'
+            // hexClassNames={[styles.yellowHex]} 
+            // polygonStyle={{ display: 'none' }} 
+            >
                 <HexagonBox
                     image={{ src: './fruit.png' }}
                     onClick={(event) => {
@@ -70,10 +75,10 @@ export function Examples() {
                 <HexagonBox>C</HexagonBox>
                 <HexagonBox>D</HexagonBox>
                 <HexagonBox image={{
-                    src:'./feathers.png',
-                    alt:'feathers'
+                    src: './feathers.png',
+                    alt: 'feathers'
                 }}>E</HexagonBox>
-                <HexagonImage src='./feathers.png' alt='feathers'/>
+                <HexagonImage src='./feathers.png' alt='feathers' />
                 <HexagonBox>G</HexagonBox>
                 <HexagonBox>H</HexagonBox>
                 <HexagonBox>I</HexagonBox>

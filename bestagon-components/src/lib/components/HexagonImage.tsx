@@ -11,14 +11,14 @@ type Props = ImgHTMLAttributes<HTMLImageElement> & {
 
 
 export const HexagonImage: React.FunctionComponent<Props> = ({ children, polygonStyle, polygonClassNames, onClick, ...imageProps }) => {
-
     return <HexagonBox
         {...{
-            polygonStyle: { ...polygonStyle, fill: "none" },
+            polygonStyle,
             polygonClassNames,
             onClick
         }}
         image={imageProps}
+        noSvg={!onClick && !polygonStyle && !polygonClassNames}
     >{children}</HexagonBox>
 }
 
