@@ -2,14 +2,13 @@
 import { Board } from '../components/Board';
 import { Examples } from '../components/Examples';
 
-
 export function App() {
-  return (<>
-
-    <Board rows={6} width={7}/>
-    <Examples />
-
-  </>);
+  return (
+    <>
+      <Board rows={6} width={7} />
+      <Examples />
+    </>
+  );
 }
 
 export default App;

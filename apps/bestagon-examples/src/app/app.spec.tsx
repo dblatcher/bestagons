@@ -7,5 +7,4 @@ describe('App', () => {
     const { baseElement } = render(<App />);
     expect(baseElement).toBeTruthy();
   });
-
 });
