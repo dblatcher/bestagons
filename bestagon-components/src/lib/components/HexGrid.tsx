@@ -1,8 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HexRow } from '@bestagon-mono/bestagon-components';
 import React, { ReactNode, forwardRef } from 'react';
 import { getZeroBasedNumbers } from '../helpers';
 import { HexSize } from '../types';
+import { HexRow } from './HexRow';
 
 interface Props {
     rows: number

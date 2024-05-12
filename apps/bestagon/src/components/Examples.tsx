@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HexGrid, HexRow, HexWrapper, HexagonBox, HexagonImage } from '@bestagon-mono/bestagon-components';
+import { HexGrid, HexRow, HexWrapper, HexagonBox, HexagonImage } from '@dblatcher/bestagons';
 import styles from './examples.module.css';
 
 

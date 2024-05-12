@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HexGrid, HexagonBox, attributeMap, useStatefulRef } from '@bestagon-mono/bestagon-components';
+import { HexGrid, HexagonBox, attributeMap, useStatefulRef } from '@dblatcher/bestagons'
 import React, { CSSProperties, useState } from 'react';
 import { PlaceOnHex } from './PlaceOnHex';
 
