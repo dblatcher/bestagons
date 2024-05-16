@@ -53,7 +53,7 @@
     }
   },
   "release": {
-    "projects": ["bestagon-components"]
+    "projects": ["bestagon-components-emotion"]
   },
   "targetDefaults": {
     "@nx/rollup:rollup": {
