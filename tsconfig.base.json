@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@dblatcher/bestagons": ["bestagon-components/src/index.ts"]
+      "@dblatcher/bestagons": ["bestagon-components/src/index.ts"],
+      "@dblatcher/bestagons-2": ["bestagon-components-emotion/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,0 +1,29 @@
+{
+  "name": "bestagon-components-emotion",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "bestagon-components-emotion/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/bestagon-components-emotion",
+        "tsConfig": "bestagon-components-emotion/tsconfig.lib.json",
+        "project": "bestagon-components-emotion/package.json",
+        "entryFile": "bestagon-components-emotion/src/index.ts",
+        "external": ["react", "react-dom", "@emotion/react/jsx-runtime"],
+        "rollupConfig": "@nx/react/plugins/bundle-rollup",
+        "compiler": "babel",
+        "assets": [
+          {
+            "glob": "bestagon-components-emotion/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    }
+  }
+}

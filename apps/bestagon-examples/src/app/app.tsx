@@ -1,4 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { HexagonBox } from '@dblatcher/bestagons-2';
 import { Board } from '../components/Board';
 import { Examples } from '../components/Examples';
 

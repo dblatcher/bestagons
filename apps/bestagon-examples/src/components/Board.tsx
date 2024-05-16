@@ -4,7 +4,7 @@ import {
   HexagonBox,
   attributeMap,
   useStatefulRef,
-} from '@dblatcher/bestagons';
+} from '@dblatcher/bestagons-2';
 import React, { CSSProperties, useState } from 'react';
 import { PlaceOnHex } from './PlaceOnHex';
 

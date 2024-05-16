@@ -5,7 +5,7 @@ import {
   HexWrapper,
   HexagonBox,
   HexagonImage,
-} from '@dblatcher/bestagons';
+} from '@dblatcher/bestagons-2';
 import styles from './examples.module.css';
 
 export function Examples() {
