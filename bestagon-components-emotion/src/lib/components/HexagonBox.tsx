@@ -5,6 +5,7 @@ import { getDerivedProperties } from "../derive-combined-properties";
 import { useHexContainer } from "../hex-container-context";
 import { HertitableHexProps } from "../types";
 import { HexData, buildHexDataAttributes } from "../data-hex-attributes";
+import { hexButtonCss } from "../shared-styles";
 
 
 
@@ -51,8 +52,8 @@ const ButtonHexagonBox: React.FunctionComponent<Props> = ({
         useHexContainer(), heritablePropsAndClassName, useChildNumber()
     )
 
-    return <button className={[styles.hexButton, ...classNames].join(" ")}
-        css={css}
+    return <button className={classNames.join(" ")}
+        css={[css, hexButtonCss]}
         style={combinedHexStyle}
         onClick={onClick}
         {...buildHexDataAttributes(hexData)}

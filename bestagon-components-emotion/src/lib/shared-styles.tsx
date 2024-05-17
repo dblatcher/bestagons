@@ -15,11 +15,7 @@ export const buildContainerCss = (
 }
 
 export const buildHexagonBoxCss = (position: number, size: HexSize, container?: HTMLElement) => {
-
     const dims = getHexDimensionsForSize(size)
-
-
-
     return css({
         clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);',
         boxSizing: 'border-box',
@@ -32,3 +28,35 @@ export const buildHexagonBoxCss = (position: number, size: HexSize, container?: 
         position: position === -1 ? 'relative' : 'absolute',
     })
 }
+
+export const hexButtonCss = css({
+    backgroundColor: 'unset',
+    textAlign: 'unset',
+    cursor: 'pointer',
+    border: 'none',
+
+    '>svg': {
+        'polygon': {
+            strokeWidth: 4,
+            stroke: 'gray'
+        }
+    },
+
+    '&:focus': {
+        '>svg': {
+            'polygon': {
+                strokeWidth: 8,
+                stroke: 'black'
+            }
+        }
+    },
+
+    '&:hover': {
+        '>svg': {
+            'polygon': {
+                fill: 'rgba(10, 10, 10, .1)',
+                stroke: 'black'
+            }
+        }
+    },
+})

@@ -23,25 +23,3 @@
     inset: 0 25%;
     height: 100%;
 }
-
-.hexButton {
-    background-color: unset;
-    text-align: unset;
-    cursor: pointer;
-    border: none;
-}
-
-.hexButton .hexBox_svg polygon {
-    stroke-width: 4;
-    stroke: gray;
-}
-
-.hexButton:focus .hexBox_svg polygon {
-    stroke-width: 8;
-    stroke: black;
-}
-
-.hexButton:hover .hexBox_svg polygon {
-    fill: rgba(10, 10, 10, .1);
-    stroke: black;
-}
