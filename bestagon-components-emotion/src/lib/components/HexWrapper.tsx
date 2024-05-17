@@ -5,6 +5,8 @@ import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, getHexDimensionsForSize, getSizeC
 import { HexContainerContext } from "../hex-container-context";
 import { HertitableHexProps, HexSize } from "../types";
 import { useStatefulRef } from "../use-stateful-ref";
+import { SerializedStyles, css } from "@emotion/react";
+import { buildContainerCss } from "../shared-styles";
 
 type Props = HertitableHexProps & {
     children: ReactNode
@@ -48,13 +50,6 @@ const higherLevelGetClassNamesForBox = (sizeClasses: string[], hexClassNames: st
         return [...base, styles.hexBoxAbsolute]
     }
 
-const getClassNamesForContainer = (
-    extraHeight?: boolean,
-    size?: HexSize
-): string[] => {
-    const heightClasses = extraHeight ? styles.hexRowExtraHeight : []
-    return [styles.hexRow, getSizeClasses(size), heightClasses].flat()
-}
 
 const getHexesPerRow = (containerWidth: number, hexWidth: number): number => {
     const spacePerHex = hexWidth * AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP;
@@ -101,14 +96,13 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
 
     const getClassNames = higherLevelGetClassNamesForBox(getSizeClasses(size), hexClassNames);
     const getStyle = higherLevelGetStyleForBox(hexesPerRow, startLow)
-    const classNamesForContainer = getClassNamesForContainer(extraHeight, size)
 
     return (
         <HexContainerContext.Provider value={{
             container, getClassNames, getStyle, ...heritables
         }}>
             <section
-                className={classNamesForContainer.join(" ")}
+                css={buildContainerCss(extraHeight, size)}
                 ref={containerRef}
                 style={{
                     minHeight: hexDims.height * (.5 + rowCount),

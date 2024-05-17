@@ -1,10 +1,11 @@
 import React, { CSSProperties, ReactNode } from "react";
-import { NumberedChildren } from "./NumberedChildren";
 import styles from '../bestagon-components.module.css';
 import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, getSizeClasses } from "../helpers";
 import { HexContainerContext } from "../hex-container-context";
-import { HertitableHexProps, HexSize } from "../types";
+import { buildContainerCss } from "../shared-styles";
+import { HertitableHexProps } from "../types";
 import { useStatefulRef } from "../use-stateful-ref";
+import { NumberedChildren } from "./NumberedChildren";
 
 type Props = HertitableHexProps & {
     children: ReactNode
@@ -16,7 +17,7 @@ type Props = HertitableHexProps & {
 
 const higherLevelGetStyleForBox = (xOffset = 0, startLow = false) =>
     (position: number, container?: HTMLElement): CSSProperties => {
-        if (position ===  -1) {
+        if (position === -1) {
             return {}
         }
         if (!container) {
@@ -37,7 +38,7 @@ const higherLevelGetStyleForBox = (xOffset = 0, startLow = false) =>
 const higherLevelGetClassNamesForBox = (sizeClasses: string[], hexClassNames: string[]) =>
     (position: number, container?: HTMLElement): string[] => {
         const base = [styles.hexBox, ...sizeClasses, ...hexClassNames]
-        if (!container || position ===  -1) {
+        if (!container || position === -1) {
             return base
         }
         if (position % 2 === 1) {
@@ -45,14 +46,6 @@ const higherLevelGetClassNamesForBox = (sizeClasses: string[], hexClassNames: st
         }
         return [...base, styles.hexBoxAbsolute]
     }
-
-const getClassNamesForContainer = (
-    extraHeight?: boolean,
-    size?: HexSize 
-): string[] => {
-    const heightClasses = extraHeight ? styles.hexRowExtraHeight : []
-    return [styles.hexRow, getSizeClasses(size), heightClasses].flat()
-}
 
 export const HexRow: React.FunctionComponent<Props> = ({
     children,
@@ -66,14 +59,13 @@ export const HexRow: React.FunctionComponent<Props> = ({
     const [container, containerRef] = useStatefulRef()
     const getClassNames = higherLevelGetClassNamesForBox(getSizeClasses(size), hexClassNames);
     const getStyle = higherLevelGetStyleForBox(xOffset, startLow)
-    const classNamesForContainer = getClassNamesForContainer(extraHeight, size)
 
     return (
         <HexContainerContext.Provider value={{
             container, getClassNames, getStyle, ...heritables
         }}>
             <section
-                className={classNamesForContainer.join(" ")}
+                css={buildContainerCss(extraHeight, size)}
                 ref={containerRef}
             >
                 <NumberedChildren children={children} />
