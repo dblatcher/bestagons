@@ -1,24 +1,6 @@
-import styles from './bestagon-components.module.css';
 import { HexSize } from './types';
 
-
-export const getSizeClasses = (size: HexSize = 'normal'): string[] => {
-    switch (size) {
-        case "normal": return []
-        case "big": return [styles.bigHex]
-        case "small": return [styles.smallHex]
-        case "xSmall": return [styles.xSmallHex]
-    }
-}
-
-export const removeSizeClasses = (original: string[]): string[] => {
-    const filtered = original.filter(name => ![styles.bigHex, styles.smallHex].includes(name))
-    original.splice(0, original.length, ...filtered)
-    return original
-}
-
 export const AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP = .75;
-
 
 // 13/15 (0.86 recurring) is an approximation root 0.75 (0.8660254037844386)
 // which is the actual ratio of width to height for a regular hexagon

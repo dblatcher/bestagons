@@ -1,12 +1,10 @@
 import React, { CSSProperties, ReactNode } from "react";
-import styles from '../bestagon-components.module.css';
-import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, getSizeClasses } from "../helpers";
+import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP } from "../helpers";
 import { HexContainerContext } from "../hex-container-context";
 import { buildContainerCss, buildHexagonBoxCss } from "../shared-styles";
-import { HertitableHexProps, HexSize } from "../types";
+import { HertitableHexProps } from "../types";
 import { useStatefulRef } from "../use-stateful-ref";
 import { NumberedChildren } from "./NumberedChildren";
-import { css } from "@emotion/react";
 
 type Props = HertitableHexProps & {
     children: ReactNode

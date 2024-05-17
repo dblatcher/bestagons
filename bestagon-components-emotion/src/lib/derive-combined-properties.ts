@@ -1,5 +1,4 @@
 import { CSSProperties } from "react"
-import { getSizeClasses, removeSizeClasses } from "./helpers"
 import { HexContainerProps } from "./hex-container-context"
 import { buildHexagonBoxCss } from "./shared-styles"
 import { HertitableHexProps } from "./types"
@@ -22,14 +21,6 @@ export const getDerivedProperties = (
 
     if (directProperties.className) {
         classNames.push(directProperties.className)
-    }
-
-    // TO DO ? changing the size changes the posiitioning (uses %)
-    // do I actually want to allow hexes in a container to be a different size to
-    // the container?
-    if (directProperties.size) {
-        removeSizeClasses(classNames)
-        classNames.push(...getSizeClasses(directProperties.size))
     }
 
     return {
