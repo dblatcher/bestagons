@@ -91,7 +91,7 @@ export function Examples() {
         <br></br>
       </details>
 
-      <details>
+      <details open>
         <summary>responsive hexwrapper</summary>
         <HexWrapper
           size="normal"
@@ -141,7 +141,7 @@ export function Examples() {
         </HexWrapper>
       </details>
 
-      <details>
+      <details open>
         <summary>inheritance examples</summary>
         <HexRow
           startLow

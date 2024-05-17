@@ -47,11 +47,12 @@ const ButtonHexagonBox: React.FunctionComponent<Props> = ({
     noSvg,
     ...heritablePropsAndClassName
 }) => {
-    const { classNames, combinedHexStyle, combinedPolygonClassNames, combinedPolygonStyle } = getDerivedProperties(
+    const { classNames, combinedHexStyle, combinedPolygonClassNames, combinedPolygonStyle, css } = getDerivedProperties(
         useHexContainer(), heritablePropsAndClassName, useChildNumber()
     )
 
     return <button className={[styles.hexButton, ...classNames].join(" ")}
+        css={css}
         style={combinedHexStyle}
         onClick={onClick}
         {...buildHexDataAttributes(hexData)}
@@ -72,11 +73,12 @@ const DivHexagonBox: React.FunctionComponent<Props> = ({
     noSvg,
     ...heritablePropsAndClassName
 }) => {
-    const { classNames, combinedHexStyle, combinedPolygonClassNames, combinedPolygonStyle } = getDerivedProperties(
+    const { classNames, combinedHexStyle, combinedPolygonClassNames, combinedPolygonStyle, css } = getDerivedProperties(
         useHexContainer(), heritablePropsAndClassName, useChildNumber()
     )
 
     return <div className={classNames.join(" ")}
+        css={css}
         style={combinedHexStyle}
         onClick={onClick}
     >

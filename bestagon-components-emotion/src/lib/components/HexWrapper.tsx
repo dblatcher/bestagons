@@ -6,7 +6,7 @@ import { HexContainerContext } from "../hex-container-context";
 import { HertitableHexProps, HexSize } from "../types";
 import { useStatefulRef } from "../use-stateful-ref";
 import { SerializedStyles, css } from "@emotion/react";
-import { buildContainerCss } from "../shared-styles";
+import { buildContainerCss, buildHexagonBoxCss } from "../shared-styles";
 
 type Props = HertitableHexProps & {
     children: ReactNode
@@ -45,7 +45,7 @@ const higherLevelGetClassNamesForBox = (sizeClasses: string[], hexClassNames: st
             return base
         }
         if (position % 2 === 1) {
-            return [...base, styles.hexBoxAbsolute, styles.hexContainerInGridLower]
+            return [...base, styles.hexContainerInGridLower]
         }
         return [...base, styles.hexBoxAbsolute]
     }
@@ -99,7 +99,8 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
 
     return (
         <HexContainerContext.Provider value={{
-            container, getClassNames, getStyle, ...heritables
+            container, getClassNames, getStyle, ...heritables,
+            getCss: buildHexagonBoxCss, size,
         }}>
             <section
                 css={buildContainerCss(extraHeight, size)}
