@@ -20,6 +20,8 @@ export const getHexDimensionsForSize = (size: HexSize = 'normal') => {
         case "small": return hexDimensions(80)
         case "xSmall": return hexDimensions(40)
     }
+
+    return hexDimensions(size)
 };
 
 export const getZeroBasedNumbers = (length: number) => {

@@ -40,8 +40,8 @@ const startLow = true;
 
 export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
   const [board, boardRef] = useStatefulRef<HTMLDivElement>();
-  const [x, setX] = useState(2);
-  const [y, setY] = useState(3);
+  const [x, setX] = useState<number>(2);
+  const [y, setY] = useState<number>(3);
 
   const getStyle = (row: number, col: number): CSSProperties => {
     if (row === y && col === x) {
@@ -71,8 +71,8 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
       startLow={startLow}
       rows={rows}
       width={width}
-      size="small"
-      makeHex={(x, y) => (
+      size={60}
+      makeHex={(x: number, y: number) => (
         <HexagonBox
           hexData={{ x, y }}
           onClick={() => {
