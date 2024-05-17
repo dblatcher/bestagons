@@ -1,13 +1,13 @@
 import { CSSProperties } from "react"
-import { removeSizeClasses, getSizeClasses } from "./helpers"
+import { getSizeClasses, removeSizeClasses } from "./helpers"
 import { HexContainerProps } from "./hex-container-context"
-import { HertitableHexProps, HexSize } from "./types"
 import { buildHexagonBoxCss } from "./shared-styles"
+import { HertitableHexProps } from "./types"
 
 export const getDerivedProperties = (
     hexContainer: HexContainerProps,
     directProperties: HertitableHexProps & { className?: string, style?: CSSProperties },
-    positionInRow: number,
+    positionInContainer: number,
 ) => {
     const {
         container,
@@ -18,7 +18,7 @@ export const getDerivedProperties = (
         size,
     } = hexContainer
 
-    const classNames = hexContainer.getClassNames(positionInRow, container)
+    const classNames = hexContainer.getClassNames(positionInContainer)
 
     if (directProperties.className) {
         classNames.push(directProperties.className)
@@ -33,13 +33,13 @@ export const getDerivedProperties = (
     }
 
     return {
-        css: inheritiedGetCss ? inheritiedGetCss(positionInRow, size, container) : buildHexagonBoxCss(-1, directProperties.size ?? 'normal'),
+        css: inheritiedGetCss ? inheritiedGetCss(positionInContainer, size, container) : buildHexagonBoxCss(-1, directProperties.size ?? 'normal'),
         classNames,
         combinedHexStyle: {
             ...inheritedHexStyle,
             ...directProperties.hexStyle,
             ...directProperties.style,
-            ...hexContainer.getStyle(positionInRow, container),
+            ...hexContainer.getStyle(positionInContainer, container),
         },
         combinedPolygonClassNames: [
             ...inheritedPolygonClassNames,

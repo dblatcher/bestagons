@@ -1,11 +1,10 @@
+import { SerializedStyles } from "@emotion/react";
 import { CSSProperties, createContext, useContext } from "react";
-import styles from './bestagon-components.module.css';
-import { SerializedStyles, css } from "@emotion/react";
 import { HexSize } from "./types";
 
 export type HexContainerProps = {
     container?: HTMLElement,
-    getClassNames: { (position: number, container?: HTMLElement): string[] },
+    getClassNames: { (position: number): string[] },
     getCss?: { (position: number, size: HexSize, container?: HTMLElement): SerializedStyles },
     getStyle: { (position: number, container?: HTMLElement): CSSProperties }
     polygonClassNames?: string[],
@@ -16,7 +15,7 @@ export type HexContainerProps = {
 
 export const HexContainerContext = createContext<HexContainerProps>({
     container: undefined,
-    getClassNames: () => [styles.hexBox],
+    getClassNames: () => [],
     getStyle: () => ({}),
     size: 'normal',
 })

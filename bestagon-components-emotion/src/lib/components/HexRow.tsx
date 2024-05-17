@@ -35,19 +35,6 @@ const higherLevelGetStyleForBox = (xOffset = 0, startLow = false) =>
         }
     }
 
-
-const higherLevelGetClassNamesForBox = (sizeClasses: string[], hexClassNames: string[]) =>
-    (position: number, container?: HTMLElement): string[] => {
-        const base = [styles.hexBox, ...sizeClasses, ...hexClassNames]
-        if (!container || position === -1) {
-            return base
-        }
-        if (position % 2 === 1) {
-            return [...base, styles.hexContainerInGridLower]
-        }
-        return [...base, styles.hexBoxAbsolute]
-    }
-
 export const HexRow: React.FunctionComponent<Props> = ({
     children,
     extraHeight,
@@ -58,12 +45,11 @@ export const HexRow: React.FunctionComponent<Props> = ({
     ...heritables
 }) => {
     const [container, containerRef] = useStatefulRef()
-    const getClassNames = higherLevelGetClassNamesForBox(getSizeClasses(size), hexClassNames);
     const getStyle = higherLevelGetStyleForBox(xOffset, startLow)
 
     return (
         <HexContainerContext.Provider value={{
-            container, getClassNames, getStyle, ...heritables,
+            container, getClassNames: () => hexClassNames, getStyle, ...heritables,
             getCss: buildHexagonBoxCss, size,
         }}>
             <section

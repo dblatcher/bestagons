@@ -38,19 +38,6 @@ const higherLevelGetStyleForBox = (hexesPerRow: number, startLow = false,) =>
     }
 
 
-const higherLevelGetClassNamesForBox = (sizeClasses: string[], hexClassNames: string[]) =>
-    (position: number, container?: HTMLElement): string[] => {
-        const base = [styles.hexBox, ...sizeClasses, ...hexClassNames]
-        if (!container || position === -1) {
-            return base
-        }
-        if (position % 2 === 1) {
-            return [...base, styles.hexContainerInGridLower]
-        }
-        return [...base, styles.hexBoxAbsolute]
-    }
-
-
 const getHexesPerRow = (containerWidth: number, hexWidth: number): number => {
     const spacePerHex = hexWidth * AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP;
     const extraSpaceForLastHex = hexWidth * (1 - AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP)
@@ -94,12 +81,11 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
         }
     }, [handleResize])
 
-    const getClassNames = higherLevelGetClassNamesForBox(getSizeClasses(size), hexClassNames);
     const getStyle = higherLevelGetStyleForBox(hexesPerRow, startLow)
 
     return (
         <HexContainerContext.Provider value={{
-            container, getClassNames, getStyle, ...heritables,
+            container, getClassNames: () => hexClassNames, getStyle, ...heritables,
             getCss: buildHexagonBoxCss, size,
         }}>
             <section
