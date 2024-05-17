@@ -31,7 +31,7 @@
 }
 
 .fancyFrame {
-  stroke-width: 10;
+  stroke-width: 10 !important;
   transition: stroke-width 1s, stroke 1s;
 }
 

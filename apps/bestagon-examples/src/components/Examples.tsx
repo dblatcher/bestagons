@@ -95,8 +95,8 @@ export function Examples() {
         <summary>responsive hexwrapper</summary>
         <HexWrapper
           size="normal"
-          // hexClassNames={[styles.yellowHex]}
-          // polygonStyle={{ display: 'none' }}
+          hexClassNames={[styles.yellowHex]}
+          polygonStyle={{ display: 'none' }}
         >
           <HexagonBox
             image={{ src: './fruit.png' }}
