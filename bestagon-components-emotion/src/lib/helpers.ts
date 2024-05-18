@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { HexSize } from './types';
 
 export const AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP = .75;
@@ -29,3 +30,11 @@ export const getZeroBasedNumbers = (length: number) => {
     list.fill(0);
     return list.map((_, index) => index);
 };
+
+export const countChildren = (children: ReactNode) => {
+    if (!children) { return 0 }
+    if (Array.isArray(children)) {
+        return children.length
+    }
+    return 1
+}

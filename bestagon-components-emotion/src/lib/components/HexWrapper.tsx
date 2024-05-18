@@ -1,5 +1,5 @@
 import React, { CSSProperties, ReactNode, useCallback, useEffect, useState } from "react";
-import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, getHexDimensionsForSize } from "../helpers";
+import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, countChildren, getHexDimensionsForSize } from "../helpers";
 import { HexContainerContext } from "../hex-container-context";
 import { buildContainerCss, buildHexagonBoxCss } from "../shared-styles";
 import { HertitableHexProps } from "../types";
@@ -55,21 +55,16 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
     ...heritables
 }) => {
     const [containerWidth, setContainerWidth] = useState(1000)
-    const [numberOfChildElements, setNumberOfChildElements] = useState(1)
     const [container, containerRef] = useStatefulRef((container) => {
         setContainerWidth(container.clientWidth)
-        setNumberOfChildElements(container.children.length)
     })
-
+    const numberOfChildElements = countChildren(children)
     const hexDims = getHexDimensionsForSize(size);
-
     const hexesPerRow = getHexesPerRow(containerWidth, hexDims.width)
     const rowCount = Math.ceil(numberOfChildElements / hexesPerRow)
 
-
     const handleResize = useCallback(() => {
         setContainerWidth(container?.clientWidth ?? containerWidth)
-        setNumberOfChildElements(container?.children.length ?? 1)
     }, [container, containerWidth, numberOfChildElements])
 
     useEffect(() => {
