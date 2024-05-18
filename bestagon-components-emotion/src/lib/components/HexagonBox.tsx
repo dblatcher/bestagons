@@ -7,11 +7,11 @@ import { HertitableHexProps } from "../types";
 import { HexData, buildHexDataAttributes } from "../data-hex-attributes";
 import { hexButtonCss } from "../shared-styles";
 import { ImageOverlay } from "./ImageOverlay";
-
+import { HexSvgOutline } from "./HexSvgOutline";
 
 
 type Props = HertitableHexProps & {
-    children: ReactNode
+    children?: ReactNode
     style?: CSSProperties
     className?: string;
     onClick?: React.MouseEventHandler<HTMLElement>
@@ -19,19 +19,6 @@ type Props = HertitableHexProps & {
     noSvg?: boolean
     hexData?: HexData
 }
-
-const HexSvgOutline = ({ combinedPolygonStyle, combinedPolygonClassNames }: { combinedPolygonStyle?: CSSProperties, combinedPolygonClassNames: string[] }) => (
-    <svg className={styles.hexBox_svg} viewBox="0 0 150 130">
-        <polygon
-            points="0,65 37.5,0 112.5,0 150,65 112.5,130 37.5,130 0,65"
-            fill="none"
-            stroke="black"
-            strokeWidth="1"
-            style={combinedPolygonStyle}
-            className={combinedPolygonClassNames.join(" ")}
-        />
-    </svg>
-)
 
 const ButtonHexagonBox: React.FunctionComponent<Props> = ({
     children,

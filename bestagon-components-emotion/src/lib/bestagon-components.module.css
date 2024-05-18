@@ -1,14 +1,4 @@
-.hexBox_svg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-}
 
-.hexBox_svg polygon {
-    stroke-width: 2;
-    pointer-events: fill;
-}
 
 .hexBox_content {
     position: absolute;
