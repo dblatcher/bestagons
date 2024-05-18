@@ -1,16 +1,31 @@
 import React, { CSSProperties, ReactNode, useCallback, useEffect, useState } from "react";
 import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, countChildren, getHexDimensionsForSize } from "../helpers";
 import { HexContainerContext } from "../hex-container-context";
-import { buildContainerCss, buildHexagonBoxCss } from "../shared-styles";
-import { HertitableHexProps } from "../types";
+import { buildHexagonBoxCss } from "../shared-styles";
+import { HertitableHexProps, HexSize } from "../types";
 import { useStatefulRef } from "../use-stateful-ref";
 import { NumberedChildren } from "./NumberedChildren";
+import { css } from "@emotion/react";
 
 type Props = HertitableHexProps & {
     children: ReactNode
     extraHeight?: boolean
     startLow?: boolean
     hexClassNames?: string[]
+}
+
+const containerCss = (
+    size: HexSize,
+    rowCount: number,
+    numberOfChildElements: number, hexesPerRow: number
+) => {
+    const numberInLastRow = numberOfChildElements % hexesPerRow
+    const hexesHigh = numberInLastRow === 1 ? rowCount : .5 + rowCount
+    return css({
+        position: 'relative',
+        pointerEvents: 'none',
+        minHeight: getHexDimensionsForSize(size).height * hexesHigh,
+    })
 }
 
 const higherLevelGetStyleForBox = (hexesPerRow: number, startLow = false,) =>
@@ -82,11 +97,8 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
             getCss: buildHexagonBoxCss, size,
         }}>
             <section
-                css={buildContainerCss(extraHeight, size)}
+                css={containerCss(size, rowCount, numberOfChildElements, hexesPerRow)}
                 ref={containerRef}
-                style={{
-                    minHeight: hexDims.height * (.5 + rowCount),
-                }}
             >
                 <NumberedChildren children={children} />
             </section>
