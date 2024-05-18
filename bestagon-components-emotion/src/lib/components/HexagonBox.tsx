@@ -1,6 +1,5 @@
 import React, { CSSProperties, ReactNode, ImgHTMLAttributes } from "react";
 import { useChildNumber } from "./NumberedChildren";
-import styles from '../bestagon-components.module.css';
 import { getDerivedProperties } from "../derive-combined-properties";
 import { useHexContainer } from "../hex-container-context";
 import { HertitableHexProps } from "../types";
@@ -81,7 +80,12 @@ export const HexagonBox: React.FunctionComponent<Props> = ({
     return (
         <Component {...restOfProps} onClick={onClick}>
             {children && (
-                <div className={styles.hexBox_content}>
+                <div css={{
+                    position: 'absolute',
+                    top: 0,
+                    inset: `0 25%`,
+                    height: '100%',
+                }}>
                     {children}
                 </div>
             )}
