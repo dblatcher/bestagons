@@ -6,6 +6,7 @@ import { useHexContainer } from "../hex-container-context";
 import { HertitableHexProps } from "../types";
 import { HexData, buildHexDataAttributes } from "../data-hex-attributes";
 import { hexButtonCss } from "../shared-styles";
+import { ImageOverlay } from "./ImageOverlay";
 
 
 
@@ -32,14 +33,6 @@ const HexSvgOutline = ({ combinedPolygonStyle, combinedPolygonClassNames }: { co
     </svg>
 )
 
-const HexImage = ({ image }: { image: Props['image'] }) => image && (
-    <img
-        alt={image.alt ?? ''}
-        className={styles.hexBox_img}
-        {...image}
-    />
-)
-
 const ButtonHexagonBox: React.FunctionComponent<Props> = ({
     children,
     onClick,
@@ -58,7 +51,7 @@ const ButtonHexagonBox: React.FunctionComponent<Props> = ({
         onClick={onClick}
         {...buildHexDataAttributes(hexData)}
     >
-        <HexImage image={image} />
+        {image && <ImageOverlay image={image} />}
         {!noSvg && (
             <HexSvgOutline {...{ combinedPolygonClassNames, combinedPolygonStyle }} />
         )}
@@ -83,7 +76,7 @@ const DivHexagonBox: React.FunctionComponent<Props> = ({
         style={combinedHexStyle}
         onClick={onClick}
     >
-        <HexImage image={image} />
+        {image && <ImageOverlay image={image} />}
         {!noSvg && (
             <HexSvgOutline {...{ combinedPolygonClassNames, combinedPolygonStyle }} />
         )}
