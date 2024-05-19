@@ -2,12 +2,12 @@
 import { HexagonBox } from '@dblatcher/bestagons';
 import { Board } from '../components/Board';
 import { Examples } from '../components/Examples';
+import { HexPathTest } from '../components/HexPathTest';
 
 export function App() {
   return (
     <>
-      <Board rows={6} width={7} />
-      <Examples />
+      <HexPathTest rows={6} width={6} />
     </>
   );
 }

@@ -28,7 +28,7 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
         backgroundColor: 'orange',
       };
     }
-    if (isHexAdjacent(x, y, col, row, startLow)) {
+    if (isHexAdjacent({ x, y }, { x: col, y: row }, startLow)) {
       return {
         backgroundColor: 'yellow',
       };
