@@ -1,6 +1,6 @@
 {
   "name": "@dblatcher/bestagons",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "peerDependencies": {
     "@emotion/react": "^11.11.4"
   }
