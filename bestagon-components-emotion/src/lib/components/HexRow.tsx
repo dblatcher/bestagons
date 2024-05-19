@@ -26,9 +26,9 @@ const containerCss = (
 
 
 const higherLevelGetCoordinates = (xOffset = 0, startLow = false) =>
-    (position: number): CSSProperties => {
+    (position: number): { x: number, y: number } | undefined => {
         if (position === -1) {
-            return {}
+            return undefined
         }
         const offsetPosition = position + Math.floor(xOffset)
         const isOdd = offsetPosition % 2 === 1;
@@ -37,7 +37,8 @@ const higherLevelGetCoordinates = (xOffset = 0, startLow = false) =>
             : isOdd ? 50 : 0;
         const translateX = offsetPosition * (100 * AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP)
         return {
-            transform: `translateX(${translateX}%) translateY(${translateY}%)`
+            x: translateX,
+            y: translateY,
         }
     }
 

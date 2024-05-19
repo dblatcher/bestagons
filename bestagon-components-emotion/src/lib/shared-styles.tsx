@@ -1,4 +1,5 @@
 import { css } from "@emotion/react"
+import { CSSProperties } from "react"
 import { getHexDimensionsForSize } from "./helpers"
 import { HexSize } from "./types"
 
@@ -16,6 +17,14 @@ export const buildHexagonBoxCss = (position: number, size: HexSize, container?: 
         top: position === -1 ? undefined : 0,
         position: position === -1 ? 'relative' : 'absolute',
     })
+}
+
+export const coordinatesInlineStyle = (coordinates?: { x: number, y: number }): CSSProperties => {
+    if (!coordinates) { return {} }
+    const { x, y } = coordinates;
+    return {
+        transform: `translateX(${x}%) translateY(${y}%)`
+    }
 }
 
 export const hexButtonCss = css({

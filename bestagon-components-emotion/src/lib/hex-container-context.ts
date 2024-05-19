@@ -6,7 +6,7 @@ export type HexContainerProps = {
     container?: HTMLElement,
     getClassNames: { (position: number): string[] },
     getCss?: { (position: number, size: HexSize, container?: HTMLElement): SerializedStyles },
-    getCoordinates: { (position: number): CSSProperties }
+    getCoordinates: { (position: number): { x: number, y: number } | undefined }
     polygonClassNames?: string[],
     polygonStyle?: CSSProperties,
     hexStyle?: CSSProperties,
@@ -16,7 +16,7 @@ export type HexContainerProps = {
 export const HexContainerContext = createContext<HexContainerProps>({
     container: undefined,
     getClassNames: () => [],
-    getCoordinates: () => ({}),
+    getCoordinates: () => (undefined),
     size: 'normal',
 })
 

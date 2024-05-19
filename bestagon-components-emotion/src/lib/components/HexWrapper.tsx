@@ -33,9 +33,9 @@ const containerCss = (
 }
 
 const higherLevelGetCoordinates = (hexesPerRow: number, startLow = false,) =>
-    (position: number): CSSProperties => {
+    (position: number): { x: number, y: number } | undefined => {
         if (position === -1) {
-            return {}
+            return undefined
         }
         const row = Math.floor(position / hexesPerRow)
         const spacesInPreviousRows = row * hexesPerRow
@@ -47,7 +47,8 @@ const higherLevelGetCoordinates = (hexesPerRow: number, startLow = false,) =>
             : isOdd ? rowTranslate + 50 : rowTranslate;
         const translateX = offsetPosition * (100 * AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP)
         return {
-            transform: `translateX(${translateX}%) translateY(${translateY}%)`,
+            x: translateX,
+            y: translateY,
         }
     }
 
