@@ -17,10 +17,14 @@ type Props = HertitableHexProps & {
 const containerCss = (
     size: HexSize,
     rowCount: number,
-    numberOfChildElements: number, hexesPerRow: number
+    numberOfChildElements: number, hexesPerRow: number,
+    startLow: boolean
 ) => {
     const numberInLastRow = numberOfChildElements % hexesPerRow
-    const hexesHigh = numberInLastRow === 1 ? rowCount : .5 + rowCount
+    const hexesHigh = startLow
+        ? rowCount + .5
+        : (numberInLastRow === 1) ? rowCount : rowCount + .5;
+
     return css({
         position: 'relative',
         pointerEvents: 'none',
@@ -56,15 +60,15 @@ const getHexesPerRow = (containerWidth: number, hexWidth: number): number => {
     const extraSpaceForLastHex = hexWidth * (1 - AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP)
     const numberThatWouldFitWithoutExtra = Math.floor(containerWidth / spacePerHex)
     if (containerWidth > (numberThatWouldFitWithoutExtra * spacePerHex) + extraSpaceForLastHex) {
-        return numberThatWouldFitWithoutExtra
+        return Math.max(1, numberThatWouldFitWithoutExtra)
     }
-    return numberThatWouldFitWithoutExtra - 1
+    return Math.max(1, numberThatWouldFitWithoutExtra - 1)
 }
 
 export const HexWrapper: React.FunctionComponent<Props> = ({
     children,
     extraHeight,
-    startLow,
+    startLow = false,
     hexClassNames = [],
     size = 'normal',
     ...heritables
@@ -97,7 +101,7 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
             getCss: buildHexagonBoxCss, size,
         }}>
             <section
-                css={containerCss(size, rowCount, numberOfChildElements, hexesPerRow)}
+                css={containerCss(size, rowCount, numberOfChildElements, hexesPerRow, startLow)}
                 ref={containerRef}
             >
                 <NumberedChildren children={children} />

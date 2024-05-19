@@ -93,7 +93,19 @@ export function Examples() {
 
       <details open>
         <summary>responsive hexwrapper</summary>
-        <HexWrapper
+
+<HexWrapper startLow>
+  <HexagonBox></HexagonBox>
+</HexWrapper>
+<HexWrapper startLow>
+  <HexagonBox></HexagonBox>
+  <HexagonBox></HexagonBox>
+  <HexagonBox></HexagonBox>
+  <HexagonBox></HexagonBox>
+  <HexagonBox></HexagonBox>
+</HexWrapper>
+
+        <HexWrapper startLow
           size="normal"
           hexClassNames={[styles.yellowHex]}
           polygonStyle={{ display: 'none' }}
