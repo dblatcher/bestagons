@@ -32,13 +32,10 @@ const containerCss = (
     })
 }
 
-const higherLevelGetStyleForBox = (hexesPerRow: number, startLow = false,) =>
-    (position: number, container?: HTMLElement): CSSProperties => {
+const higherLevelGetCoordinates = (hexesPerRow: number, startLow = false,) =>
+    (position: number): CSSProperties => {
         if (position === -1) {
             return {}
-        }
-        if (!container) {
-            return { visibility: 'hidden' }
         }
         const row = Math.floor(position / hexesPerRow)
         const spacesInPreviousRows = row * hexesPerRow
@@ -73,7 +70,7 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
     size = 'normal',
     ...heritables
 }) => {
-    const [containerWidth, setContainerWidth] = useState(1000)
+    const [containerWidth, setContainerWidth] = useState(0)
     const [container, containerRef] = useStatefulRef((container) => {
         setContainerWidth(container.clientWidth)
     })
@@ -93,18 +90,20 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
         }
     }, [handleResize])
 
-    const getStyle = higherLevelGetStyleForBox(hexesPerRow, startLow)
+    const getCoordinates = higherLevelGetCoordinates(hexesPerRow, startLow)
 
     return (
         <HexContainerContext.Provider value={{
-            container, getClassNames: () => hexClassNames, getStyle, ...heritables,
+            container, getClassNames: () => hexClassNames, getCoordinates, ...heritables,
             getCss: buildHexagonBoxCss, size,
         }}>
             <section
                 css={containerCss(size, rowCount, numberOfChildElements, hexesPerRow, startLow)}
                 ref={containerRef}
             >
-                <NumberedChildren children={children} />
+                {container && (
+                    <NumberedChildren children={children} />
+                )}
             </section>
         </HexContainerContext.Provider>
     )

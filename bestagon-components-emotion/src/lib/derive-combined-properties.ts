@@ -30,7 +30,7 @@ export const getDerivedProperties = (
             ...inheritedHexStyle,
             ...directProperties.hexStyle,
             ...directProperties.style,
-            ...hexContainer.getStyle(positionInContainer, container),
+            ...hexContainer.getCoordinates(positionInContainer),
         },
         combinedPolygonClassNames: [
             ...inheritedPolygonClassNames,

@@ -25,13 +25,10 @@ const containerCss = (
 })
 
 
-const higherLevelGetStyleForBox = (xOffset = 0, startLow = false) =>
-    (position: number, container?: HTMLElement): CSSProperties => {
+const higherLevelGetCoordinates = (xOffset = 0, startLow = false) =>
+    (position: number): CSSProperties => {
         if (position === -1) {
             return {}
-        }
-        if (!container) {
-            return { visibility: 'hidden' }
         }
         const offsetPosition = position + Math.floor(xOffset)
         const isOdd = offsetPosition % 2 === 1;
@@ -54,11 +51,11 @@ export const HexRow: React.FunctionComponent<Props> = ({
     ...heritables
 }) => {
     const [container, containerRef] = useStatefulRef()
-    const getStyle = higherLevelGetStyleForBox(xOffset, startLow)
+    const getCoordinates = higherLevelGetCoordinates(xOffset, startLow)
 
     return (
         <HexContainerContext.Provider value={{
-            container, getClassNames: () => hexClassNames, getStyle, ...heritables,
+            container, getClassNames: () => hexClassNames, getCoordinates: getCoordinates, ...heritables,
             getCss: buildHexagonBoxCss, size,
         }}>
             <section
