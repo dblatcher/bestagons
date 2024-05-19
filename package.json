@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "nx run bestagon-examples:serve"
+    "dev": "nx run bestagon-examples:serve",
+    "build": "nx run bestagon-components-emotion:build"
   },
   "private": false,
   "dependencies": {
