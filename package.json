@@ -1,6 +1,6 @@
 {
   "name": "@bestagon-mono/source",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "scripts": {
     "dev": "nx run bestagon-examples:serve",
