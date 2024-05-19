@@ -1,4 +1,3 @@
-export * from './lib/bestagon-components-emotion';
 export * from './lib/components/HexagonBox'
 export * from './lib/components/HexagonImage'
 export * from './lib/components/HexRow'
