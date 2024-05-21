@@ -4,7 +4,7 @@ import { HexPathTest } from '../components/HexPathTest';
 export function App() {
   return (
     <>
-      <HexPathTest rows={6} width={6} />
+      <HexPathTest rows={6} width={16} />
     </>
   );
 }

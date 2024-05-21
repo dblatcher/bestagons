@@ -53,7 +53,7 @@ const getAdjacents = (cell: Coords, grid: GridDef): Coords[] => {
 
 export const coordsMatch = (a: Coords, b: Coords) => a.x == b.x && a.y === b.y
 
-export const findPath = (start: Coords, dest: Coords, grid: GridDef, maxPathLength = 10): Coords[] => {
+export const findPath = (start: Coords, dest: Coords, grid: GridDef, maxPathLength = 100): Coords[] => {
     const stepsFrom = (path: Coords[]) => {
         const lastPlace = path[path.length - 1]
         return getAdjacents(lastPlace, grid).map(
@@ -90,7 +90,7 @@ export const findPath = (start: Coords, dest: Coords, grid: GridDef, maxPathLeng
         console.log({
             currentStep,
             pathsInProgress: pathsInProgress.length,
-            completedPaths: extendedPaths.filter(hasReachedGoal).length
+            succesfulPath: !!succesfulPath
         })
         if (succesfulPath) {
             return succesfulPath
