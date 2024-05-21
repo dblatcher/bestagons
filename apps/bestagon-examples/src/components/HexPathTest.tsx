@@ -6,7 +6,7 @@ import {
   useStatefulRef,
 } from '@dblatcher/bestagons';
 import React, { CSSProperties, useState } from 'react';
-import { Coords, findPath } from '../lib/grid-functions';
+import { Coords, coordsMatch, findPath } from '../lib/grid-functions';
 import { PlaceOnHex } from './PlaceOnHex';
 
 interface Props {
@@ -15,26 +15,35 @@ interface Props {
   startLow?: boolean;
 }
 
+const obstacles: Coords[] = [
+  { x: 2, y: 2 },
+  { x: 3, y: 2 },
+  { x: 3, y: 3 },
+  { x: 3, y: 4 },
+]
+
 export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, startLow = false }) => {
   const [board, boardRef] = useStatefulRef<HTMLDivElement>();
 
-  const [start, setStart] = useState<Coords>({ x: 1, y: 2 });
+  const [start] = useState<Coords>({ x: 0, y: 2 });
   const [dest, setDest] = useState<Coords>({ x: 4, y: 4 });
+  const [path, setPath] = useState<Coords[]>(findPath(start, dest, { rows, width, startLow, obstacles }))
 
-
-
-  const [path, setPath] = useState<Coords[]>(findPath(start, dest, { rows, width, startLow }))
-
-  const getStyle = (row: number, col: number): CSSProperties => {
-    if (row === start.y && col === start.x) {
+  const getStyle = (y: number, x: number): CSSProperties => {
+    if (coordsMatch(start, { x, y })) {
       return {
         backgroundColor: 'pink',
       };
     }
-    if (row === dest.y && col === dest.x) {
+    if (coordsMatch(dest, { x, y })) {
       return {
         backgroundColor: 'yellow',
       };
+    }
+    if (obstacles.some(obstacle => coordsMatch(obstacle, { x, y }))) {
+      return {
+        backgroundColor: 'grey',
+      }
     }
     return {};
   };
@@ -63,7 +72,7 @@ export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, start
             hexData={{ x, y }}
             onClick={() => {
               setDest({ x, y })
-              setPath(findPath(start, { x, y }, { rows, width, startLow }))
+              setPath(findPath(start, { x, y }, { rows, width, startLow, obstacles }))
             }}
             style={getStyle(y, x)}
             key={x}
@@ -79,7 +88,7 @@ export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, start
           {path.map((coord, index) => (
             <PlaceOnHex key={index}
               {...{ x: coord.x, y: coord.y, boardRef, findHex }}>
-              <span>*</span>
+              <span style={{ fontSize: '2.5rem' }}>*</span>
             </PlaceOnHex>
           ))
           }
