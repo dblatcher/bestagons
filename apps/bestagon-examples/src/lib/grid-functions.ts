@@ -70,17 +70,17 @@ export const findPath = (start: Coords, dest: Coords, grid: GridDef, maxPathLeng
         return coordsMatch(lastPlace, dest)
     }
 
+    const lastPlaceReachedSoonerInOtherPath = (path: Coords[], paths: Coords[][]) => {
+        const lastPlace = path[path.length - 1]
+        return paths.some(
+            otherPath => {
+                const indexOfLastPlaceInOtherPath = otherPath.findIndex(otherPlace => coordsMatch(otherPlace, lastPlace))
+                return indexOfLastPlaceInOtherPath !== -1 && indexOfLastPlaceInOtherPath < path.length - 1
+            }
+        )
+    }
     const purgePaths = (paths: Coords[][]): Coords[][] => {
-        const lastPlaceReachedSoonerInOtherPath = (path: Coords[]) => {
-            const lastPlace = path[path.length - 1]
-            return paths.some(
-                otherPath => {
-                    const indexOfLastPlaceInOtherPath = otherPath.findIndex(otherPlace => coordsMatch(otherPlace, lastPlace))
-                    return indexOfLastPlaceInOtherPath !== -1 && indexOfLastPlaceInOtherPath < path.length - 1
-                }
-            )
-        }
-        return paths.filter(path => !lastPlaceReachedSoonerInOtherPath(path))
+        return paths.filter(path => !lastPlaceReachedSoonerInOtherPath(path, paths))
     }
 
     const expandUntilReach = (pathsInProgress: Coords[][], maxPathLength: number, currentStep = 0): Coords[] | undefined => {
