@@ -1,4 +1,7 @@
 export interface OffsetCoords { x: number; y: number; };
+export interface AxialCoords { q: number; r: number; };
+
+const { abs } = Math
 
 export interface GridDef {
     rows: number;
@@ -14,8 +17,8 @@ export const isHexAdjacent = (
 ): boolean => {
     const { x: x1, y: y1 } = c1
     const { x: x2, y: y2 } = c2
-    const xDif = Math.abs(x1 - x2);
-    const yDif = Math.abs(y1 - y2);
+    const xDif = abs(x1 - x2);
+    const yDif = abs(y1 - y2);
     if (xDif === 0 && yDif === 1) {
         return true;
     }
@@ -55,7 +58,7 @@ export const getOpenAdjacents = (cell: OffsetCoords, grid: GridDef): OffsetCoord
             !grid.obstacles.some(obstacle => coordsMatch(obstacle, _))
         )
 
-export const convertOffsetToAxial = (coords: OffsetCoords, startLow = false) => {
+export const convertOffsetToAxial = (coords: OffsetCoords, startLow = false): AxialCoords => {
     const col = coords.x
     const row = coords.y
 
@@ -69,8 +72,17 @@ export const convertOffsetToAxial = (coords: OffsetCoords, startLow = false) => 
     return { q, r }
 }
 
-export const getDistance = (start: OffsetCoords, end: OffsetCoords, startLow: boolean): number => {
-    return 0
-}
+const getAxialDistance = (a: AxialCoords, b: AxialCoords) =>
+    (abs(a.q - b.q)
+        + abs(a.q + a.r - b.q - b.r)
+        + abs(a.r - b.r)) / 2
+
+export const getDistance = (start: OffsetCoords, end: OffsetCoords, startLow: boolean): number =>
+    getAxialDistance(
+        convertOffsetToAxial(start, startLow),
+        convertOffsetToAxial(end, startLow)
+    )
+
+
 
 export const coordsMatch = (a: OffsetCoords, b: OffsetCoords) => a.x == b.x && a.y === b.y
