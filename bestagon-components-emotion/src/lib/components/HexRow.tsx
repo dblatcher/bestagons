@@ -12,7 +12,7 @@ type Props = HertitableHexProps & {
     extraHeight?: boolean
     hexClassNames?: string[]
     xOffset?: number
-    startLow?: boolean
+    evenColsLow?: boolean
 }
 
 const containerCss = (
@@ -25,14 +25,14 @@ const containerCss = (
 })
 
 
-const higherLevelGetCoordinates = (xOffset = 0, startLow = false) =>
+const higherLevelGetCoordinates = (xOffset = 0, evenColsLow = false) =>
     (position: number): { x: number, y: number } | undefined => {
         if (position === -1) {
             return undefined
         }
         const offsetPosition = position + Math.floor(xOffset)
         const isOdd = offsetPosition % 2 === 1;
-        const translateY = startLow
+        const translateY = evenColsLow
             ? isOdd ? 0 : 50
             : isOdd ? 50 : 0;
         const translateX = offsetPosition * (100 * AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP)
@@ -46,13 +46,13 @@ export const HexRow: React.FunctionComponent<Props> = ({
     children,
     extraHeight,
     xOffset,
-    startLow,
+    evenColsLow,
     hexClassNames = [],
     size = 'normal',
     ...heritables
 }) => {
     const [container, containerRef] = useStatefulRef()
-    const getCoordinates = higherLevelGetCoordinates(xOffset, startLow)
+    const getCoordinates = higherLevelGetCoordinates(xOffset, evenColsLow)
 
     return (
         <HexContainerContext.Provider value={{

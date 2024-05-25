@@ -6,14 +6,14 @@ const { abs } = Math
 export interface GridDef {
     rows: number;
     width: number;
-    startLow: boolean;
+    evenColsLow: boolean;
     obstacles: OffsetCoords[],
 }
 
 export const isHexAdjacent = (
     c1: OffsetCoords,
     c2: OffsetCoords,
-    startLow = false
+    evenColsLow = false
 ): boolean => {
     const { x: x1, y: y1 } = c1
     const { x: x2, y: y2 } = c2
@@ -25,7 +25,7 @@ export const isHexAdjacent = (
     if (y1 === y2 && xDif === 1) {
         return true;
     }
-    const upIsAdjacent = x1 % 2 === (startLow ? 1 : 0);
+    const upIsAdjacent = x1 % 2 === (evenColsLow ? 1 : 0);
     const adjacentY = upIsAdjacent ? 1 : -1;
     if (y1 - y2 === adjacentY && xDif === 1) {
         return true;
@@ -41,7 +41,7 @@ export const isInGrid = (coords: OffsetCoords, grid: GridDef) => {
 
 export const getAdjacents = (cell: OffsetCoords, grid: GridDef): OffsetCoords[] => {
     const { x, y } = cell;
-    const yMinusOneIsAdjacent = cell.x % 2 === (grid.startLow ? 1 : 0);
+    const yMinusOneIsAdjacent = cell.x % 2 === (grid.evenColsLow ? 1 : 0);
     const adjacentY = yMinusOneIsAdjacent ? y - 1 : y + 1;
     return [
         { x: x - 1, y },
@@ -58,12 +58,12 @@ export const getOpenAdjacents = (cell: OffsetCoords, grid: GridDef): OffsetCoord
             !grid.obstacles.some(obstacle => coordsMatch(obstacle, _))
         )
 
-export const convertOffsetToAxial = (coords: OffsetCoords, startLow = false): AxialCoords => {
+export const convertOffsetToAxial = (coords: OffsetCoords, evenColsLow = false): AxialCoords => {
     const col = coords.x
     const row = coords.y
 
     const isOdd = (v: number) => !!(v & 1)
-    const colAdjust = startLow
+    const colAdjust = evenColsLow
         ? -((col / 2) + (isOdd(col) ? .5 : 0))
         : -(col - (col & 1)) / 2
 
@@ -77,10 +77,10 @@ const getAxialDistance = (a: AxialCoords, b: AxialCoords) =>
         + abs(a.q + a.r - b.q - b.r)
         + abs(a.r - b.r)) / 2
 
-export const getDistance = (start: OffsetCoords, end: OffsetCoords, startLow: boolean): number =>
+export const getDistance = (start: OffsetCoords, end: OffsetCoords, evenColsLow: boolean): number =>
     getAxialDistance(
-        convertOffsetToAxial(start, startLow),
-        convertOffsetToAxial(end, startLow)
+        convertOffsetToAxial(start, evenColsLow),
+        convertOffsetToAxial(end, evenColsLow)
     )
 
 

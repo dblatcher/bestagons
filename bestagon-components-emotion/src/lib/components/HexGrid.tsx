@@ -8,14 +8,14 @@ interface Props {
     rows: number
     width: number
     size?: HexSize
-    startLow?: boolean
+    evenColsLow?: boolean
     makeHex: { (x: number, y: number): ReactNode }
     ref?: React.RefObject<HTMLDivElement>
     children?: ReactNode
 }
 
 export const HexGrid = forwardRef<HTMLDivElement, Props>(
-    ({ rows, width, makeHex, startLow = false, children, size }, ref) => {
+    ({ rows, width, makeHex, evenColsLow = false, children, size }, ref) => {
 
         return (
             <div
@@ -25,7 +25,7 @@ export const HexGrid = forwardRef<HTMLDivElement, Props>(
                 }}>
                 {
                     getZeroBasedNumbers(rows).map((row) => (
-                        <HexRow startLow={startLow}
+                        <HexRow evenColsLow={evenColsLow}
                             size={size}
                             key={row}
                             extraHeight={row === rows - 1}

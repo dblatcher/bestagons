@@ -94,10 +94,10 @@ export function Examples() {
       <details open>
         <summary>responsive hexwrapper</summary>
 
-<HexWrapper startLow>
+<HexWrapper evenColsLow>
   <HexagonBox></HexagonBox>
 </HexWrapper>
-<HexWrapper startLow>
+<HexWrapper evenColsLow>
   <HexagonBox></HexagonBox>
   <HexagonBox></HexagonBox>
   <HexagonBox></HexagonBox>
@@ -105,7 +105,7 @@ export function Examples() {
   <HexagonBox></HexagonBox>
 </HexWrapper>
 
-        <HexWrapper startLow
+        <HexWrapper evenColsLow
           size="normal"
           hexClassNames={[styles.yellowHex]}
           polygonStyle={{ display: 'none' }}
@@ -156,7 +156,7 @@ export function Examples() {
       <details open>
         <summary>inheritance examples</summary>
         <HexRow
-          startLow
+          evenColsLow
           polygonClassNames={[styles.fancyFrame]}
           hexClassNames={[styles.blueHex]}
         >
@@ -167,7 +167,7 @@ export function Examples() {
           <HexagonBox>E</HexagonBox>
         </HexRow>
         <HexRow
-          startLow
+          evenColsLow
           extraHeight
           hexStyle={{
             backgroundImage: 'url(./feathers.png)',

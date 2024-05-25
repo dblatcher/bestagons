@@ -10,7 +10,7 @@ import { css } from "@emotion/react";
 type Props = HertitableHexProps & {
     children: ReactNode
     extraHeight?: boolean
-    startLow?: boolean
+    evenColsLow?: boolean
     hexClassNames?: string[]
 }
 
@@ -18,10 +18,10 @@ const containerCss = (
     size: HexSize,
     rowCount: number,
     numberOfChildElements: number, hexesPerRow: number,
-    startLow: boolean
+    evenColsLow: boolean
 ) => {
     const numberInLastRow = numberOfChildElements % hexesPerRow
-    const hexesHigh = startLow
+    const hexesHigh = evenColsLow
         ? rowCount + .5
         : (numberInLastRow === 1) ? rowCount : rowCount + .5;
 
@@ -32,7 +32,7 @@ const containerCss = (
     })
 }
 
-const higherLevelGetCoordinates = (hexesPerRow: number, startLow = false,) =>
+const higherLevelGetCoordinates = (hexesPerRow: number, evenColsLow = false,) =>
     (position: number): { x: number, y: number } | undefined => {
         if (position === -1) {
             return undefined
@@ -42,7 +42,7 @@ const higherLevelGetCoordinates = (hexesPerRow: number, startLow = false,) =>
         const offsetPosition = position - spacesInPreviousRows
         const isOdd = offsetPosition % 2 === 1;
         const rowTranslate = 100 * row
-        const translateY = startLow
+        const translateY = evenColsLow
             ? isOdd ? rowTranslate : rowTranslate + 50
             : isOdd ? rowTranslate + 50 : rowTranslate;
         const translateX = offsetPosition * (100 * AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP)
@@ -66,7 +66,7 @@ const getHexesPerRow = (containerWidth: number, hexWidth: number): number => {
 export const HexWrapper: React.FunctionComponent<Props> = ({
     children,
     extraHeight,
-    startLow = false,
+    evenColsLow = false,
     hexClassNames = [],
     size = 'normal',
     ...heritables
@@ -91,7 +91,7 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
         }
     }, [handleResize])
 
-    const getCoordinates = higherLevelGetCoordinates(hexesPerRow, startLow)
+    const getCoordinates = higherLevelGetCoordinates(hexesPerRow, evenColsLow)
 
     return (
         <HexContainerContext.Provider value={{
@@ -99,7 +99,7 @@ export const HexWrapper: React.FunctionComponent<Props> = ({
             getCss: buildHexagonBoxCss, size,
         }}>
             <section
-                css={containerCss(size, rowCount, numberOfChildElements, hexesPerRow, startLow)}
+                css={containerCss(size, rowCount, numberOfChildElements, hexesPerRow, evenColsLow)}
                 ref={containerRef}
             >
                 {container && (

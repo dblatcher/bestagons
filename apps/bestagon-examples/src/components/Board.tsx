@@ -14,12 +14,12 @@ import { OffsetCoordinates } from './OffsetCoordinates';
 interface Props {
   rows: number;
   width: number;
-  startLow?: boolean;
+  evenColsLow?: boolean;
   showAxialCoords?: boolean;
 }
 
 
-export const Board: React.FunctionComponent<Props> = ({ rows, width, startLow = false, showAxialCoords = false }) => {
+export const Board: React.FunctionComponent<Props> = ({ rows, width, evenColsLow = false, showAxialCoords = false }) => {
   const [board, boardRef] = useStatefulRef<HTMLDivElement>();
   const [x, setX] = useState<number>(2);
   const [y, setY] = useState<number>(3);
@@ -30,7 +30,7 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width, startLow = 
         backgroundColor: 'orange',
       };
     }
-    if (isHexAdjacent({ x, y }, { x: col, y: row }, startLow)) {
+    if (isHexAdjacent({ x, y }, { x: col, y: row }, evenColsLow)) {
       return {
         backgroundColor: 'yellow',
       };
@@ -49,7 +49,7 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width, startLow = 
   return (
     <HexGrid
       ref={boardRef}
-      startLow={startLow}
+      evenColsLow={evenColsLow}
       rows={rows}
       width={width}
       size={60}
@@ -64,7 +64,7 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width, startLow = 
           key={x}
         >
           {showAxialCoords
-            ? <AxialCoordinates axial={convertOffsetToAxial({ x, y }, startLow)} />
+            ? <AxialCoordinates axial={convertOffsetToAxial({ x, y }, evenColsLow)} />
             : <OffsetCoordinates coords={{ x, y }} />
           }
         </HexagonBox>

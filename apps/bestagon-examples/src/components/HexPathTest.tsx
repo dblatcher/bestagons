@@ -15,7 +15,7 @@ import { AxialCoordinates } from './AxialCoordinates';
 interface Props {
   rows: number;
   width: number;
-  startLow?: boolean;
+  evenColsLow?: boolean;
   showAxialCoords?: boolean;
 }
 
@@ -27,14 +27,14 @@ const obstacles: OffsetCoords[] = [
   { x: 4, y: 5 },
 ]
 
-export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, startLow = false, showAxialCoords }) => {
+export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, evenColsLow = false, showAxialCoords }) => {
   const [board, boardRef] = useStatefulRef<HTMLDivElement>();
 
   const [start] = useState<OffsetCoords>({ x: 5, y: 5 });
   const [dest, setDest] = useState<OffsetCoords>({ x: 5, y: 4 });
-  const [path, setPath] = useState<OffsetCoords[]>(findPathInefficiently(start, dest, { rows, width, startLow, obstacles }))
+  const [path, setPath] = useState<OffsetCoords[]>(findPathInefficiently(start, dest, { rows, width, evenColsLow, obstacles }))
 
-  const [distance, setDistance] = useState(getDistance(start, dest, startLow))
+  const [distance, setDistance] = useState(getDistance(start, dest, evenColsLow))
 
   const getStyle = (y: number, x: number): CSSProperties => {
     if (coordsMatch(start, { x, y })) {
@@ -70,7 +70,7 @@ export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, start
       </div>
       <HexGrid
         ref={boardRef}
-        startLow={startLow}
+        evenColsLow={evenColsLow}
         rows={rows}
         width={width}
         size={60}
@@ -79,14 +79,14 @@ export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, start
             hexData={{ x, y }}
             onClick={() => {
               setDest({ x, y })
-              setDistance(getDistance(start, { x, y }, startLow))
-              setPath(findPathInefficiently(start, { x, y }, { rows, width, startLow, obstacles }))
+              setDistance(getDistance(start, { x, y }, evenColsLow))
+              setPath(findPathInefficiently(start, { x, y }, { rows, width, evenColsLow, obstacles }))
             }}
             style={getStyle(y, x)}
             key={x}
           >
             {showAxialCoords
-              ? <AxialCoordinates axial={convertOffsetToAxial({ x, y }, startLow)} />
+              ? <AxialCoordinates axial={convertOffsetToAxial({ x, y }, evenColsLow)} />
               : <OffsetCoordinates coords={{ x, y }} />
             }
           </HexagonBox>
