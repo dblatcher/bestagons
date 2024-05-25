@@ -6,14 +6,17 @@ import {
   useStatefulRef,
 } from '@dblatcher/bestagons';
 import React, { CSSProperties, useState } from 'react';
-import { OffsetCoords, coordsMatch, getDistance } from '../lib/grid-functions';
+import { OffsetCoords, convertOffsetToAxial, coordsMatch, getDistance } from '../lib/grid-functions';
 import { PlaceOnHex } from './PlaceOnHex';
 import { findPathInefficiently } from '../lib/path-finding'
+import { OffsetCoordinates } from './OffsetCoordinates';
+import { AxialCoordinates } from './AxialCoordinates';
 
 interface Props {
   rows: number;
   width: number;
   startLow?: boolean;
+  showAxialCoords?: boolean;
 }
 
 const obstacles: OffsetCoords[] = [
@@ -24,7 +27,7 @@ const obstacles: OffsetCoords[] = [
   { x: 4, y: 5 },
 ]
 
-export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, startLow = false }) => {
+export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, startLow = false, showAxialCoords }) => {
   const [board, boardRef] = useStatefulRef<HTMLDivElement>();
 
   const [start] = useState<OffsetCoords>({ x: 5, y: 5 });
@@ -82,9 +85,10 @@ export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, start
             style={getStyle(y, x)}
             key={x}
           >
-            <b>
-              {x}, {y}
-            </b>
+            {showAxialCoords
+              ? <AxialCoordinates axial={convertOffsetToAxial({ x, y }, startLow)} />
+              : <OffsetCoordinates coords={{ x, y }} />
+            }
           </HexagonBox>
         )}
       >

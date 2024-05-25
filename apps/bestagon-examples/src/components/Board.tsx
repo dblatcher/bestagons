@@ -9,15 +9,17 @@ import React, { CSSProperties, useState } from 'react';
 import { convertOffsetToAxial, isHexAdjacent } from '../lib/grid-functions';
 import { AxialCoordinates } from './AxialCoordinates';
 import { PlaceOnHex } from './PlaceOnHex';
+import { OffsetCoordinates } from './OffsetCoordinates';
 
 interface Props {
   rows: number;
   width: number;
   startLow?: boolean;
+  showAxialCoords?: boolean;
 }
 
 
-export const Board: React.FunctionComponent<Props> = ({ rows, width, startLow = false }) => {
+export const Board: React.FunctionComponent<Props> = ({ rows, width, startLow = false, showAxialCoords = false }) => {
   const [board, boardRef] = useStatefulRef<HTMLDivElement>();
   const [x, setX] = useState<number>(2);
   const [y, setY] = useState<number>(3);
@@ -61,7 +63,10 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width, startLow = 
           style={getStyle(y, x)}
           key={x}
         >
-          <AxialCoordinates axial={convertOffsetToAxial({ x: x - 2, y: y - 2 }, startLow)} />
+          {showAxialCoords
+            ? <AxialCoordinates axial={convertOffsetToAxial({ x, y }, startLow)} />
+            : <OffsetCoordinates coords={{ x, y }} />
+          }
         </HexagonBox>
       )}
     >
