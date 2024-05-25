@@ -1,10 +1,10 @@
-import React, { CSSProperties, ReactNode, ImgHTMLAttributes } from "react";
+import React, { CSSProperties, ReactNode, ImgHTMLAttributes, AnchorHTMLAttributes } from "react";
 import { useChildNumber } from "./NumberedChildren";
 import { getDerivedProperties } from "../derive-combined-properties";
 import { useHexContainer } from "../hex-container-context";
 import { HertitableHexProps } from "../types";
 import { HexData, buildHexDataAttributes } from "../data-hex-attributes";
-import { hexButtonCss } from "../shared-styles";
+import { hexAnchorCss, hexButtonCss } from "../shared-styles";
 import { ImageOverlay } from "./ImageOverlay";
 import { HexSvgOutline } from "./HexSvgOutline";
 
@@ -14,9 +14,10 @@ type Props = HertitableHexProps & {
     style?: CSSProperties
     className?: string;
     onClick?: React.MouseEventHandler<HTMLElement>
-    image?: ImgHTMLAttributes<HTMLImageElement>
     noSvg?: boolean
     hexData?: HexData
+    image?: ImgHTMLAttributes<HTMLImageElement>
+    anchor?: AnchorHTMLAttributes<HTMLAnchorElement>
 }
 
 const ButtonHexagonBox: React.FunctionComponent<Props> = ({
@@ -70,15 +71,42 @@ const DivHexagonBox: React.FunctionComponent<Props> = ({
     </div>
 }
 
+const AnchorHexagonBox: React.FunctionComponent<Props> = ({
+    children,
+    onClick,
+    image,
+    hexData,
+    noSvg,
+    anchor,
+    ...heritablePropsAndClassName
+}) => {
+    const { classNames, combinedHexStyle, combinedPolygonClassNames, combinedPolygonStyle, css } = getDerivedProperties(
+        useHexContainer(), heritablePropsAndClassName, useChildNumber()
+    )
+
+    return <a className={classNames.join(" ")}
+        css={[hexAnchorCss, css]}
+        style={combinedHexStyle}
+        onClick={onClick}
+        {...anchor}
+    >
+        {image && <ImageOverlay image={image} />}
+        {!noSvg && (
+            <HexSvgOutline {...{ combinedPolygonClassNames, combinedPolygonStyle }} />
+        )}
+        {children}
+    </a>
+}
 
 export const HexagonBox: React.FunctionComponent<Props> = ({
     children,
     onClick,
+    anchor,
     ...restOfProps
 }) => {
-    const Component = onClick ? ButtonHexagonBox : DivHexagonBox;
+    const Component = anchor ? AnchorHexagonBox : onClick ? ButtonHexagonBox : DivHexagonBox;
     return (
-        <Component {...restOfProps} onClick={onClick}>
+        <Component {...restOfProps} onClick={onClick} anchor={anchor}>
             {children && (
                 <div css={{
                     position: 'absolute',

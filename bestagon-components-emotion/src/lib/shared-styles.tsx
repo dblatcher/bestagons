@@ -58,3 +58,7 @@ export const hexButtonCss = css({
         }
     },
 })
+
+export const hexAnchorCss = css({
+    display: 'block',
+})
