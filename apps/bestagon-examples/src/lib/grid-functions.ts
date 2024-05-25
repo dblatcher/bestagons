@@ -1,7 +1,5 @@
+import { AxialCoords, getAxialDistance, isAxialAdjacent } from "./axial-coords";
 export interface OffsetCoords { x: number; y: number; };
-export interface AxialCoords { q: number; r: number; };
-
-const { abs } = Math
 
 export interface GridDef {
     rows: number;
@@ -10,17 +8,35 @@ export interface GridDef {
     obstacles: OffsetCoords[],
 }
 
+export const coordsMatch = (a: OffsetCoords, b: OffsetCoords) => a.x == b.x && a.y === b.y
+
+export const convertOffsetToAxial = (coords: OffsetCoords, evenColsLow = false): AxialCoords => {
+    const col = coords.x
+    const row = coords.y
+
+    const colAdjust = evenColsLow
+        ? -(col + (col & 1)) / 2
+        : -(col - (col & 1)) / 2
+
+    const q = col
+    const r = row + colAdjust
+    return { q, r }
+}
+
 export const isHexAdjacent = (
     coords1: OffsetCoords,
     coords2: OffsetCoords,
     evenColsLow = false
-): boolean => {
-    const axial1 = convertOffsetToAxial(coords1, evenColsLow)
-    const axial2 = convertOffsetToAxial(coords2, evenColsLow)
-    const rDiff = axial2.r - axial1.r
-    const qDiff = axial2.q - axial1.q
-    return abs(rDiff) <= 1 && abs(qDiff) <= 1 && abs(qDiff + rDiff) <= 1 && !(rDiff === 0 && qDiff === 0)
-};
+): boolean => isAxialAdjacent(
+    convertOffsetToAxial(coords1, evenColsLow),
+    convertOffsetToAxial(coords2, evenColsLow)
+)
+
+export const getDistance = (start: OffsetCoords, end: OffsetCoords, evenColsLow: boolean): number =>
+    getAxialDistance(
+        convertOffsetToAxial(start, evenColsLow),
+        convertOffsetToAxial(end, evenColsLow)
+    )
 
 
 export const isInGrid = (coords: OffsetCoords, grid: GridDef) => {
@@ -47,30 +63,4 @@ export const getOpenAdjacents = (cell: OffsetCoords, grid: GridDef): OffsetCoord
             !grid.obstacles.some(obstacle => coordsMatch(obstacle, _))
         )
 
-export const convertOffsetToAxial = (coords: OffsetCoords, evenColsLow = false): AxialCoords => {
-    const col = coords.x
-    const row = coords.y
 
-    const colAdjust = evenColsLow
-        ? -((col / 2) + ((col & 1) * .5))
-        : -(col - (col & 1)) / 2
-
-    const q = col
-    const r = row + colAdjust
-    return { q, r }
-}
-
-const getAxialDistance = (a: AxialCoords, b: AxialCoords) =>
-    (abs(a.q - b.q)
-        + abs(a.q + a.r - b.q - b.r)
-        + abs(a.r - b.r)) / 2
-
-export const getDistance = (start: OffsetCoords, end: OffsetCoords, evenColsLow: boolean): number =>
-    getAxialDistance(
-        convertOffsetToAxial(start, evenColsLow),
-        convertOffsetToAxial(end, evenColsLow)
-    )
-
-
-
-export const coordsMatch = (a: OffsetCoords, b: OffsetCoords) => a.x == b.x && a.y === b.y

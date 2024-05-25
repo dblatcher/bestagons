@@ -1,5 +1,5 @@
 import React from "react"
-import { AxialCoords } from "../lib/grid-functions"
+import { AxialCoords } from "../lib/axial-coords"
 
 interface Props {
     axial: AxialCoords
