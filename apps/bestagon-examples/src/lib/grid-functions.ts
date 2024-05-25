@@ -11,26 +11,15 @@ export interface GridDef {
 }
 
 export const isHexAdjacent = (
-    c1: OffsetCoords,
-    c2: OffsetCoords,
+    coords1: OffsetCoords,
+    coords2: OffsetCoords,
     evenColsLow = false
 ): boolean => {
-    const { x: x1, y: y1 } = c1
-    const { x: x2, y: y2 } = c2
-    const xDif = abs(x1 - x2);
-    const yDif = abs(y1 - y2);
-    if (xDif === 0 && yDif === 1) {
-        return true;
-    }
-    if (y1 === y2 && xDif === 1) {
-        return true;
-    }
-    const upIsAdjacent = x1 % 2 === (evenColsLow ? 1 : 0);
-    const adjacentY = upIsAdjacent ? 1 : -1;
-    if (y1 - y2 === adjacentY && xDif === 1) {
-        return true;
-    }
-    return false;
+    const axial1 = convertOffsetToAxial(coords1, evenColsLow)
+    const axial2 = convertOffsetToAxial(coords2, evenColsLow)
+    const rDiff = axial2.r - axial1.r
+    const qDiff = axial2.q - axial1.q
+    return abs(rDiff) <= 1 && abs(qDiff) <= 1 && abs(qDiff + rDiff) <= 1 && !(rDiff === 0 && qDiff === 0)
 };
 
 
@@ -62,9 +51,8 @@ export const convertOffsetToAxial = (coords: OffsetCoords, evenColsLow = false):
     const col = coords.x
     const row = coords.y
 
-    const isOdd = (v: number) => !!(v & 1)
     const colAdjust = evenColsLow
-        ? -((col / 2) + (isOdd(col) ? .5 : 0))
+        ? -((col / 2) + ((col & 1) * .5))
         : -(col - (col & 1)) / 2
 
     const q = col
