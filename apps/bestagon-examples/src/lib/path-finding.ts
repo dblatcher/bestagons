@@ -1,24 +1,24 @@
-import { Coords, GridDef, coordsMatch, getOpenAdjacents } from "./grid-functions";
+import { OffsetCoords, GridDef, coordsMatch, getOpenAdjacents } from "./grid-functions";
 
 
-export const findPathInefficiently = (start: Coords, dest: Coords, grid: GridDef, maxPathLength = 100): Coords[] => {
-    const stepsFrom = (path: Coords[]) => {
+export const findPathInefficiently = (start: OffsetCoords, dest: OffsetCoords, grid: GridDef, maxPathLength = 100): OffsetCoords[] => {
+    const stepsFrom = (path: OffsetCoords[]) => {
         const lastPlace = path[path.length - 1]
         return getOpenAdjacents(lastPlace, grid).map(
             adjacent => [...path, adjacent]
         )
     }
 
-    const extendAllPaths = (paths: Coords[][]) => {
+    const extendAllPaths = (paths: OffsetCoords[][]) => {
         return paths.map(stepsFrom).flat(1)
     }
 
-    const hasReachedGoal = (path: Coords[]): boolean => {
+    const hasReachedGoal = (path: OffsetCoords[]): boolean => {
         const lastPlace = path[path.length - 1]
         return coordsMatch(lastPlace, dest)
     }
 
-    const lastPlaceReachedSoonerInOtherPath = (path: Coords[], paths: Coords[][]) => {
+    const lastPlaceReachedSoonerInOtherPath = (path: OffsetCoords[], paths: OffsetCoords[][]) => {
         const lastPlace = path[path.length - 1]
         return paths.some(
             otherPath => {
@@ -27,11 +27,11 @@ export const findPathInefficiently = (start: Coords, dest: Coords, grid: GridDef
             }
         )
     }
-    const purgePaths = (paths: Coords[][]): Coords[][] => {
+    const purgePaths = (paths: OffsetCoords[][]): OffsetCoords[][] => {
         return paths.filter(path => !lastPlaceReachedSoonerInOtherPath(path, paths))
     }
 
-    const expandUntilReach = (pathsInProgress: Coords[][], maxPathLength: number, currentStep = 0): Coords[] | undefined => {
+    const expandUntilReach = (pathsInProgress: OffsetCoords[][], maxPathLength: number, currentStep = 0): OffsetCoords[] | undefined => {
         currentStep = currentStep + 1
         const extendedPaths = extendAllPaths(pathsInProgress)
         const succesfulPath = extendedPaths.find(hasReachedGoal)

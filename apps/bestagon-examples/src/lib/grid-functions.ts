@@ -1,15 +1,15 @@
-export interface Coords { x: number; y: number; };
+export interface OffsetCoords { x: number; y: number; };
 
 export interface GridDef {
     rows: number;
     width: number;
     startLow: boolean;
-    obstacles: Coords[],
+    obstacles: OffsetCoords[],
 }
 
 export const isHexAdjacent = (
-    c1: Coords,
-    c2: Coords,
+    c1: OffsetCoords,
+    c2: OffsetCoords,
     startLow = false
 ): boolean => {
     const { x: x1, y: y1 } = c1
@@ -31,12 +31,12 @@ export const isHexAdjacent = (
 };
 
 
-export const isInGrid = (coords: Coords, grid: GridDef) => {
+export const isInGrid = (coords: OffsetCoords, grid: GridDef) => {
     const { x, y } = coords;
     return x >= 0 && y >= 0 && x < grid.width && y < grid.rows
 }
 
-export const getAdjacents = (cell: Coords, grid: GridDef): Coords[] => {
+export const getAdjacents = (cell: OffsetCoords, grid: GridDef): OffsetCoords[] => {
     const { x, y } = cell;
     const yMinusOneIsAdjacent = cell.x % 2 === (grid.startLow ? 1 : 0);
     const adjacentY = yMinusOneIsAdjacent ? y - 1 : y + 1;
@@ -49,14 +49,28 @@ export const getAdjacents = (cell: Coords, grid: GridDef): Coords[] => {
         { x: x + 1, y: adjacentY },
     ].filter(_ => isInGrid(_, grid))
 }
-export const getOpenAdjacents = (cell: Coords, grid: GridDef): Coords[] =>
+export const getOpenAdjacents = (cell: OffsetCoords, grid: GridDef): OffsetCoords[] =>
     getAdjacents(cell, grid)
         .filter(_ =>
             !grid.obstacles.some(obstacle => coordsMatch(obstacle, _))
         )
 
-export const getDistance = (start: Coords, end: Coords, startLow: boolean): number => {
+export const convertOffsetToAxial = (coords: OffsetCoords, startLow = false) => {
+    const col = coords.x
+    const row = coords.y
+
+    const isOdd = (v: number) => !!(v & 1)
+    const colAdjust = startLow
+        ? -((col / 2) + (isOdd(col) ? .5 : 0))
+        : -(col - (col & 1)) / 2
+
+    const q = col
+    const r = row + colAdjust
+    return { q, r }
+}
+
+export const getDistance = (start: OffsetCoords, end: OffsetCoords, startLow: boolean): number => {
     return 0
 }
 
-export const coordsMatch = (a: Coords, b: Coords) => a.x == b.x && a.y === b.y
+export const coordsMatch = (a: OffsetCoords, b: OffsetCoords) => a.x == b.x && a.y === b.y

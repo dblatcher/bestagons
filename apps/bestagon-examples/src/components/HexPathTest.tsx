@@ -6,7 +6,7 @@ import {
   useStatefulRef,
 } from '@dblatcher/bestagons';
 import React, { CSSProperties, useState } from 'react';
-import { Coords, coordsMatch, getDistance } from '../lib/grid-functions';
+import { OffsetCoords, coordsMatch, getDistance } from '../lib/grid-functions';
 import { PlaceOnHex } from './PlaceOnHex';
 import { findPathInefficiently } from '../lib/path-finding'
 
@@ -16,7 +16,7 @@ interface Props {
   startLow?: boolean;
 }
 
-const obstacles: Coords[] = [
+const obstacles: OffsetCoords[] = [
   { x: 2, y: 2 },
   { x: 3, y: 2 },
   { x: 3, y: 3 },
@@ -27,9 +27,9 @@ const obstacles: Coords[] = [
 export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, startLow = false }) => {
   const [board, boardRef] = useStatefulRef<HTMLDivElement>();
 
-  const [start] = useState<Coords>({ x: 5, y: 5 });
-  const [dest, setDest] = useState<Coords>({ x: 5, y: 4 });
-  const [path, setPath] = useState<Coords[]>(findPathInefficiently(start, dest, { rows, width, startLow, obstacles }))
+  const [start] = useState<OffsetCoords>({ x: 5, y: 5 });
+  const [dest, setDest] = useState<OffsetCoords>({ x: 5, y: 4 });
+  const [path, setPath] = useState<OffsetCoords[]>(findPathInefficiently(start, dest, { rows, width, startLow, obstacles }))
 
   const [distance, setDistance] = useState(getDistance(start, dest, startLow))
 

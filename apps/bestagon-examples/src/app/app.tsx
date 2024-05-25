@@ -1,10 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Board } from '../components/Board';
 import { HexPathTest } from '../components/HexPathTest';
 
 export function App() {
   return (
     <>
-      <HexPathTest rows={10} width={16} startLow />
+      <Board rows={5} width={5} />
+      <HexPathTest rows={10} width={16} />
     </>
   );
 }

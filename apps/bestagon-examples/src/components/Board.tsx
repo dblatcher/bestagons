@@ -7,7 +7,7 @@ import {
 } from '@dblatcher/bestagons';
 import React, { CSSProperties, useState } from 'react';
 import { PlaceOnHex } from './PlaceOnHex';
-import { isHexAdjacent } from '../lib/grid-functions';
+import { OffsetCoords, convertOffsetToAxial, isHexAdjacent } from '../lib/grid-functions';
 
 interface Props {
   rows: number;
@@ -16,6 +16,18 @@ interface Props {
 
 
 const startLow = true;
+
+const renderAxial = (coords: OffsetCoords) => {
+  const axial = convertOffsetToAxial(coords, startLow)
+  return <div>
+    <div style={{textAlign:'center'}}>
+      {axial.q > 0 && '+'}{axial.q}
+    </div>
+    <br />
+
+    <span style={{ paddingLeft: 20 }}>{axial.r > 0 && '+'}{axial.r}</span>
+  </div>
+}
 
 export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
   const [board, boardRef] = useStatefulRef<HTMLDivElement>();
@@ -39,7 +51,7 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
   const findHex = (x: number, y: number) => {
     return (
       board?.querySelector(
-        `[${attributeMap.x}="${x}"][${attributeMap.y}="${y}"]`
+        `[${attributeMap.x}="${x}"][${attributeMap.y} = "${y}"]`
       ) ?? undefined
     );
   };
@@ -62,7 +74,7 @@ export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
           key={x}
         >
           <b>
-            {x}, {y}
+            {renderAxial({ x: x - 2, y: y - 2 })}
           </b>
         </HexagonBox>
       )}
