@@ -6,20 +6,18 @@ import {
   useStatefulRef,
 } from '@dblatcher/bestagons';
 import React, { CSSProperties, useState } from 'react';
-import { PlaceOnHex } from './PlaceOnHex';
-import { OffsetCoords, convertOffsetToAxial, isHexAdjacent } from '../lib/grid-functions';
+import { convertOffsetToAxial, isHexAdjacent } from '../lib/grid-functions';
 import { AxialCoordinates } from './AxialCoordinates';
+import { PlaceOnHex } from './PlaceOnHex';
 
 interface Props {
   rows: number;
   width: number;
+  startLow?: boolean;
 }
 
 
-const startLow = true;
-
-
-export const Board: React.FunctionComponent<Props> = ({ rows, width }) => {
+export const Board: React.FunctionComponent<Props> = ({ rows, width, startLow = false }) => {
   const [board, boardRef] = useStatefulRef<HTMLDivElement>();
   const [x, setX] = useState<number>(2);
   const [y, setY] = useState<number>(3);
