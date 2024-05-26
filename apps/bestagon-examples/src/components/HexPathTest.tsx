@@ -8,7 +8,7 @@ import {
 import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { OffsetCoords, convertOffsetToAxial, coordsMatch, getDistance } from '../lib/grid-functions';
 import { PlaceOnHex } from './PlaceOnHex';
-import { findPathInefficiently } from '../lib/path-finding'
+import { breadthFirstSearch } from '../lib/path-finding'
 import { OffsetCoordinates } from './OffsetCoordinates';
 import { AxialCoordinates } from './AxialCoordinates';
 
@@ -36,7 +36,7 @@ export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, evenC
     []
   )
   useEffect(() => {
-    setPath(findPathInefficiently(start, dest, { rows, width, evenColsLow, obstacles }))
+    setPath(breadthFirstSearch(start, dest, { rows, width, evenColsLow, obstacles }))
   }, [setPath])
 
   const [distance, setDistance] = useState(getDistance(start, dest, evenColsLow))
@@ -85,7 +85,7 @@ export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, evenC
             onClick={() => {
               setDistance(getDistance(start, { x, y }, evenColsLow))
               setDest({ x, y })
-              setPath(findPathInefficiently(start, { x, y }, { rows, width, evenColsLow, obstacles }))
+              setPath(breadthFirstSearch(start, { x, y }, { rows, width, evenColsLow, obstacles }))
             }}
             style={getStyle(y, x)}
             key={x}

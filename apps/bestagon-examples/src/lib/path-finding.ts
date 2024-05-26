@@ -1,7 +1,7 @@
 import { OffsetCoords, GridDef, coordsMatch, getOpenAdjacents } from "./grid-functions";
 
 
-export const findPathInefficiently = (start: OffsetCoords, dest: OffsetCoords, grid: GridDef, maxPathLength = 100): OffsetCoords[] => {
+export const breadthFirstSearch = (start: OffsetCoords, dest: OffsetCoords, grid: GridDef, maxPathLength = 100): OffsetCoords[] => {
     console.time('pathfind expand')
     const stepsFrom = (path: OffsetCoords[]) => {
         const lastPlace = path[path.length - 1]
