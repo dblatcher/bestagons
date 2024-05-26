@@ -29,17 +29,24 @@ const obstacles: OffsetCoords[] = [
 
 export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, evenColsLow = false, showAxialCoords }) => {
   const [board, boardRef] = useStatefulRef<HTMLDivElement>();
-
-  const [start] = useState<OffsetCoords>({ x: 5, y: 5 });
+  const [start, setStart] = useState<OffsetCoords>({ x: 5, y: 5 });
   const [dest, setDest] = useState<OffsetCoords>({ x: 5, y: 4 });
-  const [path, setPath] = useState<OffsetCoords[]>(
-    []
-  )
+  const [path, setPath] = useState<OffsetCoords[]>([])
+  const [distance, setDistance] = useState(getDistance(start, dest, evenColsLow))
+  const [isMovingStart, setIsMovingStart] = useState(false)
+
   useEffect(() => {
     setPath(breadthFirstSearch(start, dest, { rows, width, evenColsLow, obstacles }))
   }, [setPath])
 
-  const [distance, setDistance] = useState(getDistance(start, dest, evenColsLow))
+
+  const findHex = (x: number, y: number) => {
+    return (
+      board?.querySelector(
+        `[${attributeMap.x}="${x}"][${attributeMap.y}="${y}"]`
+      ) ?? undefined
+    );
+  };
 
   const getStyle = (y: number, x: number): CSSProperties => {
     if (coordsMatch(start, { x, y })) {
@@ -60,18 +67,24 @@ export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, evenC
     return {};
   };
 
-  const findHex = (x: number, y: number) => {
-    return (
-      board?.querySelector(
-        `[${attributeMap.x}="${x}"][${attributeMap.y}="${y}"]`
-      ) ?? undefined
-    );
-  };
+  const handleHexClick = (x: number, y: number) => {
+    if (isMovingStart) {
+      setStart({ x, y })
+      setDistance(getDistance({ x, y }, dest, evenColsLow))
+      setPath(breadthFirstSearch({ x, y }, dest, { rows, width, evenColsLow, obstacles }))
+    } else {
+      setDest({ x, y })
+      setDistance(getDistance(start, { x, y }, evenColsLow))
+      setPath(breadthFirstSearch(start, { x, y }, { rows, width, evenColsLow, obstacles }))
+    }
+  }
 
   return (
     <>
       <div>
-        path finding : distance = {distance}
+        <p>path finding</p>
+        <div>distance = {distance}</div>
+        <button onClick={() => setIsMovingStart(!isMovingStart)}>{isMovingStart ? 'start' : 'dest'}</button>
       </div>
       <HexGrid
         ref={boardRef}
@@ -83,9 +96,7 @@ export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, evenC
           <HexagonBox
             hexData={{ x, y }}
             onClick={() => {
-              setDistance(getDistance(start, { x, y }, evenColsLow))
-              setDest({ x, y })
-              setPath(breadthFirstSearch(start, { x, y }, { rows, width, evenColsLow, obstacles }))
+              handleHexClick(x, y)
             }}
             style={getStyle(y, x)}
             key={x}
