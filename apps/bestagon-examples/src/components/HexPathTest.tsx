@@ -5,7 +5,7 @@ import {
   attributeMap,
   useStatefulRef,
 } from '@dblatcher/bestagons';
-import React, { CSSProperties, useState } from 'react';
+import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { OffsetCoords, convertOffsetToAxial, coordsMatch, getDistance } from '../lib/grid-functions';
 import { PlaceOnHex } from './PlaceOnHex';
 import { findPathInefficiently } from '../lib/path-finding'
@@ -32,7 +32,12 @@ export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, evenC
 
   const [start] = useState<OffsetCoords>({ x: 5, y: 5 });
   const [dest, setDest] = useState<OffsetCoords>({ x: 5, y: 4 });
-  const [path, setPath] = useState<OffsetCoords[]>(findPathInefficiently(start, dest, { rows, width, evenColsLow, obstacles }))
+  const [path, setPath] = useState<OffsetCoords[]>(
+    []
+  )
+  useEffect(() => {
+    setPath(findPathInefficiently(start, dest, { rows, width, evenColsLow, obstacles }))
+  }, [setPath])
 
   const [distance, setDistance] = useState(getDistance(start, dest, evenColsLow))
 
@@ -78,8 +83,8 @@ export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, evenC
           <HexagonBox
             hexData={{ x, y }}
             onClick={() => {
-              setDest({ x, y })
               setDistance(getDistance(start, { x, y }, evenColsLow))
+              setDest({ x, y })
               setPath(findPathInefficiently(start, { x, y }, { rows, width, evenColsLow, obstacles }))
             }}
             style={getStyle(y, x)}

@@ -2,6 +2,7 @@ import { OffsetCoords, GridDef, coordsMatch, getOpenAdjacents } from "./grid-fun
 
 
 export const findPathInefficiently = (start: OffsetCoords, dest: OffsetCoords, grid: GridDef, maxPathLength = 100): OffsetCoords[] => {
+    console.time('pathfind expand')
     const stepsFrom = (path: OffsetCoords[]) => {
         const lastPlace = path[path.length - 1]
         return getOpenAdjacents(lastPlace, grid).map(
@@ -35,11 +36,6 @@ export const findPathInefficiently = (start: OffsetCoords, dest: OffsetCoords, g
         currentStep = currentStep + 1
         const extendedPaths = extendAllPaths(pathsInProgress)
         const succesfulPath = extendedPaths.find(hasReachedGoal)
-        console.log({
-            currentStep,
-            pathsInProgress: pathsInProgress.length,
-            succesfulPath: !!succesfulPath
-        })
         if (succesfulPath) {
             return succesfulPath
         }
@@ -48,7 +44,8 @@ export const findPathInefficiently = (start: OffsetCoords, dest: OffsetCoords, g
         }
         return expandUntilReach(purgePaths(extendedPaths), maxPathLength, currentStep)
     }
-
+    
     const path = expandUntilReach([[start]], maxPathLength)
+    console.timeEnd('pathfind expand')
     return path || []
 };
