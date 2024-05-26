@@ -1,7 +1,15 @@
-import { OffsetCoords, GridDef, coordsMatch, getOpenAdjacents } from "./grid-functions";
+import { OffsetCoords, GridDef, coordsMatch, getOpenAdjacents, getDistance } from "./grid-functions";
+
+export const pathFindFailures = {
+    NO_ROUTE: 'no route',
+    NOT_FOUND_WITHIN_STEPS: 'not found within maximum steps',
+    TOO_FAR: 'too far to reach within maximum steps',
+}
 
 
-export const breadthFirstSearch = (start: OffsetCoords, dest: OffsetCoords, grid: GridDef, maxPathLength = 100): OffsetCoords[] => {
+export type PathfindFailCode = keyof typeof pathFindFailures
+
+export const breadthFirstSearch = (start: OffsetCoords, dest: OffsetCoords, grid: GridDef, maxPathLength = 12): { path: OffsetCoords[], failure?: PathfindFailCode } => {
     console.time('pathfind expand')
     const stepsFrom = (path: OffsetCoords[]) => {
         const lastPlace = path[path.length - 1]
@@ -32,20 +40,33 @@ export const breadthFirstSearch = (start: OffsetCoords, dest: OffsetCoords, grid
         return paths.filter(path => !lastPlaceReachedSoonerInOtherPath(path, paths))
     }
 
-    const expandUntilReach = (pathsInProgress: OffsetCoords[][], maxPathLength: number, currentStep = 0): OffsetCoords[] | undefined => {
+    const expandUntilReach = (pathsInProgress: OffsetCoords[][], maxPathLength: number, currentStep = 0): OffsetCoords[] | PathfindFailCode => {
         currentStep = currentStep + 1
         const extendedPaths = extendAllPaths(pathsInProgress)
         const succesfulPath = extendedPaths.find(hasReachedGoal)
         if (succesfulPath) {
             return succesfulPath
         }
+        if (pathsInProgress.length == 0) {
+            return 'NO_ROUTE'
+        }
         if (currentStep >= maxPathLength) {
-            return undefined
+            return 'NOT_FOUND_WITHIN_STEPS'
         }
         return expandUntilReach(purgePaths(extendedPaths), maxPathLength, currentStep)
     }
-    
-    const path = expandUntilReach([[start]], maxPathLength)
+
+    const isTooFar = getDistance(start, dest, grid.evenColsLow) > maxPathLength
+    const result = isTooFar ? 'TOO_FAR' : expandUntilReach([[start]], maxPathLength)
     console.timeEnd('pathfind expand')
-    return path || []
+
+    if (typeof result === 'string') {
+        return {
+            path: [],
+            failure: result,
+        }
+    }
+    return {
+        path: result
+    }
 };

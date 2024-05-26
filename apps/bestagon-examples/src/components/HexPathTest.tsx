@@ -20,10 +20,18 @@ interface Props {
 }
 
 const obstacles: OffsetCoords[] = [
+
+  { x: 0, y: 3 },
+  { x: 0, y: 6 },
+  { x: 1, y: 3 },
+  { x: 1, y: 6 },
   { x: 2, y: 2 },
+  { x: 2, y: 6 },
   { x: 3, y: 2 },
   { x: 3, y: 3 },
   { x: 3, y: 4 },
+  { x: 3, y: 6 },
+  { x: 4, y: 4 },
   { x: 4, y: 5 },
 ]
 
@@ -36,7 +44,7 @@ export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, evenC
   const [isMovingStart, setIsMovingStart] = useState(false)
 
   useEffect(() => {
-    setPath(breadthFirstSearch(start, dest, { rows, width, evenColsLow, obstacles }))
+    setPath(breadthFirstSearch(start, dest, { rows, width, evenColsLow, obstacles }).path)
   }, [setPath])
 
 
@@ -68,14 +76,15 @@ export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, evenC
   };
 
   const handleHexClick = (x: number, y: number) => {
+    const grid = { rows, width, evenColsLow, obstacles }
     if (isMovingStart) {
       setStart({ x, y })
       setDistance(getDistance({ x, y }, dest, evenColsLow))
-      setPath(breadthFirstSearch({ x, y }, dest, { rows, width, evenColsLow, obstacles }))
+      setPath(breadthFirstSearch({ x, y }, dest, grid).path)
     } else {
       setDest({ x, y })
       setDistance(getDistance(start, { x, y }, evenColsLow))
-      setPath(breadthFirstSearch(start, { x, y }, { rows, width, evenColsLow, obstacles }))
+      setPath(breadthFirstSearch(start, { x, y }, grid).path)
     }
   }
 
