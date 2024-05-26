@@ -80,11 +80,14 @@ export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, evenC
     if (isMovingStart) {
       setStart({ x, y })
       setDistance(getDistance({ x, y }, dest, evenColsLow))
-      setPath(breadthFirstSearch({ x, y }, dest, grid).path)
     } else {
       setDest({ x, y })
       setDistance(getDistance(start, { x, y }, evenColsLow))
-      setPath(breadthFirstSearch(start, { x, y }, grid).path)
+    }
+    const { path, failure } = isMovingStart ? breadthFirstSearch({ x, y }, dest, grid) : breadthFirstSearch(start, { x, y }, grid)
+    setPath(path)
+    if (failure) {
+      console.warn(failure)
     }
   }
 
