@@ -80,8 +80,36 @@ type AStarPath = {
     reachedGoal: boolean
 }
 
-/** sort of working, but needs more thought */
+class NodeCostMap {
+    data: Record<number, Record<number, number>>
+
+    constructor() {
+        this.data = {}
+    }
+
+    put(coords: { x: number, y: number }, value: number) {
+        if (!this.data[coords.y]) {
+            this.data[coords.y] = {}
+        }
+        this.data[coords.y][coords.x] = value
+    }
+
+    retrieve(coords: { x: number, y: number }): null | number {
+        if (!this.data[coords.y]) {
+            return null
+        }
+        return typeof this.data[coords.y][coords.x] === 'undefined' ? null : this.data[coords.y][coords.x]
+    }
+}
+
+/** not implement path limits yet, not fully tested, seems to work */
 export const aStar = (start: OffsetCoords, dest: OffsetCoords, grid: GridDef, maxPathLength = 10): { path: OffsetCoords[], failure?: PathfindFailCode } => {
+
+    const costMap = new NodeCostMap()
+    const isBestRouteToLastNodeSoFar = (path: AStarPath): boolean => {
+        const bestCostSoFar = costMap.retrieve(path.steps[path.steps.length - 1]);
+        return typeof bestCostSoFar !== 'number' ? true : bestCostSoFar > path.cost
+    }
 
     const getStepCost = (_from: OffsetCoords, _to: OffsetCoords) => 1;
 
@@ -109,8 +137,13 @@ export const aStar = (start: OffsetCoords, dest: OffsetCoords, grid: GridDef, ma
         if (!bestPath) {
             return copy
         }
-        const branched = branchPath(bestPath)
-        copy.splice(copy.indexOf(bestPath), 1, ...branched)
+        const newGoodBranches = branchPath(bestPath).filter(isBestRouteToLastNodeSoFar)
+
+        newGoodBranches.forEach(branch => {
+            const lastNode = branch.steps[branch.steps.length - 1]
+            costMap.put(lastNode, branch.cost)
+        })
+        copy.splice(copy.indexOf(bestPath), 1, ...newGoodBranches)
         return copy
     }
 
@@ -128,16 +161,6 @@ export const aStar = (start: OffsetCoords, dest: OffsetCoords, grid: GridDef, ma
     const timesToTry = 500
     const recursiveExtend = (paths: AStarPath[], cycle = 0): AStarPath | PathfindFailCode => {
         cycle++
-
-        // need to track the lowest cost to each node found so far
-        // so i can prune the paths that take longer to get somewhere than an earlier path
-        //
-        // A - B - C - E
-        //     \  /
-        //       D
-        //
-        // don't explore A-B-D-C-E when A-B-C-E was a dead end
-        // remember, A-B-C-E is already popped out of the array
 
         // need to not extend paths further if already past max steps
         const withBestPathExtended = extendBestIncompletePath(paths).sort(lowScoreLowCostFirst)
