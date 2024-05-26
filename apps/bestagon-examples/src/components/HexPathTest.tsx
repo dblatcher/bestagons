@@ -5,12 +5,12 @@ import {
   attributeMap,
   useStatefulRef,
 } from '@dblatcher/bestagons';
-import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import { OffsetCoords, convertOffsetToAxial, coordsMatch, getDistance } from '../lib/grid-functions';
-import { PlaceOnHex } from './PlaceOnHex';
-import { breadthFirstSearch } from '../lib/path-finding'
-import { OffsetCoordinates } from './OffsetCoordinates';
+import { aStar, breadthFirstSearch } from '../lib/path-finding';
 import { AxialCoordinates } from './AxialCoordinates';
+import { OffsetCoordinates } from './OffsetCoordinates';
+import { PlaceOnHex } from './PlaceOnHex';
 
 interface Props {
   rows: number;
@@ -33,6 +33,15 @@ const obstacles: OffsetCoords[] = [
   { x: 3, y: 6 },
   { x: 4, y: 4 },
   { x: 4, y: 5 },
+  
+  { x: 7, y: 3 },
+  { x: 7, y: 4 },
+  { x: 7, y: 5 },
+  { x: 7, y: 6 },
+  { x: 8, y: 2 },
+  { x: 9, y: 2 },
+  { x: 10, y: 2 },
+
 ]
 
 export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, evenColsLow = false, showAxialCoords }) => {
@@ -84,7 +93,7 @@ export const HexPathTest: React.FunctionComponent<Props> = ({ rows, width, evenC
       setDest({ x, y })
       setDistance(getDistance(start, { x, y }, evenColsLow))
     }
-    const { path, failure } = isMovingStart ? breadthFirstSearch({ x, y }, dest, grid) : breadthFirstSearch(start, { x, y }, grid)
+    const { path, failure } = isMovingStart ? aStar({ x, y }, dest, grid) : aStar(start, { x, y }, grid)
     setPath(path)
     if (failure) {
       console.warn(failure)
