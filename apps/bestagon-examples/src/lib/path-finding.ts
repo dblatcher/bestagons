@@ -156,8 +156,6 @@ export const aStar = (start: OffsetCoords, dest: OffsetCoords, grid: GridDef, ma
         }
     )).sort(lowScoreLowCostFirst)
 
-
-
     const timesToTry = 500
     const recursiveExtend = (paths: AStarPath[], cycle = 0): AStarPath | PathfindFailCode => {
         cycle++
@@ -169,18 +167,14 @@ export const aStar = (start: OffsetCoords, dest: OffsetCoords, grid: GridDef, ma
         }
         const bestSuccess = withBestPathExtended.find(path => path.reachedGoal)
         if (bestSuccess) {
-            console.table(withBestPathExtended)
             return bestSuccess
         }
         if (cycle >= timesToTry) {
-            console.table(withBestPathExtended)
             return 'TOO_HARD'
         }
         return recursiveExtend(withBestPathExtended, cycle)
     }
-
     const result = recursiveExtend(paths)
-
 
     if (typeof result === 'string') {
         return {
@@ -188,8 +182,5 @@ export const aStar = (start: OffsetCoords, dest: OffsetCoords, grid: GridDef, ma
             failure: result
         }
     }
-
     return { path: result.steps }
-
-
 }
