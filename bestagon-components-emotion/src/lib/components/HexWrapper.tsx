@@ -1,14 +1,14 @@
-import React, { CSSProperties, ReactNode, useCallback, useEffect, useState } from "react";
+import { css } from "@emotion/react";
+import React, { ReactNode, useCallback, useEffect, useState } from "react";
 import { AMOUNT_OF_WIDTH_USED_WITHOUT_OVERLAP, countChildren, getHexDimensionsForSize } from "../helpers";
 import { HexContainerContext } from "../hex-container-context";
 import { buildHexagonBoxCss } from "../shared-styles";
 import { HertitableHexProps, HexSize } from "../types";
 import { useStatefulRef } from "../use-stateful-ref";
 import { NumberedChildren } from "./NumberedChildren";
-import { css } from "@emotion/react";
 
 type Props = HertitableHexProps & {
-    children: ReactNode
+    children?: ReactNode
     extraHeight?: boolean
     evenColsLow?: boolean
     hexClassNames?: string[]

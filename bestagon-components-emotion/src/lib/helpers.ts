@@ -31,10 +31,28 @@ export const getZeroBasedNumbers = (length: number) => {
     return list.map((_, index) => index);
 };
 
+
+export const toFlatChildArray = (children: ReactNode[] | ReactNode): ReactNode[] => {
+    if (!Array.isArray(children)) {
+        return [children]
+    }
+    const unpacked: ReactNode[] = children.flatMap(child => {
+        if (Array.isArray(child)) {
+            return child
+        } else {
+            return [child]
+        }
+    })
+    if (unpacked.some(r => Array.isArray(r))) {
+        return toFlatChildArray(unpacked)
+    }
+    return unpacked
+}
+
 export const countChildren = (children: ReactNode) => {
     if (!children) { return 0 }
-    if (Array.isArray(children)) {
-        return children.length
+    if (!Array.isArray(children)) {
+        return 1
     }
-    return 1
+    return toFlatChildArray(children).length
 }
